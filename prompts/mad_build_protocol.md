@@ -47,19 +47,48 @@ Wait for Codex to finish. Confirm `codex_v1/` is populated.
 
 ## Round 2 — cross-review
 
-Claude reads `codex_v1/` and writes
+**Strict rule: each side reviews ONLY the other side's draft.** This is
+what makes the critique a fair second opinion rather than a defense of
+one's own work. Do not let either prompt mention the reviewer's own draft.
+
+Claude reads `codex_v1/` (NOT `claude_v1/`) and writes
 `round1_feedback/claude_reviews_codex.md`: be specific (line numbers,
-named bugs, what to steal, what's weaker).
+named bugs, what to steal, what's weaker). Do not re-read your own draft.
 
-Dispatch Codex with:
+Dispatch Codex with this exact prompt template (do not improvise the
+wording):
 ```
-Read round1_feedback/. Then read claude_v1/. Write a critical review at
+Round 2 of MAD-build. Read ASSIGNMENT.md and claude_v1/ (the other agent's
+draft). Do NOT open codex_v1/ — that is your own draft and looking at it
+would defeat the purpose of cross-review. Write a critical review at
 round1_feedback/codex_reviews_claude.md. Be specific: cite line numbers,
-identify bugs, name what you would steal and what is weaker than yours.
-Do NOT read codex_v1/ during this round.
+identify bugs, name what you would steal and what is weaker. 200-400 words.
 ```
 
-## Round 3 — revisions
+## Post-Round-2 validation (mandatory)
+
+Before proceeding to Round 3, verify:
+- `round1_feedback/claude_reviews_codex.md` exists and is non-empty.
+- `round1_feedback/codex_reviews_claude.md` exists and is non-empty.
+- Neither review references the reviewer's own draft by name.
+
+If any of these fail, the round did not produce a fair cross-review.
+Re-run the failed side with the strict prompt above.
+
+## Round 3 — revisions (do NOT skip)
+
+This round is **mandatory** in MAD-build. Do not jump from Round 2 to the
+final merge. The point of MAD-build is that each side gets a chance to
+respond to legitimate criticism. Skipping this round produces a final
+that mixes one side's first draft with the other side's critique — not a
+true synthesis.
+
+If, after Round 2, you (the orchestrator) decide the critiques are too
+trivial to warrant revision, say so explicitly in
+`README_DEBRIEF.md` and write the v2's as `(no changes; v2 = v1)` files.
+Do not silently skip.
+
+
 
 Claude reads Codex's review of Claude's draft, revises into
 `round2_revisions/claude_v2.<ext>`.
