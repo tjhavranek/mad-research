@@ -14,6 +14,7 @@ Thumbs.db
 # These live in the sibling Joint/mad-skill-private/ folder locally.
 /REVIEW_*.md
 /build_notes/
+/_review/
 
 # Per-example internal prompts; keep audit-trail artifacts but not the
 # internal prompts that elicited them.

@@ -1,4 +1,4 @@
-# Round 1 — Audit X
+# Round 1 — Audit Y
 
 ## Top 5 criticisms
 
@@ -63,85 +63,58 @@ The final ~5 slides of the WAIVE presentation (slides 22-26) were truncated in t
 
 The MAIVE Supplementary Information (S1-S6) and Supplementary Tables (S3-S5) are referenced repeatedly in MAIVE pp. 5-9 but not included in the audit material. Several methodological claims (the "key assumption broken" condition, the "implied relative degree of SE-selection") depend on supplementary content I could not verify.
 
+
 ---
-# Round 1 — Audit Y
 
-## Top 5 criticisms
+# Round 2 — Cross-critique — Audit Y
 
-1.
-- Claim: WAIVE is framed as a new estimator, but the extracted evidence makes it look like an incremental weighting layer on MAIVE.
-- Severity: High
-- Evidence: [MANUSCRIPT] "WAIVE first stage — same as MAIVE." (WAIVE slide 20)
-- Why it matters: If the first stage is explicitly the same as MAIVE, the contribution burden shifts to showing that the second-stage weighting rule adds something conceptually and empirically important.
-- Concrete fix: State WAIVE as an extension of MAIVE unless the paper can show a distinct estimand, new identifying content, or material gains. Add a table separating inherited machinery from genuinely new elements.
-- Devil's-advocate check: This is not merely a taste disagreement about naming. It is a failure of the claim's own evidentiary standard if "successor" is implied while the documented novelty is mainly an extra weight applied after the MAIVE first stage.
+For Round 2 I treat the two peer audits as anonymized: Audit X (the
+evidence-quality peer) and Audit Y (the contribution-overclaim peer).
 
-2.
-- Claim: The residual interpretation moves from tentative signal to operational label too quickly.
-- Severity: High
-- Evidence: [MANUSCRIPT] "Negative π_i → reported SE too small relative to N → possibly p-hacking." (WAIVE slide 20)
-- Why it matters: "Possibly p-hacking" is a weak evidentiary basis for treating all negative residuals as suspicious enough to penalize. As a contribution claim, WAIVE needs to show that the residual is a reliable diagnostic, not just a narratively plausible proxy.
-- Concrete fix: Reframe the residual as a risk score rather than evidence of hacking, and document false-positive cases such as legitimate design efficiency or measurement differences. Report sensitivity to alternative residual interpretations.
-- Devil's-advocate check: The criticism is not that negative residuals can never be informative. It is that the proposed method's evidentiary standard is stronger than the slide's own language supports.
+## Two strongest peer arguments
 
-3.
-- Claim: The key weighting rule is presented as smooth and natural, but the deck does not show why this functional form is principled.
+### Strong #1 — from Audit X
+- Claim: The exponential weight `ω_i = exp(−max(0, −π_i))` is scale-dependent and underspecified; the same evidence can receive different weights after rescaling.
+- Evidence: "ω_i = exp[ −max(0, −π_i) ]" (WAIVE slide 21) combined with "In practice it's better to use logs in the first stage." (WAIVE slide 12).
+- Why it survives: π_i is a residual from a variance regression whose units depend on whether SE, SE², or log SE is on the LHS. WAIVE slide 12 quietly recommends logs but slide 21 displays the formula without restating the transformation. A reader implementing WAIVE from the slides will get different weights depending on which scale they pick. This is exactly the kind of hidden choice that erodes the contribution claim. Audit X is right that this is a serious evidence-quality gap, and it complements my own criticism (#2) that the exponential is unmotivated: it's not just unmotivated, it's *also* unstandardized.
+
+### Strong #2 — from Audit Y
+- Claim: WAIVE's "successor to MAIVE" framing leans on MAIVE's credibility while needing to prove *incremental* validity over MAIVE, not merely continuity with it.
+- Evidence: "WAIVE first stage — same as MAIVE." (WAIVE slide 20).
+- Why it survives: Audit Y caught something my Round 1 also flagged but framed differently. The slides explicitly say the first stage is shared. The contribution claim therefore rests entirely on the second-stage downweight. Without a clean MAIVE-vs.-WAIVE ablation on the *same* simulation panels and the *same* empirical sample, there is no evidence that the additional layer earns its name. Audit Y is right to insist the burden of proof is incremental, not categorical.
+
+## Two weakest or overstated peer arguments
+
+### Weak #1 — from Audit Y (criticism #5)
+- Claim: "Practical deployment language may imply readiness before the extracted evidence supports it." (Y's criticism #5, citing slide 17's "Supports MAIVE, WAIVE, multilevel, clustering.")
+- Why it fails: This is a stretch. The phrase "supports" on slide 17 describes the easymeta.org software's capability, not a claim of methodological readiness for WAIVE itself. Slide 19 explicitly visualizes WAIVE as more aggressive than MAIVE — that is presentation of a proposal, not premature deployment. Audit Y is generalizing from a tool screenshot to an overclaim of validation. The deeper criticisms Y makes (residual interpretation, functional form, ablation) are stronger and Y should drop this one.
+- Counter-quote: "Penalize only negative residuals (π_i < 0) — downweight spuriously precise estimates." (WAIVE slide 21) — the slides are explicit about the mechanical novelty and don't claim full validation.
+
+### Weak #2 — from Audit X (criticism #5)
+- Claim: "Robustness coverage does not yet address inherited MAIVE fragilities." (X's criticism #5, naming the F<10 threshold and sample-size-selection assumption from MAIVE.)
+- Why it fails: This is a real concern, but X is double-counting the inherited MAIVE limitations as a WAIVE-specific evidence gap. They are not. MAIVE's published paper acknowledges these (MAIVE p. 7) and recommends Anderson-Rubin CIs and F>100 as defensive practice. WAIVE inherits the warnings. The correct framing is "WAIVE inherits MAIVE's limitations and adds a new one" — not "WAIVE fails to re-derive MAIVE's existing caveats." X's R1 criticism #5 reads as boilerplate; X should consolidate it with X's stronger criticism #2 (residual interpretation) into a single targeted point.
+- Counter-quote: "Caution is warranted if the F-statistic from the first-stage regression of reported variance on inverse sample size falls below 10." (MAIVE p. 7).
+
+## One issue neither X nor Y raised
+
+- Claim: WAIVE's downweight is asymmetric (only negative π_i is penalized), but the manuscript does not justify the asymmetry against an alternative reading.
 - Severity: Medium
-- Evidence: [MANUSCRIPT] "Weight ∈ (0, 1], smooth and proportional decay." (WAIVE slide 21)
-- Why it matters: Smoothness alone is not a methodological contribution. Without a principled argument, the exponential tilt risks looking tuned to downweight observations already suspected to be problematic.
-- Concrete fix: Justify the exponential form against alternatives such as trimming, linear downweighting, symmetric penalties, or robust loss functions. If the choice is pragmatic, say so and report robustness.
-- Devil's-advocate check: This is partly a disagreement about standards for methodological novelty, but it becomes a failure of WAIVE's own standard if the method is sold as an estimator rather than as a heuristic sensitivity analysis.
+- Evidence: "Penalize only negative residuals (π_i < 0) — downweight spuriously precise estimates." (WAIVE slide 21).
+- Why it matters: If π_i is supposed to capture "p-hacking and misspecification" (slide 12 says exactly this), then *positive* π_i values — reported SE larger than the design implies — could just as easily reflect misspecification (e.g., conservative clustering, redundant controls) as they reflect honest design. WAIVE penalizes only one side. The justification (slide 20: "Negative π_i → reported SE too small → possibly p-hacking") is asymmetric. A reader could legitimately ask: why is *over*-reported precision the only direction that signals misbehavior? The published MAIVE paper does not commit to this asymmetry; WAIVE introduces it without defense.
+- Concrete fix: Either (i) defend the asymmetry on the grounds that incentives push only in one direction (researchers want significance, not insignificance, so they shrink SE) — this is plausible but should be stated; or (ii) make the downweight symmetric and report both versions.
 
-4.
-- Claim: The motivation establishes that PEESE can fail, not that MAIVE fails enough to need WAIVE.
-- Severity: High
-- Evidence: [MANUSCRIPT] "Natural solution: 1/N instrumenting SE(Ê_i)² → MAIVE." (WAIVE slide 11)
-- Why it matters: WAIVE's predecessor is MAIVE, which the slides present as the natural solution. A credible successor claim needs direct evidence that MAIVE leaves an important residual problem that WAIVE fixes.
-- Concrete fix: Put MAIVE, WAIVE, and conventional estimators in the same validation panels and foreground the incremental gain of WAIVE over MAIVE. The abstract/conclusion should say "incremental robustness over MAIVE" unless the marginal evidence is large and stable across settings.
-- Devil's-advocate check: This is a failure of the contribution claim's evidentiary standard. The slides motivate the problem, but the extracted text does not prove that MAIVE is insufficient.
+## Top 3 surviving criticisms after Round 2
 
-5.
-- Claim: Practical deployment language may imply readiness before the extracted evidence supports it.
-- Severity: Medium
-- Evidence: [MANUSCRIPT] "Supports MAIVE, WAIVE, multilevel, clustering." (WAIVE slide 17)
-- Why it matters: Tool support can turn a methodological proposal into a practical recommendation. Presenting WAIVE alongside mature features risks overstating its validation status.
-- Concrete fix: Label WAIVE as experimental until the results are documented and benchmarked against MAIVE. Add warnings about residual interpretation and sensitivity to the weight rule.
-- Devil's-advocate check: This is not an objection to releasing software. It is an overclaim concern: the implementation signal should not outrun the evidentiary support for routine applied use.
+1. **Negative first-stage residuals are not a unique signal of p-hacking** (Self R1 #3, also X R1 #2, also Y R1 #2). Three streams converge on this. Severity: High. Evidence: WAIVE slide 20. Survives because none of the streams could find a justification in the manuscript for treating negative π_i as evidence of hacking rather than as evidence of honest design heterogeneity.
 
-## Top 2 strengths
+2. **The exponential downweight `ω_i = exp(−max(0,−π_i))` is unmotivated and scale-dependent** (Self R1 #2, also X R1 #3, also Y R1 #3). Three streams converge. Severity: High. Evidence: WAIVE slide 21. Survives because the slides offer "smooth and proportional decay" as the only justification, which is a property of many possible curves, not a derivation of this one.
 
-1.
-- Claim: WAIVE identifies a real gap in conventional funnel-plot corrections under spurious precision.
-- Severity: High
-- Evidence: [MANUSCRIPT] "Aggressive p-hacking: PEESE in trouble." (WAIVE slide 7)
-- Why it matters: The core intuition is coherent: if researchers manipulate standard errors, methods using reported precision naively can be misled.
-- Concrete fix: Keep this as the motivating problem, but tie it explicitly to MAIVE's remaining limitations rather than treating PEESE failure as enough.
-- Devil's-advocate check: This is a genuine strength, not just rhetoric, because it aligns with the MAIVE paper's documented concern about spurious precision.
+3. **The contribution claim is unsupported until a clean MAIVE-vs.-WAIVE ablation is shown** (Y R1 #1 and #4, also X R1 #1, also Self R1 implicitly). Severity: High. Evidence: "WAIVE first stage — same as MAIVE." (WAIVE slide 20). Survives because the available slides show WAIVE doing more aggressive downweighting visually, but no panel directly compares WAIVE-PEESE to MAIVE-PEESE under the same simulation grid.
 
-2.
-- Claim: WAIVE is transparent about its mechanical novelty.
-- Severity: Medium
-- Evidence: [MANUSCRIPT] "Penalize only negative residuals (π_i < 0) — downweight spuriously precise estimates." (WAIVE slide 21)
-- Why it matters: The proposed increment is easy to understand and audit. That transparency makes the method testable.
-- Concrete fix: Preserve the simplicity, but present it as a transparent assumption requiring validation. Add sensitivity panels that show when the penalty helps, hurts, or does nothing relative to MAIVE.
-- Devil's-advocate check: This is a strength even from a skeptical stance: the rule is exposed clearly enough that its contribution can be debated directly.
+## Devil's-advocate check on emerging consensus
 
-## Biggest interpretive blind spot
+All three streams agree that (a) negative-residual interpretation is uncertain, (b) the exponential tilt is unmotivated, (c) ablation is needed. This is a lot of convergence. Is it grounded or herd-driven? I think grounded: each criticism is anchored in a different specific quote+locator (slide 20, slide 21, slide 20+22-26 truncation), and each stream argued the point from a different lane (methodology, evidence quality, contribution overclaim). The convergence reflects the slides actually having these gaps. But I should be wary: the four sources of negative-residual variation I named (heteroskedasticity, controls, clustering, scale) are *my* conjectures — none of the streams could quote the manuscript to confirm them. If the missing slides (22-26) actually address one of these, the convergent consensus may be wrong in the same way.
 
-WAIVE's largest blind spot is that it treats "more aggressive penalization" as if it were naturally equivalent to "better correction." The extracted material shows a plausible suspicious pattern, but the interpretation of negative residuals carries more weight than the evidence shown for it. The successor claim leans on MAIVE's credibility while needing to prove incremental validity over MAIVE, not merely continuity with it. No [EXTERNAL] literature was used.
+## Extraction caveats and unverified references
 
-## Bottom line
-
-WAIVE is credible as a proposed MAIVE extension, but the extracted record does not yet support presenting it as a clean methodological successor. The strongest contribution claim should be narrowed to: WAIVE adds a transparent residual-based downweighting sensitivity to MAIVE. A stronger claim requires visible evidence that the penalty improves performance beyond MAIVE and is not just a plausible but arbitrary tilt. In role, I would press hard against any abstract or conclusion language implying validated routine use.
-
-## Candidate for minority report
-
-I would defend Criticism 2 even if outvoted: the slide's own language says "possibly p-hacking" (WAIVE slide 20), while the proposed rule penalizes negative residuals as "spuriously precise estimates" (WAIVE slide 21). That interpretive jump is the main place where the contribution could exceed the evidence.
-
-## Extraction caveats
-
-The WAIVE extraction is incomplete: [MANUSCRIPT] "Final slides: results/applications/conclusions/Q&A (text-extraction truncated; not used in this audit)." (WAIVE slides 22-26) Therefore, this audit cannot evaluate detailed WAIVE results, applications, or conclusion language contained only there. Slides are also text-light, so some visual claims are represented through extracted descriptions rather than full slide text.
-
-## Unverified references
-
-None. No [EXTERNAL] sources were used.
+Same as Round 1: slides 22-26 truncated; supplementary information (S1-S6 of MAIVE) not in the audit material. The Round 2 conclusions are conditional on what's in the audit corpus, not on the full evidence the authors may have.

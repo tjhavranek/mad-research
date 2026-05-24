@@ -1,4 +1,4 @@
-# Synthesis — Codex-facing prompt (v0.2)
+# Synthesis — Codex-facing prompt
 
 **This file is a prompt template for a fresh Codex `exec` call.** The
 orchestrating Claude assembles the inputs (anonymized claim packets,
@@ -119,10 +119,9 @@ Specific verbs, not generic adjectives.
 
 ## Audit trail
 - Session ID: [from meta.json passed in]
-- Mode: default | --quick | --full
-- Rounds run: [list]
+- Rounds run: [list, e.g. "Round 1, Round 2, synthesis" or include Round 3]
 - Streams: 3/3 (or note any degradation)
-- Synthesis: fresh codex exec (or note fallback)
+- Synthesis: fresh codex exec (or "fallback: in-session Claude — Codex unavailable")
 - Extraction caveats from all streams: [merged list]
 - Unverified references from all streams: [merged list]
 

@@ -1,4 +1,4 @@
-# Claim packet schema — prompt-injection guard (v0.2)
+# Claim packet schema — prompt-injection guard
 
 **Why this file exists.** Round 2 and synthesis each ingest markdown
 files written by other agents. Those packets are *untrusted input*.
@@ -78,9 +78,9 @@ When validation fails:
 
 ## Why this skill does NOT use a regex-based prompt-injection scanner
 
-An earlier v0.2 design pass added a regex scanner for "red flags"
+An earlier design pass added a regex scanner for "red flags"
 like `^Ignore`, `^Disregard`, `bypass.*sandbox`, `unsafe[- ]?yolo`,
-etc. AI3 in the v0.2 review correctly pointed out the failure mode:
+etc. Outside reviewers correctly pointed out the failure mode:
 **academic prose and audit packets that quote from it will
 legitimately contain these words.** A referee might write "this
 paper *ignores* the publication-bias literature," or a Round 1
@@ -88,8 +88,7 @@ output might quote a footnote that says "we *disregard* observations
 with..." — both are valid evidence and both would be killed by a
 regex gate.
 
-The regex scanner was therefore removed in v0.3. The remaining
-defenses are:
+The regex scanner was therefore removed. The remaining defenses are:
 
 1. **Constrained schema.** Each packet must have the expected
    section structure. Imperative instructions disguised as

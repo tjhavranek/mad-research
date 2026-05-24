@@ -1,11 +1,12 @@
 {
   "session_id": "20260524-1015-waive-mad-research",
   "created_at": "2026-05-24T10:15:00+02:00",
-  "mode": "research",
+  "skill": "mad-research",
   "user_request": "Stress-test the WAIVE proposal as a top-5 referee would: identify the strongest grounded objections to WAIVE's claimed contribution over MAIVE.",
   "input_files": ["input/maive.pdf", "input/waive_ottawa.pdf", "input/manuscript_text.md"],
   "audit_target": "WAIVE (slides) with MAIVE (paper) as published baseline",
-  "rounds_planned": ["round1", "round2", "synthesis"],
+  "rounds_run": ["round1", "round2", "synthesis"],
+  "round3_status": "skipped (no trigger)",
   "codex_version": "0.133.0",
   "codex_available": true,
   "host_session": "claude-code (Opus 4.7, 1M context)",
@@ -14,5 +15,12 @@
     "evidence_auditor": "codex (reads manuscript_text.md)",
     "contribution_skeptic": "codex (reads manuscript_text.md)"
   },
-  "anonymization_map_for_round2": "TBD — written after Round 1 outputs ready"
+  "anonymization_map_for_synthesis": {
+    "audit_X": "contribution_skeptic",
+    "audit_Y": "methodologist",
+    "audit_Z": "evidence_auditor"
+  },
+  "synthesis": "fresh codex exec call against synthesis_packet/",
+  "synthesis_raw_artifact": "final_memo_codex_raw.md",
+  "final_memo": "final_memo.md (Claude formatted; quote-verification appended; no substantive changes to verdict/criticisms/minority/actions)"
 }

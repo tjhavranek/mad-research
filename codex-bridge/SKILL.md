@@ -45,7 +45,8 @@ no synthesis, no role assignment.
 
 1. Run `helpers/doctor.md` pre-flight (Node.js, Codex CLI, flags, auth).
 2. Write the user's request to a prompt file under the user's `cwd`
-   (e.g. `codex_bridge_runs/<YYYYMMDD-HHMM-slug>/prompt.txt`).
+   (e.g. `mad_sessions/<YYYYMMDD-HHMM-slug>/prompt.txt` — same session
+   folder convention as the other two skills, for consistency).
 3. Call `codex exec` per `helpers/invoke_codex.md`. Use
    `--sandbox read-only` if the user's task is purely informational;
    `--sandbox workspace-write` if Codex needs to write file(s) into

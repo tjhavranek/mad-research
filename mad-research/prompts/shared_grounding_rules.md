@@ -1,4 +1,4 @@
-# Shared grounding rules — MAD-research mode
+# Shared grounding rules — mad-research skill
 
 These rules apply to every role stream in every round. Any role prompt
 includes this file by reference. The synthesis step auto-rejects any
@@ -77,13 +77,13 @@ MAD-research output:
 - **Khan et al., *"Debating with More Persuasive LLMs Leads to More
   Truthful Answers"* (ICML 2024 Best Paper).** Debate helps the
   judge most when the debaters are *stronger* than the judge.
-  v0.2's switch to fresh-Codex synthesis is motivated partly by
+  This skill's use of fresh-Codex synthesis is motivated partly by
   this — the orchestrating Claude is a debater (Methodologist
   stream) and cannot also be a fresh judge of its own output. The
   fresh-Codex judge has no session history with the debaters,
   which is the minimal honest fix.
 
-  **Caveat (v0.3 honesty).** The current configuration has three
+  **Caveat (honesty).** The current configuration has three
   debaters (Claude as Methodologist, Codex as Evidence Auditor,
   Codex as Contribution Skeptic) plus a fresh Codex synthesizer as
   judge. Judge and two of the three debaters are therefore the same
@@ -93,8 +93,9 @@ MAD-research output:
   would need to be plausibly weaker than the debaters, which we
   cannot engineer when both available models are at frontier
   strength. Model rotation across runs (which model judges, which
-  takes the Methodologist seat) is a v0.4 candidate. Do not
-  overclaim the Khan effect in external descriptions of the skill.
+  takes the Methodologist seat) is a candidate for future work.
+  Do not overclaim the Khan effect in external descriptions of
+  the skill.
 
 Both papers should be cited as limitations in any external use of
 the protocol's output.

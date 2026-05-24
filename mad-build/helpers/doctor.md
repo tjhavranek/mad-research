@@ -45,7 +45,7 @@ Run `codex exec --help` and look for these tokens in the output:
 If any are missing, the user's Codex version is incompatible with this
 skill. Tell them which flag is missing and offer:
 - Pinning to a tested Codex version: `npm install -g @openai/codex@<known-good>`.
-- Or skip Codex and run Mode B as Claude-only (clearly labeled degraded).
+- Or, for `mad-research`, run Claude-only (clearly labeled "single-model audit," never as MAD-research).
 
 ### 6. Codex authentication
 ```sh
@@ -67,7 +67,7 @@ If all pass:
 ```
 Pre-flight OK.
   node: v22.x
-  codex: v0.x.y
+  codex: 0.13x.y
   flags: ok
   auth: ok
 Session folder will be: <path>
