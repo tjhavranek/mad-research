@@ -73,7 +73,9 @@ memo, include a one-line ledger entry:
   Reason: [one short sentence].
 This is the audit trail. Do not skip it.
 
-OUTPUT FORMAT — write to <output_path>/final_memo.md:
+OUTPUT FORMAT — produce the memo as your response (it will be captured
+by the orchestrator's `--output-last-message` channel; do not write to
+any file directly, since the sandbox may be read-only):
 
 # MAD-research final memo
 
@@ -129,7 +131,10 @@ LENGTH: Aim for 1500-2500 words total. Be specific; do not pad.
 
 ## What Claude does after Codex returns
 
-1. **Read `final_memo.md`** from Codex's output.
+1. **Read `final_memo_codex_raw.md`** from Codex's
+   `--output-last-message` channel. **Preserve this file** — it is
+   the audit artifact that the anti-tamper rule in
+   `helpers/orchestration.md` Step 8 compares against.
 2. **Verify every quote** against `manuscript_text.md` (and against
    the original PDF where available). If a quote does not appear on
    the cited page, move that criticism into "Points rejected —

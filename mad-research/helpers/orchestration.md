@@ -190,26 +190,83 @@ synthesis work itself per the same prompt template.
 This preserves user choice (proceed with disclosure or abort) and
 honesty (the audit trail records the degradation).
 
-## Step 8: Final quote verification (Claude formats and verifies)
+## Step 8: Final quote verification (Claude as formatter/verifier only)
 
-After Codex returns the synthesized memo, the orchestrating Claude:
+After Codex returns the synthesized memo, the orchestrating Claude
+operates under a strict **anti-tamper rule**: Claude formats and
+verifies; Claude does NOT silently rewrite Codex's judgments.
 
-1. **Verifies every quote** in `final_memo_codex_raw.md` against
-   `manuscript_text.md` and the original PDF where available.
-2. **For each failing quote:** moves the criticism into "Points
-   rejected — locator failed verification" with the original cited
-   page and the actual location (or absence) recorded. Does NOT
-   silently fix the locator.
-3. **Formats** the verified memo into the user's final
-   `final_memo.md`. Format-only changes: header consistency, code
-   fence styling, link rendering. Do NOT change verdict, action
-   list, or severity assignments.
-4. **Appends the audit trail** with: Codex version, total Codex
-   calls, total elapsed time, "synthesis ran via fresh `codex exec`"
-   note.
-5. **Surfaces any quote-verification failures** to the user — if
-   Codex's synthesis cited a page that didn't contain the quote,
-   that is a quality signal worth flagging prominently.
+### Anti-tamper rule (v0.3)
+
+The Codex raw output `final_memo_codex_raw.md` is preserved as an
+audit artifact for the lifetime of the session folder. Any
+divergence between `final_memo_codex_raw.md` and the user-facing
+`final_memo.md` must be explainable as one of these explicit
+operations (and only these):
+
+1. **Format-level polish.** Header level consistency, fenced code
+   block styling, table alignment, link rendering, trailing
+   whitespace, smart-quote normalization.
+2. **Quote verification.** For each cited quote+locator: verify
+   that the quote appears on the cited page or block in the
+   source manuscript. If verification fails, MOVE the criticism
+   into "Points rejected — locator failed verification" — do not
+   silently fix the locator and do not delete the criticism
+   without a row in "Points rejected." The verification result is
+   logged in `meta.json` under `quote_verification`.
+3. **Audit-trail metadata append.** Add to the "Audit trail"
+   section: Codex version, total Codex calls, total elapsed
+   time, "synthesis ran via fresh `codex exec`" note. Nothing
+   else.
+
+**Protected sections (Claude MUST NOT modify substantively):**
+
+- The verdict paragraph.
+- Top-N surviving criticisms (the list of items, their severity
+  assignments, their evidence quotes, their "why it matters"
+  text).
+- The minority report.
+- The action list.
+- The trajectory ledger.
+
+If Claude finds that one of these sections is materially wrong
+(e.g., a criticism is incoherent), Claude does NOT fix it. Claude
+re-runs Codex synthesis once with a brief reminder of the template,
+or flags the issue to the user and asks how to proceed.
+
+### Why retention of the raw output matters
+
+"String-comparable modulo formatting" is only enforceable if the
+raw output is kept. The raw output is therefore committed alongside
+the final memo as part of the session folder. A user can audit
+exactly what Codex produced versus what Claude shipped — and
+catch any tamper, intentional or accidental.
+
+### Procedure (in order)
+
+1. Read `final_memo_codex_raw.md` into working memory.
+2. Verify every quote+locator against source. Build the list of
+   verification failures (if any).
+3. For each verification failure: move the affected criticism into
+   "Points rejected — locator failed verification" in the
+   user-facing final memo.
+4. Apply format-level polish.
+5. Append audit-trail metadata.
+6. Save as `final_memo.md`. Keep `final_memo_codex_raw.md` in
+   place — do not delete it.
+7. Surface to the user: where the memo is, and any
+   quote-verification failures that affected the output.
+8. If the raw output itself fails the template (missing required
+   sections, no trajectory ledger), the orchestrator re-runs
+   Codex once with a template reminder. If that also fails,
+   surface to the user with the raw output preserved.
+
+### Automated diff enforcement: deferred to v0.4
+
+A future version will add an automated diff check between
+`final_memo_codex_raw.md` and `final_memo.md` that fails the run
+if changes exceed the allowed-operations whitelist. v0.3 keeps
+this at the documentation level.
 
 If `final_memo_codex_raw.md` itself violates the output template
 (missing required sections, no trajectory ledger, etc.), the

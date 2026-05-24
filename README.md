@@ -57,7 +57,7 @@ your Claude skills folder.
 git clone https://github.com/tjhavranek/mad-research /tmp/mad-research
 cp -r /tmp/mad-research/codex-bridge      ~/.claude/skills/codex-bridge
 cp -r /tmp/mad-research/mad-build         ~/.claude/skills/mad-build
-cp -r /tmp/mad-research/mad-research-skill ~/.claude/skills/mad-research
+cp -r /tmp/mad-research/mad-research ~/.claude/skills/mad-research
 ```
 
 ### Windows (PowerShell)
@@ -66,7 +66,7 @@ cp -r /tmp/mad-research/mad-research-skill ~/.claude/skills/mad-research
 git clone https://github.com/tjhavranek/mad-research $env:TEMP\mad-research
 Copy-Item -Recurse $env:TEMP\mad-research\codex-bridge      $env:USERPROFILE\.claude\skills\codex-bridge
 Copy-Item -Recurse $env:TEMP\mad-research\mad-build         $env:USERPROFILE\.claude\skills\mad-build
-Copy-Item -Recurse $env:TEMP\mad-research\mad-research-skill $env:USERPROFILE\.claude\skills\mad-research
+Copy-Item -Recurse $env:TEMP\mad-research\mad-research $env:USERPROFILE\.claude\skills\mad-research
 ```
 
 Restart Claude Code. Test with: ask Claude in natural language

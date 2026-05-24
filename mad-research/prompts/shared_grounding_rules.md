@@ -83,5 +83,18 @@ MAD-research output:
   fresh-Codex judge has no session history with the debaters,
   which is the minimal honest fix.
 
+  **Caveat (v0.3 honesty).** The current configuration has three
+  debaters (Claude as Methodologist, Codex as Evidence Auditor,
+  Codex as Contribution Skeptic) plus a fresh Codex synthesizer as
+  judge. Judge and two of the three debaters are therefore the same
+  underlying model. This avoids session-context leakage but does
+  NOT optimally exploit Khan's "stronger debaters than judge"
+  finding — for that effect to operate at full strength, the judge
+  would need to be plausibly weaker than the debaters, which we
+  cannot engineer when both available models are at frontier
+  strength. Model rotation across runs (which model judges, which
+  takes the Methodologist seat) is a v0.4 candidate. Do not
+  overclaim the Khan effect in external descriptions of the skill.
+
 Both papers should be cited as limitations in any external use of
 the protocol's output.
