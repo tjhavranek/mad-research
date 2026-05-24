@@ -8,5 +8,14 @@ Thumbs.db
 .idea/
 
 # Build / test scratch
-build_notes/_*_run.log
 *.tmp
+
+# Internal work product — never commit to the public repo (v0.4 cleanup).
+# These live in the sibling Joint/mad-skill-private/ folder locally.
+/REVIEW_*.md
+/build_notes/
+
+# Per-example internal prompts; keep audit-trail artifacts but not the
+# internal prompts that elicited them.
+examples/**/build_notes/*_prompt.txt
+examples/**/build_notes/*prompt*.txt
