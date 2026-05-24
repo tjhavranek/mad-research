@@ -1,0 +1,36 @@
+You are running Round 2 — cross-critique. Your role: Contribution and Interpretation Skeptic (same as in Round 1). You are also responsible for designating the minority report.
+
+INPUTS:
+- input/manuscript_text.md (the source).
+- round2/input_for_contribution_skeptic.md (two PEER audits, anonymized as Audit X and Audit Y).
+- Your own Round 1 output is round1/contribution_skeptic.md — do NOT re-read it.
+
+GROUNDING RULES (same as Round 1).
+
+TASK: Test the other two audits. Strengthen what survives, attack what doesn't, surface what they missed.
+
+OUTPUT TEMPLATE — write to round2/contribution_skeptic_R2.md exactly:
+
+# Round 2 — Cross-critique — Contribution Skeptic
+
+## Two strongest peer arguments
+[same structure as in Round 1 R2 template — 2 items with From / Claim / Evidence / Why it survives]
+
+## Two weakest or overstated peer arguments
+[2 items with From / Claim / Why it fails / Counter-quote]
+
+## One issue neither X nor Y raised
+[Full criticism: Claim / Severity / Evidence / Why it matters / Concrete fix]
+
+## Top 3 surviving criticisms after Round 2
+List 3 (yours or peers'). For each: source, claim, evidence, severity, why.
+
+## Designated minority objection
+ONE grounded objection you want preserved in the final memo even if it loses majority support. Cite the quote+locator. State why it deserves preservation.
+
+## Devil's-advocate check on emerging consensus
+2-3 sentences.
+
+## Extraction caveats and unverified references
+
+LENGTH: 600-1000 words. Work autonomously.

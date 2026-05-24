@@ -1,0 +1,51 @@
+You are running Round 2 — cross-critique. Your role: Evidence and Reproducibility Auditor (same as in Round 1).
+
+INPUTS:
+- input/manuscript_text.md (the source: MAIVE + WAIVE).
+- round2/input_for_evidence_auditor.md (two PEER audits, anonymized as Audit X and Audit Y).
+- Your own Round 1 output is round1/evidence_auditor.md — do NOT re-read it.
+
+GROUNDING RULES (same as Round 1):
+- Every claim quoted from the manuscript needs a locator (MAIVE p. N or WAIVE slide N).
+- No confidence scores.
+- Devil's-advocate pass against any emerging consensus — required.
+- Distinguish manuscript evidence vs. outside knowledge ([EXTERNAL] tag).
+- No fabricated locators.
+
+TASK: Test the other two audits against the manuscript. Strengthen what survives, attack what doesn't, surface what they missed.
+
+OUTPUT TEMPLATE — write to round2/evidence_auditor_R2.md exactly:
+
+# Round 2 — Cross-critique — Evidence Auditor
+
+## Two strongest peer arguments
+For each (1-2):
+- From: Audit X or Y
+- Claim: [verbatim]
+- Evidence: "[quote from source]" (locator)
+- Why it survives: [1 sentence]
+
+## Two weakest or overstated peer arguments
+For each (1-2):
+- From: Audit X or Y
+- Claim: [verbatim]
+- Why it fails: [1-2 sentences naming specific failure]
+- Counter-quote (if any): "[quote]" (locator)
+
+## One issue neither X nor Y raised
+- Claim:
+- Severity:
+- Evidence: "[quote]" (locator)
+- Why it matters:
+- Concrete fix:
+
+## Top 3 surviving criticisms after Round 2
+List the three criticisms (yours or peers') that should survive to synthesis. For each: original source (You / X / Y / new), short claim, evidence locator, severity, why it survives.
+
+## Devil's-advocate check on emerging consensus
+2-3 sentences: where are X, Y, and your own Round 1 all agreeing? Is the agreement grounded or herd-driven?
+
+## Extraction caveats and unverified references
+Same as Round 1.
+
+LENGTH: 600-1000 words. Work autonomously.

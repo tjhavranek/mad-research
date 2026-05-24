@@ -1,0 +1,18 @@
+{
+  "session_id": "20260524-1015-waive-mad-research",
+  "created_at": "2026-05-24T10:15:00+02:00",
+  "mode": "research",
+  "user_request": "Stress-test the WAIVE proposal as a top-5 referee would: identify the strongest grounded objections to WAIVE's claimed contribution over MAIVE.",
+  "input_files": ["input/maive.pdf", "input/waive_ottawa.pdf", "input/manuscript_text.md"],
+  "audit_target": "WAIVE (slides) with MAIVE (paper) as published baseline",
+  "rounds_planned": ["round1", "round2", "synthesis"],
+  "codex_version": "0.133.0",
+  "codex_available": true,
+  "host_session": "claude-code (Opus 4.7, 1M context)",
+  "stream_assignments": {
+    "methodologist": "claude (reads PDFs directly)",
+    "evidence_auditor": "codex (reads manuscript_text.md)",
+    "contribution_skeptic": "codex (reads manuscript_text.md)"
+  },
+  "anonymization_map_for_round2": "TBD — written after Round 1 outputs ready"
+}
