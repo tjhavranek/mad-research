@@ -1,0 +1,12 @@
+# MAD session outputs (these should live in user workspaces, not in the skill repo)
+mad_sessions/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Build / test scratch
+build_notes/_*_run.log
+*.tmp

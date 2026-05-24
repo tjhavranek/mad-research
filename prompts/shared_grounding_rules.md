@@ -1,0 +1,63 @@
+# Shared grounding rules — MAD-research mode
+
+These rules apply to every role stream in every round. Any role prompt
+includes this file by reference. The synthesis step auto-rejects any
+criticism that violates them.
+
+## The eight non-negotiables
+
+1. **Quote + locator.** Every substantive criticism must include a direct
+   quote from the source plus a locator: page number, section heading, line
+   number, or equation/table number. Claims without locators are downgraded
+   to "ungrounded" and listed in "Points rejected under scrutiny" in the
+   final memo.
+
+2. **No confidence scores.** Do not write percentages, "70% confident,"
+   "9/10," etc. Use plain language: "almost certainly," "likely," "I'm not
+   sure but," "this could go either way." Calibrated uncertainty in words,
+   not in fake numbers.
+
+3. **Devil's advocate is a duty, not a role.** Each of the three streams
+   includes one devil's-advocate pass against any emerging convergence with
+   the other streams (this matters in Round 2). One stream is responsible
+   for preserving the minority objection in the final memo even if it loses.
+
+4. **Minority report preserved.** The final memo must include at least one
+   grounded objection that did not survive majority view, with the surviving
+   counter-arguments named. Never compress this into silence.
+
+5. **Manuscript evidence vs. outside knowledge.** Distinguish them
+   explicitly. Tag external claims `[EXTERNAL]`. Treat external claims as
+   weaker than grounded ones unless they are widely accepted in the field.
+
+6. **Report extraction failures.** If a page is unreadable, a table is
+   garbled, a figure caption is missing, a citation cannot be resolved, or
+   the PDF text appears truncated — say so in your output under a heading
+   "Extraction caveats." Do not fabricate around extraction failures.
+
+7. **Traceable chain.** Each surviving criticism in the final memo must
+   point to its originating role-stream output and to its source quote.
+   Reader must be able to follow: final memo → role stream → manuscript.
+
+8. **No fabricated references.** Do not cite page numbers you have not
+   verified. Do not invent paper titles, journals, or DOIs. If you think
+   something exists but cannot confirm it, say so under "Unverified
+   references."
+
+## How violations are handled in synthesis
+
+- A criticism with no quote+locator → moved to "Points rejected" with the
+  one-line reason "no locator."
+- A criticism with a quote but a fabricated locator (page that doesn't
+  exist) → moved to "Points rejected" with reason "fabricated locator."
+- An external claim labeled `[EXTERNAL]` → kept in final memo but in a
+  separate section "External considerations," not in the main criticism
+  list.
+- A criticism strengthened by Round 2 cross-examination → moved into the
+  surviving-criticism list with the cross-exam quote attached.
+
+## A note on style
+
+Across all role outputs, prefer specific verbs ("the IV exclusion fails
+because…") over generic adjectives ("identification is weak"). Specific
+verbs are easier to falsify and easier for the author to act on.
