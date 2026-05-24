@@ -61,3 +61,27 @@ criticism that violates them.
 Across all role outputs, prefer specific verbs ("the IV exclusion fails
 because…") over generic adjectives ("identification is weak"). Specific
 verbs are easier to falsify and easier for the author to act on.
+
+## Relevant recent MAD literature (acknowledged limitations)
+
+Two ICML 2024 papers are worth knowing when interpreting any
+MAD-research output:
+
+- **Smit et al., *"Should we be going MAD?"* (PMLR 235:45883).**
+  Multi-agent debate does not reliably beat self-consistency or
+  simple ensembling, and gains are hyperparameter-sensitive enough
+  that many published MAD wins look like overfitting. Implication:
+  the strongest defensible claim for a single MAD-research run is
+  "this is one structured pass at adversarial critique with a
+  verifiable audit trail," not "this is a higher-truth aggregate."
+- **Khan et al., *"Debating with More Persuasive LLMs Leads to More
+  Truthful Answers"* (ICML 2024 Best Paper).** Debate helps the
+  judge most when the debaters are *stronger* than the judge.
+  v0.2's switch to fresh-Codex synthesis is motivated partly by
+  this — the orchestrating Claude is a debater (Methodologist
+  stream) and cannot also be a fresh judge of its own output. The
+  fresh-Codex judge has no session history with the debaters,
+  which is the minimal honest fix.
+
+Both papers should be cited as limitations in any external use of
+the protocol's output.

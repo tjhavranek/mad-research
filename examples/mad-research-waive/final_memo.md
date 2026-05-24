@@ -78,6 +78,28 @@ The Methodologist stream (Claude reading the PDFs directly) drew on some materia
 
 These are tagged `[EXTERNAL]` in spirit. They informed the Methodologist's analysis but could not be verified by the Codex streams from the shared text alone. For the synthesis to be fully audit-trail-clean, future runs should ensure the manuscript text extraction includes everything the Methodologist will rely on, or label Methodologist-only points more visibly.
 
+## Trajectory ledger
+
+| # | Criticism | Origin | Challenged by | Status | Reason |
+|---|---|---|---|---|---|
+| 1 | Negative residual not unique p-hacking signal | All three R1 | none in R2 | Survived (High) | Three independent angles, each grounded; "among other things" in MAIVE p. 4 is fatal for the classifier framing. |
+| 2 | Exponential weight unmotivated + scale-dependent | All three R1, sharpened by Audit Y in R2 | none | Survived (High) | Slide 12 ("logs is better") vs. slide 21 (raw formula) leak detected by R2 cross-exam. |
+| 3 | No MAIVE-vs-WAIVE ablation | Audit Y R1; my R1 implicit | partial defense from extraction caveat | Survived (High, qualified) | Slides 22-26 may contain ablation; criticism stands conditional on full deck. |
+| 4 | Asymmetric downweight without defense | Methodologist R2 emergent | none | Survived (Medium) | Surfaced in cross-exam, not Round 1. |
+| 5 | Double-counting of π_i | Contribution Skeptic R2 emergent | none | Survived (High, minority report) | Designated by Contribution Skeptic in R2; survives even though not majority-supported in R1. |
+| 6 | Instrument validity inherited not stress-tested | Methodologist R1 | downgraded by Skeptic R2 ("boilerplate") | Survived (Medium) | Substantive concern survives but lower priority than #5. |
+| — | F-threshold of 10 too low | Methodologist R1 | All three R2 | Rejected | Cross-exam noted reliance on external (Stock-Yogo) material; MAIVE already documents F > 100 application. |
+| — | Preregistration question | Methodologist R1 | n/a | Rejected | Depends on supplementary material outside audit corpus. |
+| — | EasyMeta deployment overclaim | Skeptic R1 | Methodologist R2, Evidence R2 | Rejected | Cross-exam unanimous: tool capability ≠ validation claim. |
+| — | Reproducibility coverage thin | Evidence R1 | Methodologist R2 | Merged into action item under #2 | Substantive but downstream of fixing the residual definition. |
+
+## Recent MAD literature (acknowledged limitations)
+
+This audit's output should be read with two ICML 2024 results in mind:
+
+- **Smit et al., "Should we be going MAD?"** (PMLR 235:45883) — multi-agent debate does not reliably beat self-consistency or simple ensembling, and gains are hyperparameter-sensitive. The strongest defensible claim for this audit is "one structured pass at adversarial critique with a verifiable trail," not "a higher-truth aggregate."
+- **Khan et al., "Debating with More Persuasive LLMs Leads to More Truthful Answers"** (ICML 2024 Best Paper) — debate helps the judge most when debaters are stronger than the judge. v0.2 of this skill moves synthesis to a fresh Codex call partly because of this result.
+
 ## Action list (prioritized)
 
 The criticisms above point at three concrete upgrade directions the WAIVE

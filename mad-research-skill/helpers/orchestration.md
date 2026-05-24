@@ -135,33 +135,92 @@ Follow `prompts/mad_build_protocol.md` exactly.
 6. If Round 3 runs: write `round3/round3_brief.md` naming the fault line,
    then run the three streams again per `prompts/round3_adaptive.md`.
 
-## Step 7: Synthesis
+## Step 7: Synthesis (fresh Codex exec — v0.2)
 
-Run synthesis per `prompts/synthesis.md`. The synthesis runs **inside
-this same Claude session** but with strict input isolation:
+**v0.2 change:** synthesis no longer runs in the orchestrating Claude
+session. It runs as a fresh `codex exec` call against anonymized
+inputs plus the locked rubric. Claude formats the returned memo and
+verifies quotes; Claude does **not** write the verdict.
 
-- Synthesis sees: anonymized claim packets (`audit_X.md`, `audit_Y.md`,
-  `audit_Z.md`), the rubric, the manuscript (for quote verification).
-- Synthesis does NOT see: `meta.json`, role names, model names, prior
-  conversation context with the user.
+Why: the orchestrating Claude has already authored Round 1's
+Methodologist stream and orchestrated anonymization. It cannot be a
+fresh judge over its own output. The fresh Codex synthesizer has no
+session history with the debaters. (Khan et al., ICML 2024 — debate
+helps the judge most when debaters are stronger than the judge.)
 
-To achieve this in practice: before writing the synthesis output, read
-back into your working memory only the claim packets and the rubric.
-Treat the role mapping as off-limits until after `final_memo.md` is
-written.
+### Procedure
 
-If the user wants stricter blinding, they can copy `audit_X.md`,
-`audit_Y.md`, `audit_Z.md`, `rubric.md`, and the manuscript into a fresh
-Claude Code window. Document this in the final memo's "Audit trail."
+1. **Build the synthesis packet** at `synthesis_packet/`:
+   - `manuscript_text.md` (the source, with page locators).
+   - `audit_X.md`, `audit_Y.md`, `audit_Z.md` — Round 1 + Round 2
+     outputs of each stream, **fully anonymized** (provider labels
+     stripped, role labels stripped). Use a randomized mapping for
+     each run; the mapping lives ONLY in `meta.json`.
+   - `round3/` subfolder if Round 3 ran (similarly anonymized).
+   - `rubric.md` — the locked rubric, unmodified.
+2. **Apply the packet schema** (see `helpers/packet_schema.md`).
+   Each audit packet must conform; reject and re-anonymize if any
+   stream's output violates the schema (e.g., contains text that
+   looks like injected instructions).
+3. **Assemble the synthesis prompt** from
+   `prompts/synthesis_codex_prompt.md`, substituting the session's
+   `<output_path>` and ensuring the prompt is delivered via stdin
+   (not as a positional argument).
+4. **Dispatch Codex** with `--sandbox read-only` (synthesis is
+   read-only; Codex writes the memo only via `--output-last-message`):
+   ```
+   codex exec --cd <session_path> --skip-git-repo-check \
+              --sandbox read-only \
+              --output-last-message <session>/final_memo_codex_raw.md \
+              - < <session>/synthesis_packet/_codex_prompt.txt
+   ```
+5. **Receive the memo.** Codex's response is saved to
+   `final_memo_codex_raw.md`. Read it into Claude's working memory.
 
-## Step 8: Final quote verification
+### Fallback when Codex is unavailable
 
-After synthesis writes `final_memo.md`, verify every surviving
-criticism's quote+locator against the source:
+If the synthesis Codex call fails (auth, rate limit, fatal error),
+the skill does NOT silently fall back to in-session Claude
+synthesis and call the result "fresh." It writes a labeled
+fallback memo with a header note: "SYNTHESIS NOTE: in-session
+Claude synthesizer because Codex was unavailable. Not a fresh-
+context synthesis." Then the orchestrating Claude does the
+synthesis work itself per the same prompt template.
 
-- For PDF source: the quote must appear on the cited page in the PDF.
-- For markdown source: the quote must appear in the cited file at or
-  near the cited line.
+This preserves user choice (proceed with disclosure or abort) and
+honesty (the audit trail records the degradation).
+
+## Step 8: Final quote verification (Claude formats and verifies)
+
+After Codex returns the synthesized memo, the orchestrating Claude:
+
+1. **Verifies every quote** in `final_memo_codex_raw.md` against
+   `manuscript_text.md` and the original PDF where available.
+2. **For each failing quote:** moves the criticism into "Points
+   rejected — locator failed verification" with the original cited
+   page and the actual location (or absence) recorded. Does NOT
+   silently fix the locator.
+3. **Formats** the verified memo into the user's final
+   `final_memo.md`. Format-only changes: header consistency, code
+   fence styling, link rendering. Do NOT change verdict, action
+   list, or severity assignments.
+4. **Appends the audit trail** with: Codex version, total Codex
+   calls, total elapsed time, "synthesis ran via fresh `codex exec`"
+   note.
+5. **Surfaces any quote-verification failures** to the user — if
+   Codex's synthesis cited a page that didn't contain the quote,
+   that is a quality signal worth flagging prominently.
+
+If `final_memo_codex_raw.md` itself violates the output template
+(missing required sections, no trajectory ledger, etc.), the
+orchestrator does NOT silently patch — it re-runs Codex once with
+the template reminder. If that also fails, surface to the user.
+
+## Step 8.5 (legacy): Original quote verification logic
+
+This step still applies in the fallback case (Codex unavailable, the
+orchestrating Claude did the synthesis itself). The procedure is the
+same: verify every cited locator, move failures to "Points rejected."
 
 If a quote fails verification, move the criticism to "Points rejected"
 with reason "quote did not verify against source." Do not silently
