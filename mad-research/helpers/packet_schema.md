@@ -76,6 +76,31 @@ When validation fails:
 - Tell the user. Do NOT silently pass the packet downstream.
 - Ask the user: rerun that stream, drop it (degraded run), or abort.
 
+## Mode context — required in every synthesis packet
+
+In addition to the anonymized audits, the synthesis packet MUST
+contain a `_mode_context.md` file. This is the only first-class
+channel by which the fresh-Codex synthesizer learns the audit mode
+and any confirmed Bayesian fields. Synthesis MUST NOT read
+`meta.json`.
+
+Required fields (copied verbatim from `meta.json`):
+
+```
+mode: default | bayesian
+designated_claim: <one sentence, or "n/a">
+consensus_prior: <point estimate + 80% interval, or "n/a">
+consensus_prior_basis: user-supplied | [LLM-PRIOR] | <named
+  source>, or "n/a"
+consensus_prior_direction: leans yes | leans no | split, or "n/a"
+user_prior: <verbatim, or "n/a">
+```
+
+The Bayesian-Mode appendix in the synthesis output is gated on
+`mode: bayesian` in this file. If `mode: default`, synthesis omits
+the appendix entirely. Synthesis must not infer the mode from the
+manuscript or audit content. See `helpers/orchestration.md` Step 7.
+
 ## Why this skill does NOT use a regex-based prompt-injection scanner
 
 An earlier design pass added a regex scanner for "red flags"

@@ -42,43 +42,65 @@ Bayesian Mode is explicitly enabled.
 
 **Bayesian Mode** is an opt-in mode for evaluating the truth of a
 contested empirical claim, not just the soundness of the manuscript's
-methodology. Trigger logic — orchestrator-proposes, user-confirms:
+methodology. Trigger logic — explicit selection only, no heuristic
+scanning:
 
-1. **If the user explicitly requested Bayesian Mode** (e.g., "MAD-research
-   in Bayesian Mode," "evaluate the empirical claim X with Bayesian
-   discipline"): go to step 3.
+1. **If the user explicitly requested Bayesian Mode** in the invocation
+   (the request contains "Bayesian Mode", "evaluate the empirical
+   claim", or "Bayesian discipline" — case-insensitive): go to step 3.
 
-2. **If the user did not explicitly request it,** scan the manuscript
-   for signals that the audit task is about the truth of a specific
-   contested empirical claim rather than methodology soundness.
-   Signals include: an abstract that asserts a controversial result
-   the user has flagged in the request; a user request that names a
-   contested empirical claim explicitly; a domain where the manuscript
-   contradicts established consensus. If signals fire, propose to the
-   user:
+2. **Otherwise, ask the user one binary question** before pre-flight
+   completes:
 
-   > "This manuscript appears to make a contested empirical claim
-   > about [X]. Should I run in Bayesian Mode? In that mode the
-   > synthesis will produce a numeric posterior with a 80% interval
-   > for the designated claim and require explicit prior/evidence/
-   > posterior accounting. Otherwise I'll run in default
-   > methodology-audit mode. Your call. (You can also supply your own
-   > prior for the claim.)"
+   > "Which question do you want this audit to answer?
+   > (a) Is this manuscript's methodology sound? — runs default mode.
+   > (b) Is the specific empirical claim X true? — runs Bayesian Mode
+   >     (numeric posterior + 80% interval, explicit prior accounting,
+   >     symmetric incentive map). You will need to confirm or supply
+   >     the designated empirical claim and a consensus-prior basis.
+   > Reply 'a' or 'b'. If you don't reply within the same turn, I run
+   > default mode."
 
-   If user says yes / supplies a claim and optional prior: go to step 3.
-   If user says no or doesn't respond: run default mode.
+   No silent heuristic-scanning of the manuscript. If the user picks
+   (a) or doesn't reply: run default mode. If the user picks (b): go to
+   step 3.
 
-3. **Bayesian Mode setup.** Confirm with user the **designated empirical
-   claim** (one sentence, verbatim, written into `meta.json`). Confirm
-   the **consensus prior baseline** (point estimate + 80% interval — the
-   orchestrator can propose one for user confirmation). Record user's
-   own prior if supplied. All three become inputs to the synthesis
-   prompt's Bayesian-Mode appendix.
+3. **Bayesian Mode setup — required confirmed fields.** Confirm with
+   the user (one at a time) and write each into `meta.json`:
+
+   - **`designated_claim`** — one sentence, verbatim, in the user's
+     wording. The orchestrator may propose; the user must confirm or
+     edit.
+   - **`consensus_prior`** — point estimate + 80% interval. The
+     orchestrator MAY propose one for confirmation, but only if it
+     can name a defensible basis. **If no defensible basis exists,
+     skip the numeric prior and use a qualitative direction**
+     ("majority view leans yes" / "majority view leans no" /
+     "field is split"). Write `consensus_prior: null` and
+     `consensus_prior_direction: "<one of three>"` in that case.
+   - **`consensus_prior_basis`** — required, separately confirmed.
+     One of:
+       - `"user-supplied"` — user provided the prior themselves.
+         Write verbatim what they said it is based on.
+       - `"[LLM-PRIOR]"` — orchestrator proposed it from training-
+         data inference. Treat as `[EXTERNAL]` evidence for the
+         separation rule. The synthesis appendix must label it as
+         `[LLM-PRIOR]` and flag that it is not independently
+         verified.
+       - `"named external source"` — name the source (school of
+         thought, named meta-analysis, named guideline). Write the
+         one-line identification verbatim.
+     A `consensus_prior` without a confirmed `consensus_prior_basis`
+     is not allowed to enter Bayesian Mode synthesis. Abort or fall
+     back to qualitative direction.
+   - **`user_prior`** — point estimate + 80% interval if supplied,
+     otherwise `null`.
 
 4. **Record the mode in `meta.json`**: `"mode": "default"` or
    `"mode": "bayesian"`. In Bayesian Mode also record:
-   `"designated_claim"`, `"consensus_prior"`, `"user_prior"` (or
-   `null` if not supplied).
+   `"designated_claim"`, `"consensus_prior"`,
+   `"consensus_prior_basis"`, `"consensus_prior_direction"` (if
+   qualitative fallback used), and `"user_prior"`.
 
 Bayesian Mode does NOT change Round 1 stream prompts — the three role
 streams (Methodologist, Evidence Auditor, Contribution Skeptic) still
@@ -130,9 +152,21 @@ Write `meta.json`:
     "methodologist": "claude",
     "evidence_auditor": "codex",
     "contribution_skeptic": "codex"
-  }
+  },
+  "mode": "default" | "bayesian",
+  "designated_claim": null | "<one sentence, verbatim>",
+  "consensus_prior": null | "<point estimate + 80% interval>",
+  "consensus_prior_basis": null | "user-supplied" | "[LLM-PRIOR]" | "<named external source>",
+  "consensus_prior_direction": null | "leans yes" | "leans no" | "split",
+  "user_prior": null | "<verbatim>"
 }
 ```
+
+The Bayesian fields (`designated_claim`, `consensus_prior`,
+`consensus_prior_basis`, `consensus_prior_direction`, `user_prior`)
+are present in every `meta.json` regardless of mode; they hold
+`null` in default mode. This keeps the schema stable across runs and
+makes the mode-context file mechanical to build.
 
 The `stream_assignments` map is **owned by orchestration only**. The
 synthesis step (Step 7) must not read `meta.json` directly; it gets an
@@ -210,6 +244,24 @@ helps the judge most when debaters are stronger than the judge.)
      each run; the mapping lives ONLY in `meta.json`.
    - `round3/` subfolder if Round 3 ran (similarly anonymized).
    - `rubric.md` — the locked rubric, unmodified.
+   - **`_mode_context.md`** — required in every packet, default OR
+     Bayesian. This is the only first-class channel by which the
+     fresh-Codex synthesizer learns the mode and the confirmed
+     Bayesian fields. Synthesis MUST NOT read `meta.json`. The file
+     contains exactly these fields, copied verbatim from `meta.json`:
+     ```
+     mode: default | bayesian
+     designated_claim: <one sentence, or "n/a">
+     consensus_prior: <point estimate + 80% interval, or "n/a">
+     consensus_prior_basis: user-supplied | [LLM-PRIOR] | <named
+       source>, or "n/a"
+     consensus_prior_direction: leans yes | leans no | split, or
+       "n/a"  (only set if qualitative fallback used)
+     user_prior: <verbatim, or "n/a">
+     ```
+     The synthesis prompt's INPUTS YOU RECEIVE list names this file
+     explicitly, and the Bayesian-Mode appendix is gated on
+     `mode: bayesian` from this file (not on inference).
 2. **Apply the packet schema** (see `helpers/packet_schema.md`).
    Each audit packet must contain the required section headings.
    Validation is structural only — the schema doc explains why

@@ -1,8 +1,92 @@
 # Changelog
 
 Notable changes to the `mad-research` skill family. The Git tags
-`v0.1`, `v0.2`, `v0.3`, `v0.4`, and `v0.5` correspond to the entries
-below.
+`v0.1`, `v0.2`, `v0.3`, `v0.4`, `v0.5`, `v0.6`, `v0.7`, and `v0.75`
+correspond to the entries below.
+
+## v0.75 — self-audit of the v0.6→v0.7 change (Bayesian Mode wiring fixes)
+
+Triggered by a meta-dogfooding pass: ran the mad-research protocol
+on the v0.7 change itself (three role streams audited the diff,
+anonymized Round 2 cross-critique with the new v0.7 rules baked in,
+fresh-Codex synthesis). Four mandatory fixes survived the high bar
+— all of them about Bayesian Mode's interface and provenance, not
+its architectural intent. Default mode (the bounded omission audit,
+authority anonymization probe, evidence-engagement minority rule,
+no default numerics) carries over unchanged. The full audit trail
+lives in `_v07_audit/` locally and is not part of the public repo.
+
+- **Mode context is now a first-class synthesis input.** v0.7
+  recorded `mode`, `designated_claim`, and the priors in
+  `meta.json` but forbade synthesis from reading `meta.json` — so
+  a fresh Codex synthesizer could not know whether to emit the
+  Bayesian-Mode appendix or what claim/prior was confirmed. v0.75
+  adds a required `synthesis_packet/_mode_context.md` file with
+  the confirmed mode and Bayesian fields, copied verbatim from
+  `meta.json`. The synthesis prompt's INPUTS list names it; the
+  Bayesian-Mode appendix is gated on `mode: bayesian` from this
+  file (not on inference). Default-mode runs always include it
+  too, with `mode: default`.
+- **Consensus-prior provenance is now mandatory.** The v0.7
+  orchestrator could propose a numeric consensus prior for user
+  confirmation; the safety notes warned this could "smuggle in the
+  model's own deference" but no field enforced the warning. v0.75
+  adds a required `consensus_prior_basis` field with three allowed
+  values: `user-supplied`, `[LLM-PRIOR]` (orchestrator-proposed,
+  treated as `[EXTERNAL]` evidence and labeled as such in the
+  appendix), or a named external source. If no defensible numeric
+  basis exists, the protocol falls back to a qualitative direction
+  (`leans yes` / `leans no` / `split`) instead of inventing a
+  number.
+- **Bayesian Mode trigger is now explicit, not heuristic.** v0.7
+  asked the orchestrator to "scan the manuscript for signals" that
+  it makes a contested empirical claim — three editorial judgments
+  before pre-flight that risked over- or under-triggering silently.
+  v0.75 replaces the scan with explicit selection: either the user
+  invokes with a Bayesian-Mode phrase ("Bayesian Mode", "evaluate
+  the empirical claim", "Bayesian discipline" — case-insensitive),
+  or the orchestrator asks one binary pre-flight question
+  ("methodology soundness vs. truth of a specific empirical
+  claim"). No silent heuristic.
+- **"Isolated from rhetoric" replaced with verbatim-quote +
+  proposition mapping.** The v0.7 Bayesian appendix asked the
+  synthesizer to present each evidence item "isolated from rhetoric
+  — what the evidence shows *without* the author's framing." That
+  asked for a substantive editorial transformation the v0.6
+  anti-tamper rule was designed to prevent. v0.75 replaces it with
+  two fields: a verbatim quote, then one sentence on what
+  proposition the manuscript *claims* the quote supports — followed
+  by an explicit yes/partial/no judgment of whether the quoted
+  evidence actually supports that proposition. The synthesizer's
+  job becomes judging support, not rephrasing manuscript text.
+
+Secondary wording cleanups bundled with v0.75:
+
+- The synthesis prompt's "top 3 update-relevant evidence" is now
+  explicitly "up to 3 — fewer is allowed, padding is worse than
+  listing fewer." Resolves a v0.7 inconsistency where the safety
+  notes claimed the prompt allowed fewer but the prompt itself
+  didn't say so.
+- The SKILL.md "No confidence scores or letter grades anywhere"
+  bullet is narrowed to "no confidence scores for audit quality or
+  criticism severity" — the Bayesian appendix's numeric posterior
+  for the designated empirical claim is the documented exception.
+
+What v0.75 deliberately did NOT do:
+
+- Did NOT change Round 1 stream prompts in Bayesian Mode. Two
+  audits argued that an unchanged Round 1 makes the final posterior
+  too synthesis-centered; the synthesizer found this directionally
+  valid but not a v0.75 blocker. A claim-aware Round 1 will be
+  tested in v0.8 after the v0.75 interface fixes have been exercised
+  on a real Bayesian-Mode run. The minority objection in the
+  synthesis memo is preserved.
+- Did NOT rename "Bayesian Mode" to "Contested-Claim Mode" in
+  user-facing docs. The audit's lower-severity naming criticism
+  has merit, but v0.75 already touches the same docs for the four
+  mandatory fixes, and renaming on top would make the diff harder
+  to read. Deferred to v0.8 with the Round 1 claim-awareness
+  experiment.
 
 ## v0.7 — anti-conformity additions + opt-in Bayesian Mode
 

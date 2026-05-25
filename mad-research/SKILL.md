@@ -66,14 +66,19 @@ this empirical claim actually true?" — for that, the skill has an
 opt-in **Bayesian Mode** that adds explicit prior / evidence / posterior
 discipline to the synthesis.
 
-The orchestrator (you, the host Claude) proposes Bayesian Mode when
-the manuscript or user request signals a contested empirical claim
-(see `helpers/orchestration.md` Step 2.5). The user confirms,
-optionally supplies their own prior, and the synthesis adds a
-Bayesian appendix with: designated claim, consensus prior + user
-prior, top 3 update-relevant evidence items (isolated from rhetoric),
-posterior with 80% interval + sensitivity, and a symmetric incentive
-map. Severity ratings on criticisms remain plain-language even in
+Bayesian Mode is selected by an explicit invocation phrase
+("MAD-research in Bayesian Mode", "evaluate the empirical claim X
+with Bayesian discipline") OR by the user answering one binary
+pre-flight question — no heuristic scanning of the manuscript (see
+`helpers/orchestration.md` Step 2.5). The user confirms the
+designated claim and a **consensus-prior basis** (one of:
+user-supplied / `[LLM-PRIOR]` / a named external source); the user
+may also supply their own prior. The synthesis adds a Bayesian
+appendix with: designated claim, consensus prior + basis + user
+prior, up to 3 update-relevant evidence quotes (verbatim, with the
+proposition the manuscript claims each quote supports), posterior
+with 80% interval + sensitivity, and a symmetric incentive map.
+Severity ratings on criticisms remain plain-language even in
 Bayesian Mode.
 
 **Read `helpers/safety_notes.md` before running Bayesian Mode** — six
@@ -129,7 +134,10 @@ modify the user's source documents — copy them into `input/` first.
 
 - No Python preprocessing — Claude reads PDFs natively.
 - No HTML viewer, no provider adapter layer, no marker files.
-- No confidence scores or letter grades anywhere.
+- No confidence scores or letter grades for audit quality or
+  criticism severity. (Bayesian Mode does emit a numeric posterior +
+  80% interval for the designated empirical claim inside the
+  Bayesian appendix only — never elsewhere in the memo.)
 - No fourth model.
 - No silent substitution of Claude for a failed Codex stream.
 - No claim that synthesis is "fresh" if Codex is unavailable — the

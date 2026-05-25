@@ -18,6 +18,12 @@ INPUTS YOU RECEIVE (as separate files in your working directory):
 - synthesis_packet/manuscript_text.md  — the source document, with
   page locators preserved as <!-- PAGE_INDEX N; PRINTED_LABEL X -->
   comments.
+- synthesis_packet/_mode_context.md    — required in every run. Tells
+  you the audit mode (default | bayesian) and, if Bayesian, the
+  designated claim and confirmed prior fields. The Bayesian-Mode
+  appendix below is gated on `mode: bayesian` from THIS file.
+  If `mode: default`, omit the Bayesian-Mode appendix entirely. Do
+  NOT infer the mode from anything else.
 - synthesis_packet/audit_X.md          — Round 1 + Round 2 output of
   Audit X. Provider and role labels stripped.
 - synthesis_packet/audit_Y.md          — Audit Y, same.
@@ -122,28 +128,48 @@ Plain language only — no numbers, no intervals. This is the
 default-mode Bayesian discipline check.
 
 ## Bayesian-Mode appendix
-[Include this section ONLY if Bayesian Mode was selected at pre-flight.
-Otherwise omit entirely. See `helpers/orchestration.md` for the mode
-trigger. Numeric content lives ONLY in this section; never in
-severity ratings or audit-quality language elsewhere in the memo.]
+[Include this section ONLY if `_mode_context.md` says `mode:
+bayesian`. Otherwise omit entirely. Do NOT infer the mode from the
+manuscript or audits — the mode_context file is authoritative.
+Numeric content lives ONLY in this section; never in severity
+ratings or audit-quality language elsewhere in the memo.]
 
 ### Designated empirical claim
-[Verbatim, as confirmed by user at pre-flight.]
+[Verbatim from `_mode_context.md`'s `designated_claim` field, as
+confirmed by user at pre-flight.]
 
 ### Priors
-- Consensus prior: [what mainstream field would assign, as a point
-  estimate + 80% interval, with a one-line source for the
-  consensus assumption — name the school of thought, not a
-  paper-by-paper review].
-- User prior (if supplied at pre-flight): [verbatim].
+- **Consensus prior**: [`consensus_prior` field from
+  `_mode_context.md`, verbatim. If `null`, write "no defensible
+  numeric prior; qualitative direction =
+  <consensus_prior_direction>".]
+- **Consensus prior basis**: [`consensus_prior_basis` field
+  verbatim. If `[LLM-PRIOR]`, add this sentence: "This prior was
+  proposed by the orchestrating LLM from training-data inference,
+  not from an external source. It is treated as `[EXTERNAL]`
+  evidence and is not independently verified." Do not invent a
+  basis if the field is `[LLM-PRIOR]`.]
+- **User prior**: [`user_prior` field verbatim, or "not supplied".]
 
-### Update-relevant evidence (top 3)
-For each:
-- The evidence: "[direct quote from manuscript_text.md]" (locator)
-- Isolated from rhetoric: [1 sentence — what the evidence shows
-  *without* the author's framing/contextualization].
-- Direction: supports / weakens / orthogonal.
-- Strength: strong / moderate / weak (no Bayes-factor numerics
+### Update-relevant evidence (up to 3 — fewer is allowed)
+List up to three items. **If fewer than three grounded, update-
+relevant evidence items exist, list fewer and say why.** Padding to
+three is worse than listing fewer.
+
+For each item:
+- **Evidence (verbatim)**: "[direct quote from manuscript_text.md]"
+  (locator). Quote exactly; do not rephrase.
+- **Proposition the manuscript claims this quote supports**:
+  [1 sentence — what the manuscript itself claims this quote is
+  evidence for. Do NOT strip the author's framing or restate the
+  evidence "without rhetoric". Your job is to record what the
+  manuscript says the quote supports, then judge whether the
+  evidence actually supports that proposition.]
+- **Does the quoted evidence support that proposition?**:
+  yes / partially / no — with one sentence on why.
+- **Direction (toward / away from designated claim)**:
+  supports / weakens / orthogonal.
+- **Strength**: strong / moderate / weak (no Bayes-factor numerics
   unless the manuscript supplies them).
 
 ### Posterior

@@ -93,10 +93,17 @@ specific failure modes the user should know about before opting in:
    evidence, not as a calibrated probability.
 
 2. **Prior laundering.** "The consensus prior is 80%" can quietly
-   smuggle in the model's own deference to mainstream sources
-   unless the prior's basis is named. The synthesis is required to
-   state a one-line source for the consensus assumption — read it
-   critically.
+   smuggle in the model's own deference to mainstream sources unless
+   the prior's basis is named. v0.75 added a required
+   `consensus_prior_basis` field at pre-flight, with three allowed
+   values: `user-supplied`, `[LLM-PRIOR]` (orchestrator proposed it
+   from training-data inference — treated as `[EXTERNAL]` evidence
+   and labeled as such in the synthesis appendix), or a named
+   external source. If no defensible numeric basis exists, the
+   protocol falls back to a qualitative direction rather than
+   inventing a number. Read the basis field critically; an
+   `[LLM-PRIOR]` posterior is a structured stance, not an external
+   validation.
 
 3. **Bayes-factor theater.** Formal language ("the Bayes factor
    for this evidence is approximately 5") without an actual
@@ -119,11 +126,12 @@ specific failure modes the user should know about before opting in:
    contrarian good," that is a failure of the protocol, not its
    intended output.
 
-6. **Padding.** "Top 3 update-relevant evidence items" can
+6. **Padding.** "Up to 3 update-relevant evidence items" can
    manufacture two weak items to fill the slot when only one
-   exists. The synthesis prompt explicitly allows fewer than 3 if
-   the manuscript doesn't supply more. If you see three items but
-   the second and third look thin, the synthesizer is padding.
+   exists. The synthesis prompt explicitly allows fewer than 3 and
+   instructs the synthesizer to list fewer and say why when only
+   one or two grounded items exist. If you see three items but the
+   second and third look thin, the synthesizer is padding.
 
 These failure modes do not disqualify Bayesian Mode — they describe
 where to look critically when reading its output. Default mode
