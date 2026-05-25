@@ -34,6 +34,65 @@ Before any cloud call:
 4. **Wait for confirmation.** Do not skip this step even if you think
    the user is impatient.
 
+## Step 2.5: Mode selection (Bayesian Mode opt-in)
+
+Default mode is **methodology/contribution audit** — no numeric
+probabilities, plain-language verdicts only. This is what runs unless
+Bayesian Mode is explicitly enabled.
+
+**Bayesian Mode** is an opt-in mode for evaluating the truth of a
+contested empirical claim, not just the soundness of the manuscript's
+methodology. Trigger logic — orchestrator-proposes, user-confirms:
+
+1. **If the user explicitly requested Bayesian Mode** (e.g., "MAD-research
+   in Bayesian Mode," "evaluate the empirical claim X with Bayesian
+   discipline"): go to step 3.
+
+2. **If the user did not explicitly request it,** scan the manuscript
+   for signals that the audit task is about the truth of a specific
+   contested empirical claim rather than methodology soundness.
+   Signals include: an abstract that asserts a controversial result
+   the user has flagged in the request; a user request that names a
+   contested empirical claim explicitly; a domain where the manuscript
+   contradicts established consensus. If signals fire, propose to the
+   user:
+
+   > "This manuscript appears to make a contested empirical claim
+   > about [X]. Should I run in Bayesian Mode? In that mode the
+   > synthesis will produce a numeric posterior with a 80% interval
+   > for the designated claim and require explicit prior/evidence/
+   > posterior accounting. Otherwise I'll run in default
+   > methodology-audit mode. Your call. (You can also supply your own
+   > prior for the claim.)"
+
+   If user says yes / supplies a claim and optional prior: go to step 3.
+   If user says no or doesn't respond: run default mode.
+
+3. **Bayesian Mode setup.** Confirm with user the **designated empirical
+   claim** (one sentence, verbatim, written into `meta.json`). Confirm
+   the **consensus prior baseline** (point estimate + 80% interval — the
+   orchestrator can propose one for user confirmation). Record user's
+   own prior if supplied. All three become inputs to the synthesis
+   prompt's Bayesian-Mode appendix.
+
+4. **Record the mode in `meta.json`**: `"mode": "default"` or
+   `"mode": "bayesian"`. In Bayesian Mode also record:
+   `"designated_claim"`, `"consensus_prior"`, `"user_prior"` (or
+   `null` if not supplied).
+
+Bayesian Mode does NOT change Round 1 stream prompts — the three role
+streams (Methodologist, Evidence Auditor, Contribution Skeptic) still
+audit the manuscript in their usual lanes. The Bayesian discipline
+appears at synthesis only (see the appendix section in
+`prompts/synthesis_codex_prompt.md`). The mode adds work to synthesis,
+not to the streams.
+
+**Read the failure-modes section in `helpers/safety_notes.md` before
+running Bayesian Mode.** Six failure modes are documented there
+(false precision, prior laundering, Bayes-factor theater, [EXTERNAL]
+leakage, anti-prestige overcorrection, padding) and the user should
+be made aware before opting in.
+
 ## Step 3: Page / token thresholds
 
 If pages > 50 or estimated total tokens > 200k:

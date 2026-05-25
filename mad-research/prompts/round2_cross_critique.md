@@ -77,8 +77,40 @@ Round 2), short claim, evidence, severity, why it survives.
 [2-3 sentences. Where are all three streams agreeing? Is the agreement
 grounded, or are we converging because reviewers tend to converge?]
 
+## Authority anonymization probe
+[Mandatory in every Round 2 — added in v0.7.]
+If prestigious authors, institutions, journals, funders, or canonical
+sources were anonymized in the manuscript and in your own reading,
+would your surviving criticisms or concessions change? Name the one
+place where prestige or status may be doing work that the evidence
+alone does not justify — or say "none" and why.
+
+Stay symmetric: this is not "establishment bad." It is to strip status
+cues from both consensus and contrarian positions. The probe applies
+equally to a high-prestige journal article and to an iconoclastic
+preprint.
+
+## Bounded omission audit
+[Mandatory in every Round 2 — added in v0.7.]
+Name up to two grounded criticisms or counter-arguments — against your
+own Round 1 bottom line or against the document's main conclusion —
+that you now judge material but did not surface in Round 1. For each:
+
+- Claim: [short]
+- Evidence: "[quote]" (locator)
+- Severity: High / Medium / Low
+- Reason for absence in Round 1 (choose ONE):
+  - role boundary (out of my assigned lane)
+  - insufficient grounding (could not quote+locator it at the time)
+  - judged lower priority (in my top 10 but not top 5)
+  - missed (did not consider, see now)
+
+If you have no genuine additions, write "None — no omitted grounded
+criticism rises to material." Padding is worse than nothing; the cap
+of two is to filter noise.
+
 ## Extraction caveats and unverified references
 [As in Round 1.]
 ```
 
-**Length.** 600-1000 words.
+**Length.** 700-1200 words (v0.7 added two short mandatory sections).

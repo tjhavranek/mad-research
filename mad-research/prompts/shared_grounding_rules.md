@@ -12,19 +12,29 @@ criticism that violates them.
    to "ungrounded" and listed in "Points rejected under scrutiny" in the
    final memo.
 
-2. **No confidence scores.** Do not write percentages, "70% confident,"
-   "9/10," etc. Use plain language: "almost certainly," "likely," "I'm not
-   sure but," "this could go either way." Calibrated uncertainty in words,
-   not in fake numbers.
+2. **No confidence scores in audit-quality language.** Do not write
+   percentages, "70% confident," "9/10," etc. when assigning criticism
+   severity or expressing your own confidence in an audit point. Use plain
+   language: "almost certainly," "likely," "I'm not sure but," "this could
+   go either way." Calibrated uncertainty in words, not in fake numbers.
+   **Exception:** in Bayesian Mode only (opt-in at pre-flight), the
+   *designated empirical claim* under evaluation gets a point estimate +
+   80% interval. That number is about the claim's truth, not about audit
+   severity. Severity ratings remain plain-language in all modes.
 
 3. **Devil's advocate is a duty, not a role.** Each of the three streams
    includes one devil's-advocate pass against any emerging convergence with
    the other streams (this matters in Round 2). One stream is responsible
    for preserving the minority objection in the final memo even if it loses.
 
-4. **Minority report preserved.** The final memo must include at least one
-   grounded objection that did not survive majority view, with the surviving
-   counter-arguments named. Never compress this into silence.
+4. **Minority report preserved — evidence-engagement test.** The final
+   memo must include at least one grounded objection that did not survive
+   majority view, with the surviving counter-arguments named. The test
+   for preservation: the objection has verified quote+locator support
+   AND the convergent majority ignores rather than directly refutes its
+   update-relevant evidence. ("Three streams said the opposite" is not a
+   refutation; addressing the evidence is.) Never compress this section
+   into silence.
 
 5. **Manuscript evidence vs. outside knowledge.** Distinguish them
    explicitly. Tag external claims `[EXTERNAL]`. Treat external claims as

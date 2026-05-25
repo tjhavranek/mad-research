@@ -4,6 +4,70 @@ Notable changes to the `mad-research` skill family. The Git tags
 `v0.1`, `v0.2`, `v0.3`, `v0.4`, and `v0.5` correspond to the entries
 below.
 
+## v0.7 — anti-conformity additions + opt-in Bayesian Mode
+
+Triggered by an outside memo arguing that LLMs are "publication bias
+compounded" — corpus selection + RLHF rewards balanced/non-controversial
+output, so on contested empirical questions frontier models default to
+social consensus rather than evidence-weighted posteriors. After
+consultation with Codex and four outside AIs, v0.7 adds anti-conformity
+machinery to default mode and an opt-in Bayesian Mode for contested
+empirical claims. The COVID example that motivated the memo is NOT in
+the repo; the design is domain-agnostic.
+
+**Mandatory additions to default mode** (every audit gets these now):
+
+- **Bounded Omission Audit** in Round 2: up to 2 grounded criticisms
+  each stream now judges material but did not surface in Round 1.
+  Quote+locator required; categorical reason for absence (role
+  boundary / insufficient grounding / lower priority / missed).
+  Capped at 2 to filter padding.
+- **Authority Anonymization Probe** in Round 2: each stream asks
+  itself whether surviving criticisms or concessions would change if
+  prestigious authors, institutions, journals, funders, or canonical
+  sources were anonymized. Symmetric — applies equally to prestigious
+  consensus and iconoclastic preprints.
+- **Conventional-referee assumption check** in synthesis: plain-language
+  Bayesian discipline. "What assumption would a conventional referee
+  import, and did the manuscript earn it?" No numbers in default mode.
+- **Refined minority-report rule**: preserve a minority objection when
+  it has verified quote+locator support AND the convergent majority
+  ignores rather than directly refutes its update-relevant evidence.
+  Replaces the looser "preserved even if it loses" framing.
+
+**New opt-in Bayesian Mode** (for evaluating the truth of a contested
+empirical claim, not just the soundness of methodology):
+
+- Selected at pre-flight via orchestrator-proposes / user-confirms.
+  If the manuscript or user request signals a contested empirical
+  claim, the orchestrator proposes Bayesian Mode and asks the user
+  to confirm + supply an optional prior. Otherwise default mode.
+- Adds a Bayesian appendix to the synthesis: designated claim,
+  consensus prior + user prior (separated), top 3 update-relevant
+  evidence items isolated from rhetoric, posterior + 80% interval +
+  one-line sensitivity, symmetric incentive map (incentives on
+  consensus AND contrarian sides), explicit `[EXTERNAL]` separation.
+- Round 1 prompts unchanged; the Bayesian machinery lives in
+  synthesis only. Severity ratings on criticisms remain
+  plain-language in all modes.
+- Six failure modes documented in `helpers/safety_notes.md`: false
+  precision, prior laundering, Bayes-factor theater, `[EXTERNAL]`
+  evidence leakage, anti-prestige overcorrection, padding.
+
+What v0.7 deliberately did NOT do:
+
+- Did NOT make probability discipline mandatory in default mode.
+  Numerical confidence on audit severity remains false precision.
+- Did NOT add an "Establishment Stake Check" (the outside memo's
+  framing). Replaced by the symmetric incentive map, which avoids
+  conspiracy-flavored asymmetry.
+- Did NOT add a "Bayes factor" minority-report rule. The refined
+  evidence-engagement test is operational; "Bayes factor that didn't
+  survive consensus" is not auditable as written.
+- Did NOT add a COVID worked example. The four outside AIs and Codex
+  agreed: design is domain-agnostic; the example would invite
+  political dismissal of the methodology.
+
 ## v0.6 — self-audit (the skill applied to itself)
 
 The skill was run on its own public docs as the audit target — three

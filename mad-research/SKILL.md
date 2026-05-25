@@ -4,7 +4,9 @@ description: |
   Three-role-stream adversarial audit of a research document — paper,
   grant, referee report, preprint. Quote+page-grounded criticism,
   anonymized cross-critique, fresh-context Codex synthesis against a
-  locked rubric, minority report preserved.
+  locked rubric, minority report preserved. Two modes: default
+  methodology audit, and an opt-in Bayesian Mode for evaluating the
+  truth of a contested empirical claim.
 
   Triggers:
    - "MAD-research <file>"
@@ -13,6 +15,7 @@ description: |
    - "referee report on this"
    - "audit this manuscript"
    - "MAD-audit <file>"
+   - "MAD-research in Bayesian Mode" / "evaluate the empirical claim X with Bayesian discipline" (opt-in Bayesian Mode)
 
   For a Claude + Codex collaboration on producing artifacts (code,
   drafts, plans), use the mad-build skill instead.
@@ -54,6 +57,29 @@ Three rounds plus synthesis:
    quotes against source and formats the returned memo. Claude does
    NOT change merge/reject/severity decisions except when an
    objective quote verification fails.
+
+## Bayesian Mode (opt-in)
+
+For most audits, the question is "is this manuscript's methodology
+sound?" — default mode. But sometimes the question is closer to "is
+this empirical claim actually true?" — for that, the skill has an
+opt-in **Bayesian Mode** that adds explicit prior / evidence / posterior
+discipline to the synthesis.
+
+The orchestrator (you, the host Claude) proposes Bayesian Mode when
+the manuscript or user request signals a contested empirical claim
+(see `helpers/orchestration.md` Step 2.5). The user confirms,
+optionally supplies their own prior, and the synthesis adds a
+Bayesian appendix with: designated claim, consensus prior + user
+prior, top 3 update-relevant evidence items (isolated from rhetoric),
+posterior with 80% interval + sensitivity, and a symmetric incentive
+map. Severity ratings on criticisms remain plain-language even in
+Bayesian Mode.
+
+**Read `helpers/safety_notes.md` before running Bayesian Mode** — six
+specific failure modes are documented there (false precision, prior
+laundering, Bayes-factor theater, [EXTERNAL] leakage, anti-prestige
+overcorrection, padding).
 
 ## Why fresh-Codex synthesis
 

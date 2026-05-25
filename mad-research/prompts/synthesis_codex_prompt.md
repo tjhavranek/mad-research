@@ -113,19 +113,74 @@ claim moved to next section.]
 [Any [EXTERNAL]-tagged claims from any stream. If none, write
 "None."]
 
+## Conventional-referee assumption check
+[Mandatory in every memo — added in v0.7. ~3-5 sentences.]
+What assumption would a conventional referee in this field import
+before reading the manuscript? Did the manuscript earn the
+update(s) it claims relative to that prior, given its own evidence?
+Plain language only — no numbers, no intervals. This is the
+default-mode Bayesian discipline check.
+
+## Bayesian-Mode appendix
+[Include this section ONLY if Bayesian Mode was selected at pre-flight.
+Otherwise omit entirely. See `helpers/orchestration.md` for the mode
+trigger. Numeric content lives ONLY in this section; never in
+severity ratings or audit-quality language elsewhere in the memo.]
+
+### Designated empirical claim
+[Verbatim, as confirmed by user at pre-flight.]
+
+### Priors
+- Consensus prior: [what mainstream field would assign, as a point
+  estimate + 80% interval, with a one-line source for the
+  consensus assumption — name the school of thought, not a
+  paper-by-paper review].
+- User prior (if supplied at pre-flight): [verbatim].
+
+### Update-relevant evidence (top 3)
+For each:
+- The evidence: "[direct quote from manuscript_text.md]" (locator)
+- Isolated from rhetoric: [1 sentence — what the evidence shows
+  *without* the author's framing/contextualization].
+- Direction: supports / weakens / orthogonal.
+- Strength: strong / moderate / weak (no Bayes-factor numerics
+  unless the manuscript supplies them).
+
+### Posterior
+- Point estimate + 80% interval.
+- One-line sensitivity: [what would move the posterior most?].
+- Flag if posterior equals consensus prior: [if yes, justify why
+  the manuscript's evidence does NOT update the prior, and ensure
+  this is not consensus deference].
+
+### Incentive map (symmetric)
+- Who has reputational/funding/career incentive aligned with the
+  consensus position? [1-2 lines]
+- Who has reputational/funding/career incentive aligned with the
+  contrarian position? [1-2 lines]
+- Which of the top-3 evidence items is most independent of
+  incentives on BOTH sides?
+
+### `[EXTERNAL]` separation
+- Manuscript evidence: [listed above]
+- `[EXTERNAL]` evidence used in the Bayesian update (if any):
+  [explicit list with sources]. If none, write "None."
+
 ## Action list (prioritized)
 3-7 specific fixes, each tied to a surviving criticism by number.
 Specific verbs, not generic adjectives.
 
 ## Audit trail
 - Session ID: [from meta.json passed in]
+- Mode: default | bayesian
 - Rounds run: [list, e.g. "Round 1, Round 2, synthesis" or include Round 3]
 - Streams: 3/3 (or note any degradation)
 - Synthesis: fresh codex exec (or "fallback: in-session Claude — Codex unavailable")
 - Extraction caveats from all streams: [merged list]
 - Unverified references from all streams: [merged list]
 
-LENGTH: Aim for 1500-2500 words total. Be specific; do not pad.
+LENGTH: Default mode ~1500-2500 words. Bayesian Mode ~2000-3000 words
+(the appendix adds substantive content but should NOT pad).
 ```
 
 ## What Claude does after Codex returns

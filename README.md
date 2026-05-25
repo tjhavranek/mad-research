@@ -16,7 +16,7 @@ Three independent skills in one repo. Install only the ones you want.
 |---|---|---|
 | **`codex-bridge`** | One-shot Codex call from inside Claude. No protocol. | You want Codex's view on a specific question without scaffolding. |
 | **`mad-build`** | Four-step Claude+Codex collaboration: independent drafts → cross-review → revisions → merge. | You're producing something (code, draft, plan) and want a structured second pair of eyes. |
-| **`mad-research`** | Three-role-stream adversarial audit of a document. Quote+page grounded criticism, anonymized cross-critique, fresh-context Codex synthesis against a locked rubric, minority report preserved. | You want a structured stress-test of a paper, grant, or referee report. See [worked example](examples/mad-research-waive/). |
+| **`mad-research`** | Three-role-stream adversarial audit of a document. Quote+page grounded criticism, anonymized cross-critique, fresh-context Codex synthesis against a locked rubric, minority report preserved. Optional opt-in **Bayesian Mode** for evaluating the truth of a contested empirical claim. | You want a structured stress-test of a paper, grant, or referee report. See [worked example](examples/mad-research-waive/). |
 
 These skills implement v3 of the [Research Audit Duel + MAD
 protocols](https://github.com/tjhavranek/research-audit-duel-protocol)
