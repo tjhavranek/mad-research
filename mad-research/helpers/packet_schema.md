@@ -33,7 +33,7 @@ structure, in this order, with no other top-level headings:
 
 ## Bottom line
 
-## Candidate for minority report   (Contribution Skeptic only)
+## Designated minority objection   (Contribution Skeptic only)
 
 ## Extraction caveats
 

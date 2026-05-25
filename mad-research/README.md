@@ -12,12 +12,16 @@ See the [top-level README](../README.md) for install commands.
 After install, you can ask Claude:
 
 ```
-MAD-research on paper.pdf as a top-5 referee stress test.
+MAD-research on paper.pdf — adversarial referee-style stress test.
 
 Stress-test this grant proposal: focus on identification.
 
-Referee report on attached.pdf, harsh.
+Adversarial audit of attached.pdf, harsh.
 ```
+
+The output is a structured critique meant to **surface issues for you
+to evaluate**, not a polished referee report or authoritative verdict
+(see `helpers/safety_notes.md` for the longer caveat).
 
 Claude will:
 1. Run pre-flight checks.

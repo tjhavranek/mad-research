@@ -44,16 +44,23 @@ so the automated and manual outputs can be compared directly.
   orchestrator, with a quote-verification note appended. Per the
   anti-tamper rule in `mad-research/helpers/orchestration.md`,
   Claude does not modify the verdict, criticisms, minority report,
-  or action list.
+  or action list — with one narrow exception: during mechanical
+  quote verification, a criticism whose cited quote does not appear
+  in the source can be moved to "Points rejected — locator failed
+  verification." That move is logged in the audit trail; the original
+  cited locator and the failure are preserved.
 
 ## What this example demonstrates
 
-**Three streams produce substantively distinct outputs despite two
-being the same Codex model.** The Methodologist (Claude) emphasises
-identification and instrument-validity concerns; the Evidence
-Auditor (Codex) emphasises arithmetic, reproducibility, and citation;
-the Contribution Skeptic (Codex) emphasises framing, overclaim, and
-positioning. Role priors and lane boundaries do the work.
+**In this run, three streams produced substantively distinct outputs
+despite two being the same Codex model.** The Methodologist (Claude)
+emphasised identification and instrument-validity concerns; the
+Evidence Auditor (Codex) emphasised arithmetic, reproducibility, and
+citation; the Contribution Skeptic (Codex) emphasised framing,
+overclaim, and positioning. In this case, role priors and lane
+boundaries appear to do the work — this is one friendly-case
+observation, not evidence that the distinctiveness generalises across
+documents or task types.
 
 **A real grounded minority report survives.** The Contribution
 Skeptic's Round 2 designated objection (WAIVE may double-use the

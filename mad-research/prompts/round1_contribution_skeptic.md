@@ -71,9 +71,10 @@ busy reviewer would miss because they accepted the paper's own framing?]
 ## Bottom line
 [3-4 sentences. Plain-language verdict in role.]
 
-## Candidate for minority report
+## Designated minority objection
 [1-2 sentences. Flag one criticism above (or a new one) that you would
-defend in synthesis even if outvoted. Cite the quote.]
+defend in synthesis even if outvoted. Cite the quote. **Use this exact
+heading** — synthesis looks for it verbatim.]
 
 ## Extraction caveats
 [Any pages or citations you could not read or verify. If none, write "None."]

@@ -44,9 +44,13 @@ and what it dropped.
 
 1. **Claude Code.** Assumed already installed (this is a Claude Code
    skill).
-2. **Node.js 18+.** Download from <https://nodejs.org> and run the
+2. **Git.** Used by the install commands below. macOS comes with Git
+   via Xcode Command Line Tools (`xcode-select --install`); Linux
+   ships it via your package manager; on Windows, install [Git for
+   Windows](https://git-scm.com/download/win) with default options.
+3. **Node.js 18+.** Download from <https://nodejs.org> and run the
    installer with default options.
-3. **Codex CLI.** Install with npm, then authenticate once via browser:
+4. **Codex CLI.** Install with npm, then authenticate once via browser:
    ```sh
    npm install -g @openai/codex
    codex                  # opens browser for OpenAI login
@@ -56,9 +60,15 @@ and what it dropped.
 
 Verify in a fresh terminal:
 ```sh
+git --version     # expect any modern version
 node --version    # expect v18.x or higher
 codex --version   # expect 0.13.x or higher
 ```
+
+If you cannot install Git, you can also use GitHub's "Download ZIP"
+button (green Code button on the repo page) and unpack the archive
+to your temp directory. Replace `git clone ...` in the commands
+below with the unpack step.
 
 The install commands below are **idempotent** — safe to re-run. They
 remove any existing temp checkout and any existing installed skill

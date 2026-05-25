@@ -8,6 +8,7 @@ description: |
 
   Triggers:
    - "MAD-research <file>"
+   - "Run MAD on <file>" (when the file is paper-like: .pdf, manuscript, grant, preprint)
    - "stress-test this paper" / "stress-test this grant"
    - "referee report on this"
    - "audit this manuscript"
@@ -62,6 +63,13 @@ judge over its own output. A fresh Codex call has no session history
 with the debaters. (See Khan et al., *Debating with More Persuasive
 LLMs Leads to More Truthful Answers*, ICML 2024 — debate helps the
 judge most when debaters are stronger than the judge.)
+
+**Caveat (honest):** "fresh-Codex" means a fresh *session* (no shared
+context with the debaters), not a *different model* from the debaters.
+The judge and two of three debaters are the same model (Codex). This
+avoids session-context leakage but does not optimally exploit Khan's
+"stronger debaters than judge" effect. See
+`prompts/shared_grounding_rules.md` for the full caveat.
 
 Same-session Claude synthesis remains available as an explicit
 degraded fallback for users without Codex.

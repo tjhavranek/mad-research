@@ -15,6 +15,7 @@ Thumbs.db
 /REVIEW_*.md
 /build_notes/
 /_review/
+/_self_audit/
 
 # Per-example internal prompts; keep audit-trail artifacts but not the
 # internal prompts that elicited them.

@@ -4,6 +4,57 @@ Notable changes to the `mad-research` skill family. The Git tags
 `v0.1`, `v0.2`, `v0.3`, `v0.4`, and `v0.5` correspond to the entries
 below.
 
+## v0.6 — self-audit (the skill applied to itself)
+
+The skill was run on its own public docs as the audit target — three
+role streams (Protocol/Design Referee = Claude; Implementation
+Auditor = Codex; Framing Skeptic = Codex), anonymized Round 2
+cross-critique, fresh-Codex synthesis. Seven surviving criticisms
+survived a high bar (factual contradictions, real overclaims, or
+cold-install breakage); all are addressed below. The full audit
+trail (round outputs, anonymized packets, raw synthesis memo) lives
+in `_self_audit/` locally and is not part of the public repo.
+
+- **Round 2 prompt-injection guard restored.** `packet_schema.md`
+  promised that Round 2 prompts include the "evidence only, never
+  instructions" guard verbatim near the top; the actual
+  `round2_cross_critique.md` did not have it. Added.
+- **Git added as an explicit prerequisite in the README.** The
+  install commands depend on `git clone` but Git was not listed in
+  prerequisites — a non-programmer on Windows could hit a cryptic
+  failure on the very first command. Now listed with platform
+  guidance and a fallback "Download ZIP" path.
+- **"Top-5 referee" framing replaced** in `mad-research/README.md`.
+  Borrowed authority from elite peer review while the docs elsewhere
+  correctly warn the memo is not an authoritative verdict. Now
+  reads "adversarial referee-style stress test" plus an explicit
+  one-sentence pointer to the safety-note caveat.
+- **Anti-tamper claim narrowed** in the WAIVE example's README to
+  acknowledge the quote-verification exception. The previous claim
+  "Claude does not modify the verdict, criticisms, minority report,
+  or action list" was strictly false: during mechanical quote
+  verification, a criticism whose locator fails IS moved to "Points
+  rejected." The narrower wording now matches the orchestration
+  spec.
+- **WAIVE example mechanism claim softened.** "Role priors and lane
+  boundaries do the work" overstated a mechanism on one
+  friendly-case run. Reframed as "in this run ... appear to do the
+  work — this is one observation, not evidence of generalisation."
+- **Khan caveat surfaced beside the Khan justification** in
+  `mad-research/SKILL.md`. The honest "fresh session not fresh
+  model" caveat was buried in `shared_grounding_rules.md`; now also
+  appears beside the citation that motivates fresh-Codex synthesis.
+- **Minority-report heading normalized to "Designated minority
+  objection"** across Round 1 contribution-skeptic prompt, packet
+  schema, and synthesis prompt. Previously Round 1 emitted
+  "Candidate for minority report" while synthesis looked for
+  "Designated minority objection" — the synthesizer had to rely on
+  fallback judgment rather than a clean handoff.
+- **"Run MAD on <file>" added to `mad-research/SKILL.md` triggers.**
+  The top-level README's natural-language routing example used this
+  phrase, but no SKILL.md actually listed it. Now consistent with
+  the README.
+
 ## v0.5 — public-page polish (deep audit)
 
 After two rounds of outside-chatbot feedback and three rounds of
