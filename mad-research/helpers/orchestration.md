@@ -158,7 +158,8 @@ Write `meta.json`:
   "consensus_prior": null | "<point estimate + 80% interval>",
   "consensus_prior_basis": null | "user-supplied" | "[LLM-PRIOR]" | "<named external source>",
   "consensus_prior_direction": null | "leans yes" | "leans no" | "split",
-  "user_prior": null | "<verbatim>"
+  "user_prior": null | "<verbatim>",
+  "independence_signature": "<one-line provider/independence note, see Step 7>"
 }
 ```
 
@@ -167,6 +168,11 @@ The Bayesian fields (`designated_claim`, `consensus_prior`,
 are present in every `meta.json` regardless of mode; they hold
 `null` in default mode. This keeps the schema stable across runs and
 makes the mode-context file mechanical to build.
+
+`independence_signature` is computed at synthesis-packet-build time
+from `stream_assignments` and the observed synthesis path (see Step 7
+for the standard signatures and the rule that the orchestrator —
+not the synthesizer — writes this string).
 
 The `stream_assignments` map is **owned by orchestration only**. The
 synthesis step (Step 7) must not read `meta.json` directly; it gets an
@@ -246,9 +252,10 @@ helps the judge most when debaters are stronger than the judge.)
    - `rubric.md` — the locked rubric, unmodified.
    - **`_mode_context.md`** — required in every packet, default OR
      Bayesian. This is the only first-class channel by which the
-     fresh-Codex synthesizer learns the mode and the confirmed
-     Bayesian fields. Synthesis MUST NOT read `meta.json`. The file
-     contains exactly these fields, copied verbatim from `meta.json`:
+     fresh-Codex synthesizer learns the mode, the confirmed Bayesian
+     fields, and the run's independence signature. Synthesis MUST
+     NOT read `meta.json`. The file contains exactly these fields,
+     copied verbatim from `meta.json`:
      ```
      mode: default | bayesian
      designated_claim: <one sentence, or "n/a">
@@ -258,10 +265,33 @@ helps the judge most when debaters are stronger than the judge.)
      consensus_prior_direction: leans yes | leans no | split, or
        "n/a"  (only set if qualitative fallback used)
      user_prior: <verbatim, or "n/a">
+     independence_signature: <one-line plain-text signature
+       describing provider overlap between debaters and judge>
      ```
      The synthesis prompt's INPUTS YOU RECEIVE list names this file
-     explicitly, and the Bayesian-Mode appendix is gated on
-     `mode: bayesian` from this file (not on inference).
+     explicitly. The Bayesian-Mode appendix is gated on
+     `mode: bayesian` from this file (not on inference). The audit
+     trail's `Independence:` line quotes
+     `independence_signature` verbatim — never paraphrased.
+
+     **Computing `independence_signature`:** the orchestrator builds
+     this string from `stream_assignments` in `meta.json` plus the
+     observed synthesis path. Standard cases:
+       - Claude + Codex + Codex streams + fresh-Codex synthesis
+         (default v0.75/v0.8 configuration): "2 providers; 3
+         streams; judge shares model family with 2 streams; fresh
+         session, not independent model."
+       - Claude + Codex + Codex streams + in-session Claude
+         fallback synthesis (Codex unavailable): "2 providers; 3
+         streams; in-session Claude synthesis after Codex failure
+         — fallback path, not an independent judge."
+       - Claude-only "single-model audit" (Codex missing and user
+         forced through): "1 provider; 3 streams from one model
+         family; in-session Claude synthesis — labeled
+         single-model audit, NOT MAD-research."
+     If a future run uses a non-default stream configuration, the
+     orchestrator writes the matching honest description; the
+     synthesizer never invents this string.
 2. **Apply the packet schema** (see `helpers/packet_schema.md`).
    Each audit packet must contain the required section headings.
    Validation is structural only — the schema doc explains why

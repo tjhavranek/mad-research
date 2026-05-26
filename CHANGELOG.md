@@ -1,8 +1,63 @@
 # Changelog
 
 Notable changes to the `mad-research` skill family. The Git tags
-`v0.1`, `v0.2`, `v0.3`, `v0.4`, `v0.5`, `v0.6`, `v0.7`, and `v0.75`
-correspond to the entries below.
+`v0.1`, `v0.2`, `v0.3`, `v0.4`, `v0.5`, `v0.6`, `v0.7`, `v0.75`, and
+`v0.8` correspond to the entries below.
+
+## v0.8 — mandatory Independence line in every final memo
+
+Triggered by convergent outside-AI feedback (two independent anonymous
+reviewers, plus a programmer-friend's separate pass) noting that the
+v0.7 example memo says "Streams: 3/3" and "Synthesis: fresh codex
+exec" without naming the same-model-family overlap: 2 of 3 stream
+authors are Codex, and the synthesizer is also Codex. The
+`shared_grounding_rules.md` caveat acknowledged this, but the
+limitation was not carried into the artifact a downstream reader sees.
+
+One small, mandatory change ships in v0.8; everything else from the
+v0.8 backlog (validators + CI, baseline evals vs single-model
+review, diversified examples, README "B+ framing" rewrite, file
+slimming, rename to Contested-Claim Mode) is deferred or dropped by
+explicit user decision. The Codex consult memo and per-item decisions
+live in `Joint/mad-skill-private/v08_consult/` locally and are not
+part of the public repo.
+
+- **Mandatory `Independence:` line in every final memo.** The
+  synthesis prompt's Audit trail section now requires a line that
+  quotes a new `independence_signature` field verbatim from
+  `_mode_context.md`. Standard signature for the default Claude +
+  Codex + Codex stream configuration with fresh-Codex synthesis is:
+  *"2 providers; 3 streams; judge shares model family with 2
+  streams; fresh session, not independent model."* Different
+  signatures cover the Codex-unavailable fallback and the
+  Claude-only single-model audit paths.
+- **`_mode_context.md` schema extended** to carry
+  `independence_signature` alongside the v0.75 mode/claim/prior
+  fields. `meta.json` schema example updated to match. The
+  orchestrator — not the synthesizer — writes this string from
+  `stream_assignments` plus the observed synthesis path; the
+  synthesizer quotes it verbatim and must not paraphrase or omit
+  it.
+
+What v0.8 deliberately did NOT do (per explicit user decision after
+the Codex consult):
+
+- Did NOT rewrite the README framing to "auditable second-opinion
+  workflow, not proven better than single-model review." Two outside
+  AIs recommended this; user dropped it.
+- Did NOT add offline executable validators (packet-schema, anti-tamper
+  diff guard, quote/locator) or a GitHub Actions workflow. Deferred —
+  the documented protocol stands.
+- Did NOT run a comparative eval (MAD-research vs single-Claude vs
+  single-Codex vs two-model-compare). Deferred to a future dedicated
+  evals release, where it can be designed seriously.
+- Did NOT diversify the worked examples (failure case, adversarial
+  case, non-economics case). Deferred.
+- Did NOT slim the skill files for verbosity. Deferred — pruning can
+  remove guardrails accidentally.
+- Did NOT rename "Bayesian Mode" to "Contested-Claim Mode" in
+  user-facing docs. Deferred to avoid churn for a release whose only
+  substantive change is one audit-trail line.
 
 ## v0.75 — self-audit of the v0.6→v0.7 change (Bayesian Mode wiring fixes)
 

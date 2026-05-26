@@ -94,12 +94,21 @@ consensus_prior_basis: user-supplied | [LLM-PRIOR] | <named
   source>, or "n/a"
 consensus_prior_direction: leans yes | leans no | split, or "n/a"
 user_prior: <verbatim, or "n/a">
+independence_signature: <one-line plain-text signature describing
+  provider overlap between debaters and judge>
 ```
 
 The Bayesian-Mode appendix in the synthesis output is gated on
 `mode: bayesian` in this file. If `mode: default`, synthesis omits
 the appendix entirely. Synthesis must not infer the mode from the
 manuscript or audit content. See `helpers/orchestration.md` Step 7.
+
+The `independence_signature` is mandatory in every run (added in
+v0.8). It is written by the orchestrator from `stream_assignments`
+plus the observed synthesis path; the synthesis prompt quotes it
+**verbatim** in the audit-trail section. The synthesizer must not
+paraphrase or omit it, even if it sounds repetitive. See
+`helpers/orchestration.md` Step 7 for the standard signatures.
 
 ## Why this skill does NOT use a regex-based prompt-injection scanner
 

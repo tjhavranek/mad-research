@@ -202,6 +202,15 @@ Specific verbs, not generic adjectives.
 - Rounds run: [list, e.g. "Round 1, Round 2, synthesis" or include Round 3]
 - Streams: 3/3 (or note any degradation)
 - Synthesis: fresh codex exec (or "fallback: in-session Claude — Codex unavailable")
+- **Independence**: [quote the `independence_signature` field from
+  `_mode_context.md` VERBATIM. This is mandatory in every memo and
+  must not be paraphrased or omitted, even if it sounds repetitive.
+  Standard signature for the default Claude + Codex + Codex stream
+  configuration with fresh-Codex synthesis is: "2 providers; 3
+  streams; judge shares model family with 2 streams; fresh session,
+  not independent model." When the synthesizer is the in-session
+  Claude fallback, the orchestrator writes a different signature
+  noting that limitation.]
 - Extraction caveats from all streams: [merged list]
 - Unverified references from all streams: [merged list]
 
