@@ -55,20 +55,30 @@ and what it dropped.
    npm install -g @openai/codex
    codex                  # opens browser for OpenAI login
    ```
-   A basic ChatGPT subscription is enough. Cost per `mad-research` run is
-   typically $0.10–$1.00 depending on document length.
+   Codex can authenticate via your ChatGPT account or an OpenAI API key.
+   Availability, rate limits, **and data-handling defaults** depend on which
+   path you use. The `$0.10–$1.00` per-run estimate refers to OpenAI API
+   billing. For confidential research, review the data-handling policy of
+   the path you chose (a free-tier ChatGPT login may retain prompts for
+   training); if your institution requires a specific zero-retention
+   agreement, configure Codex with an OpenAI API key under that agreement.
 
 Verify in a fresh terminal:
 ```sh
 git --version     # expect any modern version
 node --version    # expect v18.x or higher
-codex --version   # expect 0.13.x or higher
+codex --version   # tested against 0.13.x; newer versions (e.g. 0.133.x) may
+                  # behave differently under --sandbox workspace-write —
+                  # see helpers/invoke_codex.md and run the doctor
 ```
 
 If you cannot install Git, you can also use GitHub's "Download ZIP"
 button (green Code button on the repo page) and unpack the archive
 to your temp directory. Replace `git clone ...` in the commands
-below with the unpack step.
+below with the unpack step. **Note:** GitHub ZIPs unpack into a
+branch-named folder (typically `mad-research-main/`), so replace
+`/tmp/mad-research` (macOS/Linux) or `$env:TEMP\mad-research`
+(Windows) in the commands below with the actual unpacked path.
 
 The install commands below are **idempotent** — safe to re-run. They
 remove any existing temp checkout and any existing installed skill
@@ -143,15 +153,19 @@ also work as updates.
 ### Verify the install
 
 **Restart Claude Code** (skills are loaded at session start). Then ask
-Claude in natural language:
+Claude in natural language for the doctor of whichever skill you installed:
 
 ```
 Run the mad-research doctor.
+Run the mad-build doctor.
+Run the codex-bridge doctor.
 ```
 
-The doctor prints whether Node, npm, Codex, the expected `codex exec`
-flags, and Codex authentication all check out. If any check fails it
-tells you exactly what to install or fix.
+Each skill ships its own `helpers/doctor.md`, so users who installed only one
+skill should ask for that skill's doctor — not `mad-research`'s. The doctor
+prints whether Node, npm, Codex, the expected `codex exec` flags, and Codex
+authentication all check out. If any check fails it tells you exactly what to
+install or fix.
 
 ## How to invoke
 

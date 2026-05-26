@@ -1,8 +1,53 @@
 # Changelog
 
 Notable changes to the `mad-research` skill family. The Git tags
-`v0.1`, `v0.2`, `v0.3`, `v0.4`, `v0.5`, `v0.6`, `v0.7`, `v0.75`, and
-`v0.8` correspond to the entries below.
+`v0.1`, `v0.2`, `v0.3`, `v0.4`, `v0.5`, `v0.6`, `v0.7`, `v0.75`,
+`v0.8`, and `v0.81` correspond to the entries below.
+
+## v0.81 — README minor fixes from MAD self-audit
+
+Triggered by a `mad-build` self-audit of the README run by Claude + Codex
+against a HIGH BAR rule (only fixes that prevent a confused install,
+misuse, or wasted hour qualify). The audit converged on four such items,
+all README-only; no skill logic changed.
+
+- **Codex CLI version guidance (line 65).** The previous comment said
+  `expect 0.13.x or higher`, but Codex 0.133.x passes that check while
+  exhibiting different `--sandbox workspace-write` behaviour from the
+  tested 0.13.x baseline (reproduced during the audit: Codex 0.133
+  refused to create files in subdirectories of `--cd`, causing silent
+  artifact loss). The comment now names the tested version and points
+  users to `helpers/invoke_codex.md` and the doctor. **No downgrade pin
+  was added**; that should follow only if maintainers confirm the
+  incompatibility across more newer versions.
+- **Codex auth, billing, and data handling (lines 57–59).** The previous
+  text said "A basic ChatGPT subscription is enough" plus the
+  `$0.10–$1.00` per-run estimate, without distinguishing between
+  ChatGPT-account and OpenAI-API-key auth paths. The new wording makes
+  the auth options explicit, labels the cost figure as API-billing-only,
+  and warns researchers handling confidential material that free-tier
+  ChatGPT login may retain prompts for training.
+- **Verification step for one-skill installs (lines 145–154).** The
+  README previously sent every user to `Run the mad-research doctor.`,
+  even users who had only installed `codex-bridge` or `mad-build` via
+  the one-skill install path. The new verification block lists all
+  three doctor invocations and notes that each skill ships its own
+  `helpers/doctor.md`.
+- **ZIP fallback path (lines 68–71).** GitHub's "Download ZIP" unpacks
+  into a branch-named folder (e.g. `mad-research-main/`), not into the
+  hardcoded `/tmp/mad-research` path used by every downstream install
+  command. A note now flags this and tells users to substitute the
+  actual unpacked path.
+
+The full audit trail (independent drafts, mutual cross-critiques, two
+revisions, merged final, and debrief) is in the contributors' local
+session folder under `mad_sessions/20260526-readme-audit/` and is not
+part of the public repo. One finding raised in the audit but rejected
+under the HIGH BAR rule: adding a full reference for Smit et al. — the
+ICML 2024 paper "Should we be going MAD? A Look at Multi-Agent Debate
+Strategies for LLMs" was verified to exist and support the README's
+line 33–34 claim, so completing the citation is good hygiene rather
+than a user-harm fix and was deferred.
 
 ## v0.8 — mandatory Independence line in every final memo
 
