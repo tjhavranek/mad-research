@@ -1,7 +1,7 @@
 # mad-research: three Claude Code skills for working with Codex
 
-**For researchers who want a structured second opinion on a paper, draft,
-or grant — without writing code.**
+**For researchers who want a structured second opinion on a paper, proposal,
+or report — without writing code.**
 
 Most heavy [Claude Code](https://claude.com/claude-code) users who also use
 ChatGPT keep [Codex CLI](https://github.com/openai/codex) running in a
