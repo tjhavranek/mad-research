@@ -2,67 +2,81 @@
 
 Notable changes to the `mad-research` skill family. The Git tags
 `v0.1`, `v0.2`, `v0.3`, `v0.4`, `v0.5`, `v0.6`, `v0.7`, `v0.75`,
-`v0.8`, `v0.81`, and `v0.9` correspond to the entries below.
+`v0.8`, `v0.81`, `v0.9`, and `v0.91` correspond to the entries below.
 
-## v0.9 — gemini-bridge skill added (no mad-research changes)
+## v0.91 — revert v0.9: defer Gemini integration until conditions are right
 
-Triggered by the user asking whether Gemini CLI could close the
-same-model-overlap gap publicly disclosed by v0.8's Independence
-line. A structured Codex consult laid out six architectural options
-(A–F) from least to most invasive. After a successful Windows smoke
-test (install, OAuth, JSON output parse, file-context reading all
-green), the user picked **Option A: standalone `gemini-bridge`, no
-mad-research changes** — the lowest-risk path that proves the
-helper layer (invocation pattern, auth, Windows-safe glue, JSON
-parsing) without committing to architecture changes inside the audit
-pipeline.
+After a three-stream MAD (Claude + Codex + an external GPT-provided
+proposal on "Gemini as grounding ledger"), the user reviewed the
+verdict and decided to revert v0.9's `gemini-bridge` skill entirely
+rather than ship any of the four proposed v0.91 patches (sunset
+banner, runtime warning, provider abstraction, Grounding Ledger
+deferral). The cleaner move was to back out of Gemini until the
+substrate stabilizes.
 
-What ships in v0.9:
+Three convergent reasons across all three streams drove the revert:
 
-- **New `gemini-bridge/` skill**, parallel to `codex-bridge/`. Same
-  shape: `SKILL.md`, `README.md`, `helpers/invoke_gemini.md`,
-  `helpers/doctor.md`. Lets Claude call Gemini for one-shot tasks
-  (drafts, reviews, second opinions). Free OAuth tier on a personal
-  Google account is 1000 requests/day.
-- **Documented Gemini quirks** that make integration non-trivial
-  versus Codex:
-  - No `--output-last-message <file>` flag → must capture stdout,
-    skip non-JSON warning lines, parse last `{...}` block, pluck
-    `.response`. Helper documents both shell (`sed | jq`) and
-    Python parses.
-  - `GOOGLE_GENAI_USE_GCA=true` env var required on **every**
-    invocation when using the OAuth path, even after tokens are
-    cached. Per-call, not one-time setup.
-  - `--skip-trust` required for any headless run in a non-trusted
-    folder (analogous to Codex's `--skip-git-repo-check`).
-  - First-call browser auth needs `echo "Y" |` piped to confirm
-    "Opening authentication page in your browser." Subsequent
-    calls don't prompt.
-- **Top-level README updated** to a four-skill table (carrying
-  forward v0.81's expanded Codex auth/billing/data-handling text and
-  per-skill doctor instructions; the gemini-bridge doctor joins the
-  list). The gemini-cli prerequisite is marked optional.
-- **Cost ceiling stays the same as v0.8** for `mad-research` because
-  the audit pipeline does not call Gemini.
+1. **Gemini CLI for individuals stops serving requests on
+   2026-06-18** (announced by Google; 22 days after v0.9 shipped).
+   The free OAuth path documented in v0.9 was exactly the consumer
+   tier being sunset. The API-key path survives, but documenting it
+   as the only supported path effectively converts mad-research from
+   a free-tier-friendly research tool into a paid-API-only tool.
+2. **Antigravity CLI (the announced successor) is too new to commit
+   to.** Google itself admits "no 1:1 feature parity right out of
+   the gate." Scripted non-interactive invocation, free-tier limits,
+   auth path, and license are all unverified as of today.
+3. **"More streams = better MAD" remains empirically unfalsified.**
+   Smit et al. (ICML 2024) — already cited in the README — found
+   MAD does not reliably beat single-model self-consistency. Adding
+   a third provider before comparative evals would have paid
+   complexity for an independence story we cannot verify.
 
-What v0.9 deliberately did NOT do:
+What v0.91 ships:
 
-- Did NOT add Gemini as a Round-1 stream in `mad-research`. (Codex
-  consult Option C, deferred.)
-- Did NOT add Gemini as the synthesis judge. (Option D, deferred.)
-- Did NOT make stream assignments user-configurable. (Option F,
-  deferred as "too much surface area for the first step.")
-- Did NOT remove or weaken the mandatory `Independence:` line. The
-  v0.8 disclosure still applies to every `mad-research` final memo.
-- Did NOT make `mad-research` depend on Gemini being installed.
-  `gemini-bridge` is fully optional.
+- **Reverts everything in v0.9.** The `gemini-bridge/` folder is
+  removed (`SKILL.md`, `README.md`, `helpers/invoke_gemini.md`,
+  `helpers/doctor.md`). README returns to the three-skill table.
+  CHANGELOG version-list line returns to ending at `v0.81` before
+  this v0.91 entry.
+- **No partial Gemini support.** The sunset banner, runtime warning,
+  and provider-name abstraction proposed during the MAD all depended
+  on shipping something Gemini-shaped; all four were dropped in
+  favor of the clean revert.
 
-Backlog carried forward: a future v1.0 may add Gemini into
-`mad-research` itself — but only after a comparative evals release
-shows whether multi-provider configurations actually catch issues
-that Codex+Codex misses. The full Codex consult memo and per-item
-decision audit trail live in `Joint/mad-skill-private/gemini_consult/`
-locally and are not part of the public repo.
+What v0.91 deliberately did NOT do (per user decision):
+
+- Did NOT keep a deprecation banner or runtime warning in a
+  half-reverted gemini-bridge — the entire skill is gone.
+- Did NOT rename `helpers/invoke_codex.md` patterns to a provider-
+  neutral form. That refactor is appropriate when there is a second
+  provider; with v0.91 there is only one again.
+- Did NOT proactively integrate Antigravity CLI. The substrate is
+  not stable enough to wire into the audit pipeline.
+
+What is preserved for the future v1.0 Gemini revisit (locally only,
+not in the public repo): the full three-stream MAD memo, the
+verified-facts file with quotes from Google's sunset announcement,
+the initial Codex consult's six architectural options, the Windows
+smoke-test results, and a written archive README. Lives at
+`Joint/mad-skill-private/gemini_archive_for_v1/`.
+
+When to reopen the Gemini question:
+
+- Antigravity CLI has documented scripted non-interactive invocation
+  and stable free-tier terms, OR we accept the paid-API-only path
+  honestly.
+- AND a comparative evals release has tested whether multi-provider
+  configurations catch issues Codex+Codex misses on real audits.
+  Until that exists, "add Gemini" rests on intuition, not evidence.
+
+## v0.9 — gemini-bridge skill added (reverted in v0.91)
+
+This release shipped a standalone `gemini-bridge` skill (mirroring
+`codex-bridge` but routing to Google Gemini CLI for one-shot calls).
+It was reverted in v0.91 after the user's decision following a
+three-stream MAD; see v0.91 above for the reasoning. The original
+v0.9 commit history remains in the Git log for completeness.
 
 ## v0.81 — README minor fixes from MAD self-audit
 
@@ -92,7 +106,7 @@ all README-only; no skill logic changed.
   even users who had only installed `codex-bridge` or `mad-build` via
   the one-skill install path. The new verification block lists all
   three doctor invocations and notes that each skill ships its own
-  `helpers/doctor.md`. (v0.9 extended the list to four.)
+  `helpers/doctor.md`.
 - **ZIP fallback path (lines 68–71).** GitHub's "Download ZIP" unpacks
   into a branch-named folder (e.g. `mad-research-main/`), not into the
   hardcoded `/tmp/mad-research` path used by every downstream install
