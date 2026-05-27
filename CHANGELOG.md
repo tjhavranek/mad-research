@@ -2,7 +2,67 @@
 
 Notable changes to the `mad-research` skill family. The Git tags
 `v0.1`, `v0.2`, `v0.3`, `v0.4`, `v0.5`, `v0.6`, `v0.7`, `v0.75`,
-`v0.8`, and `v0.81` correspond to the entries below.
+`v0.8`, `v0.81`, and `v0.9` correspond to the entries below.
+
+## v0.9 — gemini-bridge skill added (no mad-research changes)
+
+Triggered by the user asking whether Gemini CLI could close the
+same-model-overlap gap publicly disclosed by v0.8's Independence
+line. A structured Codex consult laid out six architectural options
+(A–F) from least to most invasive. After a successful Windows smoke
+test (install, OAuth, JSON output parse, file-context reading all
+green), the user picked **Option A: standalone `gemini-bridge`, no
+mad-research changes** — the lowest-risk path that proves the
+helper layer (invocation pattern, auth, Windows-safe glue, JSON
+parsing) without committing to architecture changes inside the audit
+pipeline.
+
+What ships in v0.9:
+
+- **New `gemini-bridge/` skill**, parallel to `codex-bridge/`. Same
+  shape: `SKILL.md`, `README.md`, `helpers/invoke_gemini.md`,
+  `helpers/doctor.md`. Lets Claude call Gemini for one-shot tasks
+  (drafts, reviews, second opinions). Free OAuth tier on a personal
+  Google account is 1000 requests/day.
+- **Documented Gemini quirks** that make integration non-trivial
+  versus Codex:
+  - No `--output-last-message <file>` flag → must capture stdout,
+    skip non-JSON warning lines, parse last `{...}` block, pluck
+    `.response`. Helper documents both shell (`sed | jq`) and
+    Python parses.
+  - `GOOGLE_GENAI_USE_GCA=true` env var required on **every**
+    invocation when using the OAuth path, even after tokens are
+    cached. Per-call, not one-time setup.
+  - `--skip-trust` required for any headless run in a non-trusted
+    folder (analogous to Codex's `--skip-git-repo-check`).
+  - First-call browser auth needs `echo "Y" |` piped to confirm
+    "Opening authentication page in your browser." Subsequent
+    calls don't prompt.
+- **Top-level README updated** to a four-skill table (carrying
+  forward v0.81's expanded Codex auth/billing/data-handling text and
+  per-skill doctor instructions; the gemini-bridge doctor joins the
+  list). The gemini-cli prerequisite is marked optional.
+- **Cost ceiling stays the same as v0.8** for `mad-research` because
+  the audit pipeline does not call Gemini.
+
+What v0.9 deliberately did NOT do:
+
+- Did NOT add Gemini as a Round-1 stream in `mad-research`. (Codex
+  consult Option C, deferred.)
+- Did NOT add Gemini as the synthesis judge. (Option D, deferred.)
+- Did NOT make stream assignments user-configurable. (Option F,
+  deferred as "too much surface area for the first step.")
+- Did NOT remove or weaken the mandatory `Independence:` line. The
+  v0.8 disclosure still applies to every `mad-research` final memo.
+- Did NOT make `mad-research` depend on Gemini being installed.
+  `gemini-bridge` is fully optional.
+
+Backlog carried forward: a future v1.0 may add Gemini into
+`mad-research` itself — but only after a comparative evals release
+shows whether multi-provider configurations actually catch issues
+that Codex+Codex misses. The full Codex consult memo and per-item
+decision audit trail live in `Joint/mad-skill-private/gemini_consult/`
+locally and are not part of the public repo.
 
 ## v0.81 — README minor fixes from MAD self-audit
 
@@ -32,7 +92,7 @@ all README-only; no skill logic changed.
   even users who had only installed `codex-bridge` or `mad-build` via
   the one-skill install path. The new verification block lists all
   three doctor invocations and notes that each skill ships its own
-  `helpers/doctor.md`.
+  `helpers/doctor.md`. (v0.9 extended the list to four.)
 - **ZIP fallback path (lines 68–71).** GitHub's "Download ZIP" unpacks
   into a branch-named folder (e.g. `mad-research-main/`), not into the
   hardcoded `/tmp/mad-research` path used by every downstream install

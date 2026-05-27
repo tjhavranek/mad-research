@@ -1,4 +1,4 @@
-# mad-research: three Claude Code skills for working with Codex
+# mad-research: Claude Code skills for working with Codex (and now Gemini)
 
 **For researchers who want a structured second opinion on a paper, proposal,
 or report — without writing code.**
@@ -6,17 +6,24 @@ or report — without writing code.**
 Most heavy [Claude Code](https://claude.com/claude-code) users who also use
 ChatGPT keep [Codex CLI](https://github.com/openai/codex) running in a
 separate terminal and shuttle outputs by hand. These skills let Claude call
-Codex directly from one session — for one-shot tasks, structured
-collaboration, or an adversarial audit — with no MCP server, no external
-orchestrator, no code to write.
+Codex (and optionally [Gemini CLI](https://github.com/google-gemini/gemini-cli))
+directly from one session — for one-shot tasks, structured collaboration,
+or an adversarial audit — with no MCP server, no external orchestrator,
+no code to write.
 
-Three independent skills in one repo. Install only the ones you want.
+Four independent skills in one repo. Install only the ones you want.
 
 | Skill | What it does | Use when... |
 |---|---|---|
 | **`codex-bridge`** | One-shot Codex call from inside Claude. No protocol. | You want Codex's view on a specific question without scaffolding. |
+| **`gemini-bridge`** | One-shot Gemini call from inside Claude. No protocol. | You want Gemini's view (free OAuth tier: 1000 req/day) as a third-provider second opinion. Added in v0.9. |
 | **`mad-build`** | Four-step Claude+Codex collaboration: independent drafts → cross-review → revisions → merge. | You're producing something (code, draft, plan) and want a structured second pair of eyes. |
-| **`mad-research`** | Three-role-stream adversarial audit of a document. Quote+page grounded criticism, anonymized cross-critique, fresh-context Codex synthesis against a locked rubric, minority report preserved. Optional opt-in **Bayesian Mode** for evaluating the truth of a contested empirical claim. | You want a structured stress-test of a paper, grant, or referee report. See [worked example](examples/mad-research-waive/). |
+| **`mad-research`** | Three-role-stream adversarial audit of a document. Quote+page grounded criticism, anonymized cross-critique, fresh-context Codex synthesis against a locked rubric, minority report preserved. Optional opt-in **Bayesian Mode** for evaluating the truth of a contested empirical claim. Mandatory **Independence:** line in every memo (v0.8). | You want a structured stress-test of a paper, grant, or referee report. See [worked example](examples/mad-research-waive/). |
+
+`mad-research` does NOT use Gemini internally (yet). The three-stream
+audit and synthesis still run on Claude + Codex + Codex — see the
+`Independence:` line in every final memo. Gemini-into-mad-research is
+on the v1.0 backlog, conditional on a future comparative-evals release.
 
 These skills implement v3 of the [Research Audit Duel + MAD
 protocols](https://github.com/tjhavranek/research-audit-duel-protocol)
@@ -62,6 +69,16 @@ and what it dropped.
    the path you chose (a free-tier ChatGPT login may retain prompts for
    training); if your institution requires a specific zero-retention
    agreement, configure Codex with an OpenAI API key under that agreement.
+5. **Gemini CLI (optional, only needed for `gemini-bridge`).** Install
+   with npm, then authenticate once via browser:
+   ```sh
+   npm install -g @google/gemini-cli
+   gemini --skip-trust    # opens browser for Google sign-in
+   ```
+   Free tier on a personal Google account is 1000 requests/day; that
+   ceiling is generous for ad-hoc one-shot use. The Gemini CLI is fully
+   optional — `mad-research`, `mad-build`, and `codex-bridge` do not
+   call it.
 
 Verify in a fresh terminal:
 ```sh
@@ -70,6 +87,7 @@ node --version    # expect v18.x or higher
 codex --version   # tested against 0.13.x; newer versions (e.g. 0.133.x) may
                   # behave differently under --sandbox workspace-write —
                   # see helpers/invoke_codex.md and run the doctor
+gemini --version  # optional: expect 0.43.x or higher (only if using gemini-bridge)
 ```
 
 If you cannot install Git, you can also use GitHub's "Download ZIP"
@@ -85,7 +103,7 @@ remove any existing temp checkout and any existing installed skill
 folders before copying, so you cannot accidentally nest old files
 inside new ones.
 
-### Quick start: install all three skills
+### Quick start: install all four skills
 
 #### macOS / Linux
 
@@ -93,7 +111,7 @@ inside new ones.
 mkdir -p ~/.claude/skills
 rm -rf /tmp/mad-research
 git clone https://github.com/tjhavranek/mad-research /tmp/mad-research
-for skill in codex-bridge mad-build mad-research; do
+for skill in codex-bridge gemini-bridge mad-build mad-research; do
   rm -rf ~/.claude/skills/$skill
   cp -r /tmp/mad-research/$skill ~/.claude/skills/$skill
 done
@@ -107,7 +125,7 @@ $tempRepo  = "$env:TEMP\mad-research"
 New-Item -ItemType Directory -Force $skillsDir | Out-Null
 if (Test-Path $tempRepo) { Remove-Item -Recurse -Force $tempRepo }
 git clone https://github.com/tjhavranek/mad-research $tempRepo
-foreach ($skill in 'codex-bridge','mad-build','mad-research') {
+foreach ($skill in 'codex-bridge','gemini-bridge','mad-build','mad-research') {
   $dest = Join-Path $skillsDir $skill
   if (Test-Path $dest) { Remove-Item -Recurse -Force $dest }
   Copy-Item -Recurse (Join-Path $tempRepo $skill) $dest
@@ -117,7 +135,7 @@ foreach ($skill in 'codex-bridge','mad-build','mad-research') {
 ### Install one skill only
 
 Each skill is self-contained. Replace `<skill-name>` with the one you
-want (`codex-bridge`, `mad-build`, or `mad-research`).
+want (`codex-bridge`, `gemini-bridge`, `mad-build`, or `mad-research`).
 
 #### macOS / Linux
 
@@ -159,19 +177,21 @@ Claude in natural language for the doctor of whichever skill you installed:
 Run the mad-research doctor.
 Run the mad-build doctor.
 Run the codex-bridge doctor.
+Run the gemini-bridge doctor.
 ```
 
 Each skill ships its own `helpers/doctor.md`, so users who installed only one
 skill should ask for that skill's doctor — not `mad-research`'s. The doctor
-prints whether Node, npm, Codex, the expected `codex exec` flags, and Codex
-authentication all check out. If any check fails it tells you exactly what to
-install or fix.
+prints whether Node, npm, the relevant CLI (Codex or Gemini), the expected
+flags, and authentication all check out. If any check fails it tells you
+exactly what to install or fix.
 
 ## How to invoke
 
 | You say | Skill that fires |
 |---|---|
 | "have Codex draft X" / "ask Codex to review file Y" / "run Codex on this" | `codex-bridge` |
+| "have Gemini draft X" / "ask Gemini for a second opinion on this" / "run Gemini on this" | `gemini-bridge` |
 | "MAD-build a script that does X" / "have Codex help me build Y" / "competition agent on this" | `mad-build` |
 | "MAD-research this paper" / "stress-test this proposal" / "referee report on attached.pdf" | `mad-research` |
 
