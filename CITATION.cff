@@ -1,7 +1,9 @@
 cff-version: 1.2.0
-message: "If you use this software, please cite it using these metadata."
+message: "If you use mad-research, please cite this software; if you use the research-audit protocol itself, also cite the underlying Duel/MAD methodology listed in the README."
 type: software
 title: "mad-research: Claude Code skills for adversarial multi-agent debate on research documents"
+version: "0.95"
+date-released: 2026-05-28
 authors:
   - family-names: "Havránek"
     given-names: "Tomáš"
@@ -9,7 +11,7 @@ authors:
     given-names: "Zuzana"
 repository-code: "https://github.com/tjhavranek/mad-research"
 license: MIT
-abstract: "Three Claude Code skills for working with Codex CLI: codex-bridge, mad-build, and mad-research."
+abstract: "Three Claude Code skills for using Codex CLI in research and build workflows: codex-bridge for one-shot Codex calls, mad-build for staged Claude-Codex collaboration, and mad-research for adversarial audits of papers, grants, and reports with anonymized cross-critique and fresh-context synthesis."
 keywords:
   - claude-code
   - claude

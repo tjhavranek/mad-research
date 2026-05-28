@@ -2,8 +2,62 @@
 
 Notable changes to the `mad-research` skill family. The Git tags
 `v0.1`, `v0.2`, `v0.3`, `v0.4`, `v0.5`, `v0.6`, `v0.7`, `v0.75`,
-`v0.8`, `v0.81`, `v0.9`, `v0.91`, `v0.92`, `v0.93`, and `v0.94`
-correspond to the entries below.
+`v0.8`, `v0.81`, `v0.9`, `v0.91`, `v0.92`, `v0.93`, `v0.94`, and
+`v0.95` correspond to the entries below.
+
+## v0.95 — CITATION.cff tightening (triple-check follow-up to v0.94)
+
+Triggered by a triple-check audit of v0.94: two independent
+subagents (red-team + general-purpose professionalism review) plus
+a Codex stress-test all converged on the same three small gaps in
+the v0.94 CITATION.cff. Codex also caught one of my mistakes
+mid-check: I had originally drafted `version: "0.94"` for this
+release, but the tag being shipped is v0.95, so the field must
+match.
+
+What ships in v0.95:
+
+- **Added `version: "0.95"` and `date-released: 2026-05-28`** to
+  CITATION.cff. The release tag now propagates into the generated
+  citation; GitHub's "Cite this repository" button will produce a
+  versioned BibTeX entry instead of a moving-target one.
+- **Replaced the default `message:`** ("If you use this software,
+  please cite it using these metadata.") with a repo-specific line:
+  *"If you use mad-research, please cite this software; if you use
+  the research-audit protocol itself, also cite the underlying
+  Duel/MAD methodology listed in the README."* This makes the
+  distinction between the software citation (this repo) and the
+  methodology citation (Zenodo DOI 10.5281/zenodo.19105954, listed
+  in README) explicit.
+- **Rewrote `abstract:`** from a flat enumeration ("Three Claude
+  Code skills for working with Codex CLI: codex-bridge, mad-build,
+  and mad-research.") to a one-sentence summary that names the
+  ROLES of each skill: *"Three Claude Code skills for using Codex
+  CLI in research and build workflows: codex-bridge for one-shot
+  Codex calls, mad-build for staged Claude-Codex collaboration,
+  and mad-research for adversarial audits of papers, grants, and
+  reports with anonymized cross-critique and fresh-context
+  synthesis."*
+
+What v0.95 deliberately did NOT do:
+
+- Did NOT change the title. Codex's call: the title is the existing
+  software identifier; changing it one release later would create
+  citation churn without proportional benefit. The new abstract
+  carries the nuance about codex-bridge not being adversarial.
+- Did NOT prune the `ai-tools` topic. Marginal purity objection;
+  the topic set was endorsed in v0.94.
+- Did NOT touch the repo description, topics list, or any skill
+  content. v0.95 is strictly a CITATION.cff tightening.
+- Did NOT create a GitHub Release for v0.95. Tags remain the
+  release surface; the apparent "Releases error" found during the
+  audit was just GitHub-side rendering glitches in the
+  Activity/Packages/Contributors sidebar sections, not a real bug.
+
+The triple-check audit trail (red-team subagent output, general-
+purpose professionalism audit, Codex round-2 stress-test) lives
+locally at `Joint/mad-skill-private/peer_repos_polish/` and is not
+part of the public repo.
 
 ## v0.94 — repo metadata polish (CITATION.cff, topics, description)
 
