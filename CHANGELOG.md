@@ -2,8 +2,64 @@
 
 Notable changes to the `mad-research` skill family. The Git tags
 `v0.1`, `v0.2`, `v0.3`, `v0.4`, `v0.5`, `v0.6`, `v0.7`, `v0.75`,
-`v0.8`, `v0.81`, `v0.9`, `v0.91`, and `v0.92` correspond to the
-entries below.
+`v0.8`, `v0.81`, `v0.9`, `v0.91`, `v0.92`, and `v0.93` correspond
+to the entries below.
+
+## v0.93 — sequential capability routing in codex-bridge
+
+Triggered by a real-world observation the user reported: they gave
+Claude legitimate paywall credentials and asked for op-ed downloads;
+Claude couldn't complete the task; Codex (via codex-bridge) did. The
+user's question was whether the protocol should handle "Claude is
+working alone and hits a wall" by proactively naming codex-bridge as
+an option, rather than struggling silently or apologizing without
+action. A Codex stress-test agreed the gap was real but narrowly so,
+and sharpened the proposed fix on three points (observable triggers
+not vague judgment; "policy decline" reframing; explicit anti-policy-
+laundering rule).
+
+v0.92 handled the *parallel collaboration* case where one of two
+drafts is unsalvageable. v0.93 handles the *sequential routing* case
+where one model is working alone and stuck.
+
+What ships in v0.93:
+
+- **codex-bridge/SKILL.md: new "When Claude should proactively
+  propose codex-bridge" section.** Sits between the existing
+  user-invoked triggers and the operational "What this skill does."
+  Documents:
+  - Five observable triggers for when Claude should name
+    codex-bridge as a user-controlled option (missing browser/GUI
+    automation; sandbox/network denial by Claude Code's harness;
+    package/tool install failure; long-running shell exceeds the
+    harness; repeated authenticated-download / auth-handshake
+    failure despite legitimate user authorization).
+  - Explicit rule: Claude does NOT silently dispatch a codex-bridge
+    call. The proposal is named; the user decides.
+  - Three-step protocol for policy-sensitive blockers (concern
+    first → clarification second → route third), with the explicit
+    rule that codex-bridge is **not** a policy escape hatch.
+  - Framing rule: present codex-bridge as a different harness/tool
+    path, not as "Codex is categorically better than Claude at
+    task X." The honest description is "different defaults," not
+    model-ranking folklore.
+
+What v0.93 deliberately did NOT do (per Codex consult):
+
+- Did NOT add a capability matrix of "Claude is good at X, Codex
+  good at Y." Such matrices drift, overgeneralize from individual
+  cases, and read as marketing.
+- Did NOT touch mad-build, mad-research, or any helpers. The
+  sequential-routing gap is squarely a codex-bridge concern.
+- Did NOT change Claude's default safety behavior. Routing
+  guidance is about visibility, not lowering the bar.
+- Did NOT add this to a new file or a new skill. Codex was
+  explicit: the "extract that loads when the bridge skill loads"
+  is exactly where this belongs.
+
+Codex's stress-test memo and the architecture audit trail live
+locally in `Joint/mad-skill-private/capability_routing_mad/` and are
+not part of the public repo.
 
 ## v0.92 — asymmetric failure handling in mad-build; effective-stream disclosure in mad-research
 

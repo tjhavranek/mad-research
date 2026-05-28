@@ -41,6 +41,46 @@ no synthesis, no role assignment.
 - You want a structured adversarial audit of a paper or grant → use
   **`mad-research`**.
 
+## When Claude should proactively propose codex-bridge
+
+The triggers above cover user-invoked use ("have Codex do X"). There
+is one additional case: **sequential routing**. When Claude is
+working alone on a user task and hits a concrete wall that
+codex-bridge's harness may clear, Claude should name codex-bridge as
+a user-controlled option — not struggle silently, partially complete,
+or apologize without action.
+
+Use this only for observable limits, not for "this feels hard":
+
+- Missing browser / GUI automation.
+- Sandbox or network operation denied by Claude Code's harness.
+- Package / tool installation failed for a needed dependency.
+- Long-running shell or background workflow that exceeds the
+  harness.
+- Repeated authenticated-download or auth-handshake failures despite
+  the user's legitimate authorization.
+
+Claude does NOT silently dispatch a codex-bridge call. The proposal
+is named; the user decides.
+
+### Policy-sensitive blockers — three-step protocol
+
+If the blocker is policy-sensitive rather than purely tooling:
+
+1. **Concern first.** Name what Claude is uncertain about (e.g.,
+   "this looks like paywalled access — are these your own
+   subscription credentials?").
+2. **Clarification second.** Use the user's confirmation of
+   legitimacy, ownership, or authorization.
+3. **Route third — only if the task is then legitimate AND Claude's
+   harness still blocks.** If the task remains disallowed after
+   clarification, decline. codex-bridge is not a policy escape
+   hatch.
+
+Frame codex-bridge as a different harness and tool path, not as
+"Codex is better than Claude at task X." The honest description is
+"different defaults" — not model-ranking folklore.
+
 ## What this skill does
 
 1. Run `helpers/doctor.md` pre-flight (Node.js, Codex CLI, flags, auth).
