@@ -70,6 +70,22 @@ If Codex fails for any stream and Claude carries the load, the result is
 with the failure reason. Calling a degraded run "MAD" without
 qualification is a form of dishonesty about evidence quality.
 
+This rule has three operational levels (v0.92):
+
+1. **Technical non-run.** Codex did not execute for a stream (auth,
+   rate limit, fatal error). Handled at orchestration time:
+   stream marked failed, user asked whether to retry/proceed/abort.
+2. **Structural failure at Round 1.** Stream produced output but it
+   fails structural validation (empty, missing template sections, no
+   quotes, no locators). Handled at orchestration Step 6.
+3. **Effective-empty stream at synthesis.** Stream passed structural
+   validation but its entire contribution went to "Points rejected"
+   during synthesis (quotes failed verification, criticisms
+   contradicted by their own cited passages, etc.). Handled by the
+   synthesis prompt's "N/3 effective" audit-trail field. The memo
+   must disclose this; the skill must not present such a run as
+   ordinary MAD without the qualifier.
+
 ## A note for users sharing final memos
 
 The final memo is an artifact of structured disagreement, not a polished

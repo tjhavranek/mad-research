@@ -207,6 +207,18 @@ image-only PDF, etc.) abort with a message.
    Failures: do not auto-fix. Tell the user that stream X produced
    substandard output, ask whether to retry or proceed.
 
+   **Note (v0.92):** structural validation alone does not catch every
+   failure. A stream can pass these checks yet contribute zero
+   accepted points later — quotes that fail verification, locators
+   that don't match the manuscript, criticisms contradicted by the
+   cited passages. That stream-level "effectively empty" case is
+   handled at synthesis time by the audit-trail's "N/3 effective"
+   line (see `prompts/synthesis_codex_prompt.md` Audit trail
+   section). The synthesizer must surface effective-stream count
+   whenever it differs from structural-stream count; the orchestrator
+   does not retry on this basis automatically — the disclosure goes
+   in the final memo.
+
 3. **Round 2 anonymization**:
    For each stream, create a Round-2 input packet containing only the
    *other two* Round-1 outputs, with provider/role labels stripped and

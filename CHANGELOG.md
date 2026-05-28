@@ -2,7 +2,81 @@
 
 Notable changes to the `mad-research` skill family. The Git tags
 `v0.1`, `v0.2`, `v0.3`, `v0.4`, `v0.5`, `v0.6`, `v0.7`, `v0.75`,
-`v0.8`, `v0.81`, `v0.9`, and `v0.91` correspond to the entries below.
+`v0.8`, `v0.81`, `v0.9`, `v0.91`, and `v0.92` correspond to the
+entries below.
+
+## v0.92 — asymmetric failure handling in mad-build; effective-stream disclosure in mad-research
+
+Triggered by an external-AI diagnosis the user surfaced: the
+existing protocols cover the technical-failure case ("Codex didn't
+run") but not the asymmetric-quality case ("one side ran and
+returned something, but the output is wrong / incomplete / off-task
+while the other side delivered cleanly"). A Codex stress-test
+confirmed the diagnosis for mad-build (the Round 4 wording "Claude
+reads both v2's and synthesizes the best of both" creates a default
+obligation to merge even when one input should be excluded) and
+identified an analogous but smaller gap in mad-research (a stream
+can pass Round-1 structural validation yet contribute zero accepted
+points if every criticism it raised ends up in "Points rejected").
+
+What ships in v0.92:
+
+- **mad-build: candidate asymmetric failure branch** in
+  `mad_build_protocol.md` Round 4. The default merge path now reads
+  "Round 4 — Claude merges (only when drafts are comparable)" with
+  explicit anti-tamper framing. A second labeled path covers the
+  case where one draft cannot contribute final-relevant material
+  without redoing the core task.
+- **Sharpened trigger criteria.** Declaring a draft "candidate
+  asymmetric failure" requires one *mechanical trigger* (refusal /
+  empty / unparseable / broken build) OR two *objective-evidence
+  triggers* (wrong task with quoted assignment mismatch / fabricated
+  source / self-contradiction / internally broken artifact). Lower
+  quality, partial coverage, individual rejected points, or
+  orchestrator disagreement explicitly do NOT meet the bar — those
+  go through the normal Round 3 revision cycle.
+- **User-in-loop confirmation.** The orchestrator may identify a
+  candidate failure with evidence, but does NOT ship a one-sided
+  `final/` unilaterally except when the failure is already
+  equivalent to non-run (empty output, plain refusal, missing
+  required artifact). The user picks one of three paths: (a) retry
+  the failed side with a sharpened prompt, (b) ship the working
+  side as `final/` and label the run `degraded — asymmetric
+  failure` in `README_DEBRIEF.md`, or (c) proceed with the merge
+  anyway and document the overridden concern. Evidence file
+  `round2_revisions/asymmetric_failure_evidence.md` is mandatory
+  when this branch fires.
+- **Symmetry safeguard.** Claude is always the orchestrator in
+  mad-build, so the asymmetry risk is one-directional. The
+  protocol now obligates the orchestrator to surface a candidate
+  Claude-side failure when Codex's Round-2 review identifies one in
+  trigger-criteria terms (not "I would do it differently").
+- **mad-research: N/3 effective-stream disclosure** in the
+  synthesis prompt's Audit trail section. When a Round-1 stream
+  passes structural validation but contributes zero accepted points
+  to the final memo (all its criticisms land in "Points rejected"),
+  the audit-trail Streams line must disclose this as "3/3
+  structurally; N/3 effective" and name the empty stream(s). This
+  operationalizes `safety_notes.md`'s existing "do not paper over"
+  rule at the stream level.
+- **safety_notes.md** now lists the three operational levels of
+  the "do not paper over" rule: technical non-run, structural
+  failure at Round 1, effective-empty stream at synthesis.
+
+What v0.92 deliberately did NOT do:
+
+- Did NOT add asymmetric-failure handling to `codex-bridge`. It is
+  one-shot and user-invoked; there is no merge step to bias. (Per
+  Codex consult's explicit recommendation.)
+- Did NOT touch `gemini-bridge` (reverted in v0.91; not in the
+  repo).
+- Did NOT define "unsalvageable" as "worse than the other draft."
+  The triggers are observable on the failed draft itself or against
+  the assignment, never via peer comparison — to prevent the branch
+  from becoming an exit ramp from genuine disagreement.
+- Did NOT let the orchestrator finalize a one-sided result without
+  user confirmation, except in the narrow mechanical-non-run cases
+  already equivalent to v0.5's "Codex unavailable" branch.
 
 ## v0.91 — revert v0.9: defer Gemini integration until conditions are right
 

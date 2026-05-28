@@ -200,7 +200,16 @@ Specific verbs, not generic adjectives.
 - Session ID: [from meta.json passed in]
 - Mode: default | bayesian
 - Rounds run: [list, e.g. "Round 1, Round 2, synthesis" or include Round 3]
-- Streams: 3/3 (or note any degradation)
+- Streams: 3/3 structurally; **N/3 effective** — count a stream as
+  effective if at least one of its surviving criticisms (after Points
+  rejected) made it into the memo. A stream that passed Round-1
+  structural validation but whose entire output ended up in Points
+  rejected contributed 0 accepted points; the audit trail must
+  disclose that. When N < 3, name the structurally-valid-but-empty
+  stream(s) here, e.g. "3/3 structurally; 2/3 effective — stream Z
+  contributed 0 accepted points after Points rejected." (Added in
+  v0.92 to operationalize the safety_notes.md "degraded run" rule
+  at the stream level.)
 - Synthesis: fresh codex exec (or "fallback: in-session Claude — Codex unavailable")
 - **Independence**: [quote the `independence_signature` field from
   `_mode_context.md` VERBATIM. This is mandatory in every memo and

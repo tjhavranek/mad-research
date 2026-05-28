@@ -102,21 +102,119 @@ codex_v2_notes.md listing what you changed and why, and which Claude
 criticisms you rejected and why.
 ```
 
-## Round 4 — Claude merges
+## Round 4 — Claude merges (only when drafts are comparable)
 
-Claude reads both v2's and synthesizes the best of both into `final/`.
+**Default path.** When both v2's are merge-worthy contributions to the
+assignment, Claude reads both and synthesizes them into `final/`. The
+merge is anti-tamper: keep each side's stronger material, attribute
+changes, and do not silently substitute Claude's preferred phrasing
+for Codex's working solution.
+
 Write `README_DEBRIEF.md` reporting:
 - What each agent contributed.
 - Which criticisms led to which changes.
 - What still feels uncertain.
 - Total elapsed time and number of Codex calls.
 
+**Alternate path: candidate asymmetric failure.** If one side's v2
+cannot contribute final-relevant material without redoing the core
+task, do NOT force a merge. The merge step is mandatory only when
+the inputs are comparable; forcing it on a broken draft launders the
+failure into the final output.
+
+### Trigger criteria (Claude is conservative; sharper criteria avoid self-serving judgment)
+
+Declare a draft "candidate asymmetric failure" only when supported by
+**one mechanical trigger** OR **two objective-evidence triggers** —
+not by quality preference alone.
+
+Mechanical triggers (observable on the draft itself, no comparison
+needed):
+- Refused: the draft is an explicit refusal with no substantive
+  attempt. (Caveats followed by useful work are NOT refusal.)
+- Empty / missing: required artifact absent or zero-length.
+- Unparseable: the artifact cannot be opened, parsed, or rendered.
+- Broken build: when the task required runnable output, the build /
+  test / lint fails. (Distinguish from flaky environment errors.)
+
+Objective-evidence triggers (require evidence, not opinion):
+- Wrong task: material mismatch between the draft and `ASSIGNMENT.md`
+  — quote both, show the deliverable gap. Stylistic differences do
+  NOT count.
+- Fabricated source: cited file, function, API, or paper does not
+  exist on inspection.
+- Self-contradiction: draft's own claims are inconsistent with its
+  own cited evidence.
+- Internally broken artifact: deliverable parts contradict each other
+  in a way that can be shown by quoting them side-by-side.
+
+**Not enough by itself:** lower quality, partial coverage, different
+priorities, individual points rejected during cross-review, or
+orchestrator disagreement with a peer choice. Those go through the
+normal Round 3 revision cycle.
+
+### Procedure when a candidate failure is observed
+
+1. **Document the evidence first.** Write `round2_revisions/
+   asymmetric_failure_evidence.md` containing the trigger(s) and the
+   verbatim quotes / locators / error messages / refusal text that
+   support each. Do not redact or paraphrase.
+
+2. **Surface the decision to the user with three options.** The
+   orchestrator does NOT ship a one-sided `final/` unilaterally,
+   except when the failure is already equivalent to non-run (empty
+   output, plain refusal, missing required artifact). Surface:
+
+   > "I observe a candidate asymmetric failure on the <Claude | Codex>
+   > side: <one-line summary>. Evidence in `round2_revisions/
+   > asymmetric_failure_evidence.md`. Options:
+   >  (a) Re-run the failed side with a sharpened prompt.
+   >  (b) Ship the working side as `final/` and label this run
+   >      'degraded' in `README_DEBRIEF.md`.
+   >  (c) Proceed with the normal merge anyway, despite the defect."
+
+3. **If the user picks (a):** Re-run that side's Round 1 + Round 2
+   with the sharpened prompt; document the retry in `README_DEBRIEF.
+   md`.
+
+4. **If the user picks (b):** Copy the working side's v2 into
+   `final/` (or a hand-edited refinement of it). Write
+   `README_DEBRIEF.md` with these mandatory fields:
+   - `mode: degraded — asymmetric failure`
+   - `failed side: <claude | codex>`
+   - `triggers fired: <list>`
+   - `evidence file: round2_revisions/asymmetric_failure_evidence.md`
+   - `user decision: ship-degraded`
+   - `effective contributors: 1/2`
+
+5. **If the user picks (c):** Proceed with the normal merge. Log
+   that the candidate failure was overridden by user choice and
+   note the unresolved concern in `README_DEBRIEF.md` under "What
+   still feels uncertain."
+
+### Symmetry note
+
+Claude is always the orchestrator in mad-build, so the asymmetry
+risk is one-directional: Claude can over-flag Codex failures more
+easily than the reverse. Two countermeasures:
+
+- Round 2 is where Codex reviews Claude's draft. If Codex's review
+  identifies Claude's draft as broken in the trigger-criteria
+  sense (not "I would do it differently"), the orchestrator is
+  obligated to surface that as a candidate Claude-side asymmetric
+  failure using the same procedure above.
+- The "Not enough by itself" list (lower quality, partial coverage,
+  etc.) explicitly excludes the cases where Claude would be most
+  tempted to dismiss a peer draft.
+
 ## When to abort or simplify
 
 - If the task is genuinely small (e.g., "fix this typo") → don't MAD it.
   Just do it.
 - If Codex is unavailable → tell the user, ask if they want a single-agent
-  run, and proceed without claiming it was multi-model.
+  run, and proceed without claiming it was multi-model. (Distinct from
+  candidate asymmetric failure: this is technical non-run; that is
+  ran-but-unsalvageable.)
 - If the user interrupts mid-round → save state, summarize what's done,
   and ask whether to continue, restart, or stop.
 
