@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using these metadata."
+type: software
+title: "mad-research: Claude Code skills for adversarial multi-agent debate on research documents"
+authors:
+  - family-names: "Havránek"
+    given-names: "Tomáš"
+  - family-names: "Iršová"
+    given-names: "Zuzana"
+repository-code: "https://github.com/tjhavranek/mad-research"
+license: MIT
+abstract: "Three Claude Code skills for working with Codex CLI: codex-bridge, mad-build, and mad-research."
+keywords:
+  - claude-code
+  - claude
+  - codex
+  - multi-agent-debate
+  - adversarial-evaluation
+  - research-audit
+  - peer-review
+  - ai-tools

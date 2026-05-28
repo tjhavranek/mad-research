@@ -2,8 +2,53 @@
 
 Notable changes to the `mad-research` skill family. The Git tags
 `v0.1`, `v0.2`, `v0.3`, `v0.4`, `v0.5`, `v0.6`, `v0.7`, `v0.75`,
-`v0.8`, `v0.81`, `v0.9`, `v0.91`, `v0.92`, and `v0.93` correspond
-to the entries below.
+`v0.8`, `v0.81`, `v0.9`, `v0.91`, `v0.92`, `v0.93`, and `v0.94`
+correspond to the entries below.
+
+## v0.94 — repo metadata polish (CITATION.cff, topics, description)
+
+Triggered by a side-by-side comparison with two sibling repos by the
+same maintainer (`research-audit-duel-protocol`, `erc-ai-feedback`),
+both of which expose richer repo-level metadata than mad-research
+did. A Codex consult agreed on three small public-facing changes
+under a HIGH BAR rule (only ship items both Claude and Codex sign
+off on). Two further candidates (homepage link, version chips) were
+deferred or dropped.
+
+What ships in v0.94:
+
+- **`CITATION.cff`** at the repo root. CFF 1.2.0, software-type
+  metadata, MIT license, authors Havránek + Iršová, repository URL,
+  abstract, and the same eight keywords used as GitHub topics.
+  Enables GitHub's native "Cite this repository" button and gives
+  citation managers (Zotero, Mendeley, etc.) a clean entry point.
+  The README's prose citation section remains; CFF complements
+  rather than replaces it. No methodology-DOI is encoded as the
+  root identifier (avoids citation confusion between this software
+  repo and the underlying Duel+MAD methodology DOI).
+- **Updated repo description** on GitHub. Previous "Two modes"
+  framing was stale (predated codex-bridge being a first-class
+  skill). New description names all three skills explicitly.
+- **Eight repo topics added** for discoverability:
+  `adversarial-evaluation`, `ai-tools`, `claude`, `claude-code`,
+  `codex`, `multi-agent-debate`, `peer-review`, `research-audit`.
+
+What v0.94 deliberately did NOT do:
+
+- Did NOT add a homepage link (e.g., to meta-analysis.cz). Codex's
+  call: branding decision, not repo-polish necessity.
+- Did NOT add version chips to the README header. Cosmetic clutter;
+  conflicts with the "less is often more" backlog framing.
+- Did NOT change skill content. v0.94 is purely public-facing
+  metadata + one new root file.
+- Did NOT add the underlying-methodology DOI (10.5281/zenodo.19105954)
+  to CITATION.cff's root `doi` field. That DOI identifies the Duel +
+  MAD methodology, not this software repository; conflating them
+  would mislead citation managers.
+
+The full Codex consult and side-by-side comparison live locally at
+`Joint/mad-skill-private/peer_repos_polish/` and are not part of the
+public repo.
 
 ## v0.93 — sequential capability routing in codex-bridge
 
