@@ -2,8 +2,75 @@
 
 Notable changes to the `mad-research` skill family. The Git tags
 `v0.1`, `v0.2`, `v0.3`, `v0.4`, `v0.5`, `v0.6`, `v0.7`, `v0.75`,
-`v0.8`, `v0.81`, `v0.9`, `v0.91`, `v0.92`, `v0.93`, `v0.94`, and
-`v0.95` correspond to the entries below.
+`v0.8`, `v0.81`, `v0.9`, `v0.91`, `v0.92`, `v0.93`, `v0.94`,
+`v0.95`, and `v0.96` correspond to the entries below.
+
+## v0.96 — retry-semantics clarification for mid-run Codex technical non-runs
+
+Triggered by the user's question about what should happen when
+either Claude or Codex runs out of credits mid-run, with a
+specific proposal to spawn a Claude subagent in Codex's place.
+A full MAD ran on this question with five independent streams:
+Claude (host), Codex stress-test, plus three subagents — a
+steelman of the user's proposal, a hostile rejection audit, and
+a practitioner walkthrough of three real failure scenarios.
+
+**All five streams converged on rejecting the subagent
+mechanism.** Even the steelman, after defending the proposal as
+strongly as possible, concluded "ship docs only." The Khan et al.
+finding (already cited in the README — debate helps when debaters
+are stronger than the judge) survives every framing of same-family
+fallback as a substitute for cross-family debate.
+
+The hostile audit further argued the original two-sentence Codex
+patch was redundant: existing `safety_notes.md` lines 73-77
+already cover "auth, rate limit, fatal error" as technical
+non-runs. That critique was correct for Codex's specific wording.
+
+The practitioner walkthrough identified the actual gap a HIGH-BAR
+patch should close: the existing Step 6 says "retry or proceed"
+without distinguishing what "retry" means for different error
+classes. For credits/quota/auth exhaustion, retry-the-same-call
+will keep failing until the underlying state changes. A future
+Claude orchestrator could literally loop. That is not addressed
+anywhere in the current docs.
+
+What ships in v0.96:
+
+- **One note added to `orchestration.md` Step 6** (post-Round-1
+  validation), marked v0.96. It distinguishes substandard-output
+  failures (covered by v0.92's existing handling) from technical-
+  non-run failures mid-run, and specifies that "retry" only makes
+  sense when the error includes a finite Retry-After. For
+  credits/quota/auth, the orchestrator must surface the underlying
+  cause and offer wait-and-resume / fallback-per-Step-7 / abort —
+  not blind retry. The note also explicitly rules out same-family
+  Claude-subagent substitution as a debater: any Claude-only
+  fallback is the labeled-degraded synthesis path at Step 7, not a
+  silent replacement.
+
+What v0.96 deliberately did NOT do:
+
+- Did NOT add a Claude-subagent fallback mechanism. The user's
+  proposal was rejected unanimously across all five MAD streams.
+  The fresh-context property is real but second-order; provider
+  diversity is the load-bearing claim and a subagent cannot
+  restore it.
+- Did NOT add the original two-sentence patch Codex proposed in
+  its first stress-test. The hostile audit demonstrated that
+  patch was largely redundant with `safety_notes.md` lines 73-77
+  and would have introduced a new ambiguity ("retry after reset"
+  implies a reset time the skill cannot compute).
+- Did NOT add cost-of-fallback or long-gap-resume notes. The
+  practitioner identified these as minor; neither passes HIGH
+  BAR alone.
+- Did NOT touch `safety_notes.md`. The "do not paper over" rule
+  with its three operational levels (v0.92) already covers the
+  honesty-of-degradation question without further prose.
+
+The full MAD audit trail (Claude stream, Codex stress-test, three
+subagent verdicts, synthesis reasoning) lives at
+`Joint/mad-skill-private/credits_failure_mad/`.
 
 ## v0.95 — CITATION.cff tightening (triple-check follow-up to v0.94)
 

@@ -219,6 +219,19 @@ image-only PDF, etc.) abort with a message.
    does not retry on this basis automatically — the disclosure goes
    in the final memo.
 
+   **Note (v0.96):** when the failure is a Codex *technical non-run*
+   mid-run (auth, credits/quota exhausted, rate limit, fatal error)
+   rather than a substandard-output case, "retry" is only meaningful
+   if the error specifies a finite wait (e.g., rate-limit with a
+   Retry-After header). For credits/quota exhaustion or auth
+   failures, the same call will keep failing until the underlying
+   state changes (top-up, reset, re-auth) — do not blind-retry.
+   Surface the underlying cause to the user and offer wait-and-resume
+   later (per the Resume / retry state section), the fallback path
+   per Step 7, or abort. Codex's role is not silently filled by a
+   Claude subagent: same-family fallback is documented at Step 7 as a
+   labeled-degraded synthesis, not a substitute debater.
+
 3. **Round 2 anonymization**:
    For each stream, create a Round-2 input packet containing only the
    *other two* Round-1 outputs, with provider/role labels stripped and
