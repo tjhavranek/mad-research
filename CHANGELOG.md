@@ -3,7 +3,102 @@
 Notable changes to the `mad-research` skill family. The Git tags
 `v0.1`, `v0.2`, `v0.3`, `v0.4`, `v0.5`, `v0.6`, `v0.7`, `v0.75`,
 `v0.8`, `v0.81`, `v0.9`, `v0.91`, `v0.92`, `v0.93`, `v0.94`,
-`v0.95`, and `v0.96` correspond to the entries below.
+`v0.95`, `v0.96`, and `v1.0` correspond to the entries below.
+
+## v1.0 — stabilization: consistency fixes + honest scope statement
+
+Triggered by a full MAD self-audit of the public v0.96 repo "in all
+aspects." Four independent streams ran: Codex (external read of the
+repo), plus three subagents — a documentation-consistency drift
+hunter, a fresh-eyes new-user walkthrough, and a strategic skeptic.
+
+Two things came out of it. First, the repo's public surface is clean
+(the internal `_review/` and `_v07_audit/` working folders were
+verified gitignored and absent from the remote; no high-severity
+bugs; no broken file pointers; the three skills' shared helpers are
+byte-identical, not silently drifted). Second — the strongest finding,
+on which all four streams converged — the project had crossed into
+over-polishing relative to its validation: the prior few versions
+spent escalating audit machinery on shrinking changes. The honest
+highest-value move is to declare the skill stable, fix the genuine
+remaining inconsistencies, and stop the version treadmill — then treat
+the comparative-evaluation question as the separate research project
+it is.
+
+v1.0 is that stabilization. It ships only fixes the audit verified as
+real, plus one honest scope statement. No new features.
+
+Consistency fixes (each was a verified internal contradiction or
+stale reference introduced by the rapid v0.75–v0.96 cadence):
+
+- **`CITATION.cff` version corrected and frozen.** It still read
+  `version: "0.95"` while the repo was v0.96 — false public citation
+  metadata. Set to `1.0`. Declaring v1.0 and stopping routine version
+  bumps also removes the recurring "citation version goes stale on
+  every release" failure at its root.
+- **Synthesis prompt numeric-exception contradiction resolved.**
+  Non-negotiable #3 ("no confidence scores, percentages, letter
+  grades") flatly contradicted the same file's Bayesian-Mode appendix,
+  which requires a numeric posterior + 80% interval. #3 now states the
+  scoped exception explicitly (numerics only inside the Bayesian
+  appendix, gated on `_mode_context.md`).
+- **Synthesis "Session ID" source fixed.** The audit-trail template
+  told the fresh synthesizer to fill Session ID "from meta.json" — a
+  file synthesis is explicitly forbidden to read. It is now a
+  placeholder the orchestrator fills during the Step 8 audit-trail
+  append; the anti-tamper allowed-append list in `orchestration.md`
+  was widened to permit exactly that.
+- **Round 2 packet schema synced to the actual prompt.**
+  `packet_schema.md` listed a "Designated minority objection" heading
+  Round 2 does not emit (it is a Round 1 Contribution-Skeptic heading)
+  and omitted the two mandatory v0.7 Round 2 sections (Authority
+  anonymization probe, Bounded omission audit). Structural validation
+  would have mis-fired on a correct v0.7+ packet. Schema now matches
+  `round2_cross_critique.md` exactly.
+- **Worked example annotated as a preserved historical run.** The
+  WAIVE example predates the v0.8 Independence line and v0.92
+  N/3-effective field. Per the artifact-preservation norm the memo was
+  NOT rewritten; the example README now carries a protocol-version
+  note explaining that current runs additionally produce
+  `_mode_context.md` and the `Mode` / `N/3 effective` / `Independence`
+  audit-trail fields.
+
+Documentation / honesty:
+
+- **Two-provider access + cost stated up front.** The README's
+  "read first" block now plainly says you need access to BOTH a Claude
+  (Anthropic) plan AND an OpenAI Codex account (ChatGPT subscription
+  or API key), with the per-run cost framing (≈$0.10–$1.00 API-billed,
+  or within a subscription's quota). Previously a newcomer could get
+  partway through install before discovering the second required paid
+  provider.
+- **Honest v1.0 scope statement.** A new "Status (v1.0)" note states
+  that v1.0 means the tooling is feature-complete and stable — not
+  that multi-agent debate is proven to beat a single strong model.
+  That central question remains open (per Smit et al., already cited)
+  and is a separate planned evaluation.
+
+What v1.0 deliberately did NOT do:
+
+- Did NOT add features, providers, validators/CI, or a comparative
+  eval. The eval remains the one real higher-value lever and is a
+  standalone research project, out of scope for a stabilization
+  release. All four streams agreed not to reopen Gemini, capability
+  matrices, validators-before-evals, or a Claude-subagent fallback.
+- Did NOT rewrite the WAIVE final memo (preserved as an artifact;
+  annotated instead).
+- Did NOT consolidate `orchestration.md` / `synthesis_codex_prompt.md`
+  despite their length — Codex confirmed the length is guardrails, not
+  fluff, and consolidation is itself risky polish.
+- Did NOT ship the audit's Low/cosmetic items (legacy "either MAD
+  mode" wording in the doctors; a phantom `final/` reference in
+  orchestration Step 9; an internal path reference in the mad-build
+  prompt; a CHANGELOG header/v0.91-narrative nit). Each is harmless
+  and fixing it would be exactly the micro-polish the audit warned
+  against. Recorded in the local audit trail for any future cleanup.
+
+The full four-stream audit (Codex memo, three subagent reports, and
+the synthesis) lives at `Joint/mad-skill-private/v097_full_audit/`.
 
 ## v0.96 — retry-semantics clarification for mid-run Codex technical non-runs
 

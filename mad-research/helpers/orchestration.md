@@ -376,9 +376,10 @@ operations (and only these):
    without a row in "Points rejected." The verification result is
    logged in `meta.json` under `quote_verification`.
 3. **Audit-trail metadata append.** Add to the "Audit trail"
-   section: Codex version, total Codex calls, total elapsed
-   time, "synthesis ran via fresh `codex exec`" note. Nothing
-   else.
+   section: the Session ID (filling the placeholder the
+   synthesizer left, since synthesis must not read `meta.json`),
+   Codex version, total Codex calls, total elapsed time, and the
+   "synthesis ran via fresh `codex exec`" note. Nothing else.
 
 **Protected sections (Claude MUST NOT modify substantively):**
 

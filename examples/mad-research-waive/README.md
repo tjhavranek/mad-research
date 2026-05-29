@@ -5,6 +5,15 @@ meta-research literature. Inputs reused from the
 [`tjhavranek/research-audit-duel-protocol` v1.7 example](https://github.com/tjhavranek/research-audit-duel-protocol)
 so the automated and manual outputs can be compared directly.
 
+> **Protocol-version note.** This is a *preserved historical run* from
+> an earlier protocol version; it is kept verbatim as an audit artifact
+> and deliberately not rewritten. Current (v1.0) runs additionally
+> produce a `synthesis_packet/_mode_context.md` file and carry three
+> extra audit-trail fields in the final memo: `Mode`, `N/3 effective`
+> streams, and a mandatory `Independence:` line. The memo here shows
+> the older `Streams: 3/3` form. None of that changes the substance of
+> the audit below; it only post-dates these fields.
+
 ## Inputs
 
 - `input/maive.pdf` — Iršová, Bom, Havránek, Rachinger,

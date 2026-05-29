@@ -30,6 +30,15 @@ text of your manuscript and the prompts to their respective cloud APIs
 sending anything confidential, embargoed, under double-blind review, or
 covered by an NDA. If in doubt, don't.
 
+**You need access to both providers.** This drives two AI services: your
+existing Claude Code (Anthropic) plan, and an OpenAI Codex account — a
+ChatGPT subscription *or* an OpenAI API key. A typical `mad-research` run
+is 4–6 Codex calls over 30–60 minutes; that costs roughly $0.10–$1.00 when
+Codex is billed through the OpenAI API, or is covered within quota on a
+ChatGPT/Codex subscription. Claude Code usage counts against your existing
+Claude plan. If you don't already hold both, expect to set up the second
+one before the skill will run end-to-end.
+
 **Multi-agent debate is not ground truth.** Recent evidence (Smit et al.,
 ICML 2024) suggests that MAD does not reliably beat a single strong model
 with self-consistency. Treat the audit trail this skill produces as a
@@ -37,6 +46,12 @@ structured critique that surfaces issues for you to evaluate — not as an
 authoritative verdict. The "Points rejected" and "Trajectory ledger"
 sections in the final memo exist so you can audit what the protocol kept
 and what it dropped.
+
+**Status (v1.0).** The skill is feature-complete and stable. Whether
+multi-agent debate actually outperforms a single strong model on these
+tasks is the open question above — a comparative evaluation is a separate
+planned study, not part of this release. v1.0 means the tooling is done
+and honestly bounded, not that the approach is proven superior.
 
 ## Install
 

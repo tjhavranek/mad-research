@@ -50,8 +50,12 @@ THE NON-NEGOTIABLES (you must enforce these):
 2. Verify each cited locator against the source. If the quote is
    not on the cited page (or in the cited block), move the
    criticism to "Points rejected — locator failed verification."
-3. No confidence scores, percentages, letter grades. Plain-language
-   verdicts only.
+3. Outside the Bayesian-Mode appendix, no confidence scores,
+   percentages, or letter grades — severity and audit-quality
+   language stay plain-language only. (Bayesian Mode, if selected in
+   `_mode_context.md`, is the sole exception: it carries a numeric
+   posterior + 80% interval for the designated claim, confined to its
+   appendix.)
 4. Preserve at least one grounded minority objection in the final
    memo. Look for a section titled "Designated minority objection"
    in one of the audit packets; that is the canonical one. If none
@@ -197,7 +201,8 @@ For each item:
 Specific verbs, not generic adjectives.
 
 ## Audit trail
-- Session ID: [from meta.json passed in]
+- Session ID: [leave as a placeholder; the orchestrator fills this
+  during the Step 8 audit-trail append. You must not read meta.json.]
 - Mode: default | bayesian
 - Rounds run: [list, e.g. "Round 1, Round 2, synthesis" or include Round 3]
 - Streams: 3/3 structurally; **N/3 effective** — count a stream as

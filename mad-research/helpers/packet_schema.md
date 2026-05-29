@@ -49,16 +49,24 @@ structure, in this order, with no other top-level headings:
 
 ## Two weakest or overstated peer arguments
 
-## One issue neither X nor Y raised
+## One issue that neither X nor Y raised
 
 ## Top 3 surviving criticisms after Round 2
 
-## Designated minority objection   (Contribution Skeptic only)
-
 ## Devil's-advocate check on emerging consensus
+
+## Authority anonymization probe
+
+## Bounded omission audit
 
 ## Extraction caveats and unverified references
 ```
+
+(The Designated minority objection is a Round 1 heading, produced by
+the Contribution Skeptic; it is not a Round 2 section. Synthesis reads
+it from the Round 1 packet. The Authority anonymization probe and
+Bounded omission audit are mandatory in every Round 2 since v0.7 — see
+`prompts/round2_cross_critique.md`.)
 
 ## Validation pass (run by orchestration before Round 2 / synthesis)
 
