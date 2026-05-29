@@ -1,8 +1,9 @@
 # MAD-build — the production mode protocol
 
 Use when the user wants to **make something** together with Codex: code,
-draft, plan, analysis. The 4-step protocol mirrors the RDT code session
-in `Joint/cooperation_trial/` and `claude-codex-rdt-trial` on GitHub.
+draft, plan, analysis. The 4-step protocol automates the manual
+Research Audit Duel (RDT) code-collaboration session into a single
+Claude Code skill.
 
 ## Inputs
 

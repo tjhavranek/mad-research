@@ -226,11 +226,17 @@ image-only PDF, etc.) abort with a message.
    Retry-After header). For credits/quota exhaustion or auth
    failures, the same call will keep failing until the underlying
    state changes (top-up, reset, re-auth) — do not blind-retry.
-   Surface the underlying cause to the user and offer wait-and-resume
-   later (per the Resume / retry state section), the fallback path
-   per Step 7, or abort. Codex's role is not silently filled by a
-   Claude subagent: same-family fallback is documented at Step 7 as a
-   labeled-degraded synthesis, not a substitute debater.
+   Surface the underlying cause to the user and offer three options
+   (the same retry/proceed/abort set as `helpers/safety_notes.md`'s
+   technical-non-run rule): wait-and-resume later (per the Resume /
+   retry state section); proceed now with the remaining streams as a
+   labeled-degraded N-1 run (the missing stream is disclosed by the
+   "N/3 effective" audit-trail line); or abort. Note this is a
+   *debater* (Round 1/2) failure: the Step 7 fallback path is NOT an
+   option here — it covers only a failed *synthesizer*, and Codex's
+   debater role is never silently filled by a Claude subagent (a
+   substitute debater would collapse provider independence; see the
+   v0.96 reasoning).
 
 3. **Round 2 anonymization**:
    For each stream, create a Round-2 input packet containing only the
@@ -450,7 +456,7 @@ correct the locator.
 - Update `meta.json` with end timestamp, rounds run, total duration,
   total Codex calls, total tokens (approximate).
 - Print a summary to the user: where the session folder is, what to
-  read first (`final_memo.md` or `final/`), one sentence on how the run
+  read first (`final_memo.md`), one sentence on how the run
   went.
 - If any stream failed or any quote failed verification, surface that
   prominently. Do not bury it.

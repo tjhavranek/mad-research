@@ -3,7 +3,60 @@
 Notable changes to the `mad-research` skill family. The Git tags
 `v0.1`, `v0.2`, `v0.3`, `v0.4`, `v0.5`, `v0.6`, `v0.7`, `v0.75`,
 `v0.8`, `v0.81`, `v0.9`, `v0.91`, `v0.92`, `v0.93`, `v0.94`,
-`v0.95`, `v0.96`, and `v1.0` correspond to the entries below.
+`v0.95`, `v0.96`, `v1.0`, and `v1.0.1` correspond to the entries below.
+
+## v1.0.1 — one real bug caught by a third-model reviewer + final hygiene sweep
+
+Immediately after v1.0, the repo was re-audited by the Gemini Pro
+CLI — the first reviewer from a third model family (every prior audit
+used only Claude and OpenAI Codex). It caught a genuine logic bug that
+all four Claude/Codex streams missed, plus confirmed the v1.0 fixes
+were sound and introduced no new defects. Opus held final say and
+verified each finding before shipping.
+
+Bug fix:
+
+- **`orchestration.md` Step 6 mid-run failure options were
+  self-contradictory.** The v0.96 note, for a *debater* (Round 1/2)
+  technical non-run, offered "the fallback path per Step 7" as an
+  option and omitted "proceed." But Step 7's fallback covers only a
+  failed *synthesizer*, not a missing debater (the note's own next
+  sentence said so), and `safety_notes.md`'s technical-non-run rule
+  plus Step 6's own preceding line both specify retry/**proceed**/
+  abort. The options now correctly read wait-and-resume / proceed
+  (continue as a labeled-degraded N-1 run, disclosed by the "N/3
+  effective" line) / abort, and explicitly note that the Step 7
+  fallback is not applicable to a debater failure. This is the class
+  of cross-file contradiction the same-family audits had a shared
+  blind spot for; the third-family reviewer surfaced it.
+
+Final hygiene sweep (genuine stale references cleared now that the
+project is declaring itself done — done as one surgical pass, the
+only context in which the earlier audits agreed these low-severity
+items were worth touching):
+
+- All three `helpers/doctor.md` opened with "Run this before invoking
+  either MAD mode" — legacy two-mode wording predating the
+  three-skill split (and wrong for `codex-bridge`, which is not a MAD
+  mode). Now "Run this before invoking the skill." The three doctors
+  remain byte-identical.
+- `orchestration.md` Step 9 told the user to read "`final_memo.md` or
+  `final/`" — `final/` is a `mad-build` output directory that
+  `mad-research` never creates. Dropped.
+- `mad-build/prompts/mad_build_protocol.md` referenced a private local
+  path (`Joint/cooperation_trial/`) meaningless to any external
+  reader. Replaced with a generic provenance sentence.
+
+Deliberately LEFT (Opus overriding the reviewer at high bar): the
+CHANGELOG header lists `v0.9` though the v0.91 entry's prose narrated
+dropping it. The `v0.9` tag and entry are deliberately retained for
+completeness, so listing the tag is correct; removing it would unlist
+an extant tag, and rewriting shipped historical narrative is worse
+than the micro-nit. Also left: no features, no eval, no consolidation
+of the long helper files.
+
+The Gemini Pro audit memo is at
+`Joint/mad-skill-private/v097_full_audit/_gemini_memo.md`.
 
 ## v1.0 — stabilization: consistency fixes + honest scope statement
 

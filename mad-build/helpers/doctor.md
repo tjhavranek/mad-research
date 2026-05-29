@@ -1,6 +1,6 @@
 # Doctor — pre-flight checks
 
-Run this before invoking either MAD mode. If any check fails, tell the
+Run this before invoking the skill. If any check fails, tell the
 user exactly what to install. Do not proceed silently.
 
 ## Checks (in order)
