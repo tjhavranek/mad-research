@@ -3,7 +3,7 @@
 **For researchers who want a structured second opinion on a paper, proposal,
 or report — without writing code.**
 
-Most heavy [Claude Code](https://claude.com/claude-code) users who also use
+Most [Claude Code](https://claude.com/claude-code) users who also use
 ChatGPT keep [Codex CLI](https://github.com/openai/codex) running in a
 separate terminal and shuttle outputs by hand. These skills let Claude call
 Codex directly from one session — for one-shot tasks, structured
