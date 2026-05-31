@@ -386,6 +386,11 @@ operations (and only these):
    synthesizer left, since synthesis must not read `meta.json`),
    Codex version, total Codex calls, total elapsed time, and the
    "synthesis ran via fresh `codex exec`" note. Nothing else.
+4. **Optional calibration note (opt-in; experimental).** If the
+   user enabled the Opus calibration pass (Step 8.6), append the
+   independent subagent's output as its own clearly-labeled section
+   at the END of the memo. This ADDS a section; it does NOT modify
+   any protected section below. Off by default.
 
 **Protected sections (Claude MUST NOT modify substantively):**
 
@@ -450,6 +455,32 @@ same: verify every cited locator, move failures to "Points rejected."
 If a quote fails verification, move the criticism to "Points rejected"
 with reason "quote did not verify against source." Do not silently
 correct the locator.
+
+## Step 8.6 (optional, experimental — opt-in): Opus calibration pass
+
+**Off by default.** Run only when the user explicitly asks (e.g.,
+"add an Opus calibration pass" / "calibrate the memo"). This is NOT
+part of the validated v1.0 default protocol; whether an independent
+Opus review improves net audit value is exactly what the planned
+comparative evaluation will test. See `prompts/calibration_pass.md`
+for the full brief.
+
+In short: after Step 8, dispatch ONE independent Opus subagent (fresh
+context, via the Task/Agent tool — never the orchestrating session)
+to review `final_memo.md` against `manuscript_text.md` for severity
+*calibration* and triage harm (a quote-grounded but over-stated
+criticism). It surfaces the one failure mode the grounding rules miss.
+
+Anti-tamper still holds: the subagent has NO authority to edit, drop,
+re-order, or re-score any criticism, the verdict, the minority report,
+the action list, the trajectory ledger, or Points rejected. Its entire
+output is appended verbatim as one labeled section, exactly titled
+`## Calibration note (independent Opus subagent — experimental)`, with
+the within-family independence disclaimer from `calibration_pass.md`.
+Record `"calibration_pass": "opus-subagent"` in `meta.json`. If the
+subagent is unavailable, skip and note the absence — never let the
+orchestrating Claude calibrate in-session (that is the host judging
+its own run).
 
 ## Step 9: Wrap-up
 

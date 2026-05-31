@@ -108,6 +108,22 @@ avoids session-context leakage but does not optimally exploit Khan's
 Same-session Claude synthesis remains available as an explicit
 degraded fallback for users without Codex.
 
+## Optional: Opus calibration pass (experimental, opt-in, OFF by default)
+
+If the user asks ("add an Opus calibration pass" / "calibrate the
+memo"), an independent **Opus subagent** reviews the finished memo for
+severity *calibration* — the one failure mode quote+locator grounding
+does not catch: a criticism that cites a real passage yet over-states
+its severity (triage harm). It appends a separate, clearly-labeled
+`## Calibration note` and **never edits** the verdict or any
+criticism — the anti-tamper rule is fully preserved. It is a
+within-Anthropic-family check (same family as the Methodologist
+stream), not an independent judge, and it is **not yet validated** —
+its value is what the planned comparative evaluation will measure. It
+is the cleanest way to put the strongest available model on real
+judgment work without rewiring the fresh-Codex judge. See
+`prompts/calibration_pass.md` and `helpers/orchestration.md` Step 8.6.
+
 ## Pre-flight policy
 
 Run `helpers/doctor.md` checks. If Codex is missing or its auth is
@@ -173,7 +189,8 @@ mad-research/
 │   ├── round1_contribution_skeptic.md
 │   ├── round2_cross_critique.md
 │   ├── round3_adaptive.md
-│   └── synthesis_codex_prompt.md   — Codex-facing synthesis prompt
+│   ├── synthesis_codex_prompt.md   — Codex-facing synthesis prompt
+│   └── calibration_pass.md         — optional Opus calibration pass (experimental)
 ├── helpers/
 │   ├── invoke_codex.md
 │   ├── doctor.md

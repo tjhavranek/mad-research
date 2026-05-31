@@ -3,8 +3,61 @@
 Notable changes to the `mad-research` skill family. The Git tags
 `v0.1`, `v0.2`, `v0.3`, `v0.4`, `v0.5`, `v0.6`, `v0.7`, `v0.75`,
 `v0.8`, `v0.81`, `v0.9`, `v0.91`, `v0.92`, `v0.93`, `v0.94`,
-`v0.95`, `v0.96`, `v1.0`, `v1.0.1`, and `v1.0.2` correspond to the
-entries below.
+`v0.95`, `v0.96`, `v1.0`, `v1.0.1`, `v1.0.2`, and `v1.0.3` correspond
+to the entries below.
+
+## v1.0.3 — optional Opus calibration pass (experimental, opt-in)
+
+Adds the first step that puts Claude's strongest model (Opus) on real
+judgment work, in response to the maintainer's question about whether
+the protocol over-relies on Codex (Codex authors 2/3 Round-1 streams
+and is the synthesis judge; Claude was only a quote-verifier).
+Chosen deliberately as the *additive, low-risk* option over the two
+riskier rebalances (swapping the Codex judge for Opus, or giving Opus
+a second Round-1 stream) — both of which were left as variables for
+the planned eval rather than blind-shipped.
+
+What it is:
+
+- **`prompts/calibration_pass.md`** (new) plus `helpers/orchestration.md`
+  Step 8.6 and a SKILL.md note. When the user opts in ("add an Opus
+  calibration pass"), an **independent Opus subagent** (fresh context,
+  via the Task tool — never the orchestrating session) reviews the
+  finished memo against the manuscript for severity *calibration*: it
+  attacks the one failure mode quote+locator grounding cannot catch —
+  a criticism that cites a real passage yet over-states its severity
+  (the "triage harm" documented in v1.0.2). It is also the first
+  cross-check of the Codex synthesis by a different model family.
+
+Why it is safe (anti-tamper fully preserved):
+
+- The calibration subagent has NO authority to edit, drop, re-order,
+  or re-score anything. The verdict, surviving criticisms, minority
+  report, action list, trajectory ledger, and Points rejected stay
+  byte-for-byte as the fresh-Codex judge produced them. The subagent's
+  entire output is appended as ONE separate, labeled section
+  (`## Calibration note (independent Opus subagent — experimental)`),
+  carrying a within-family independence disclaimer (Opus shares a model
+  family with the Methodologist stream and the orchestrator, so it is
+  a calibration check, not an independent judge). Added as allowed
+  anti-tamper operation #4 in Step 8 — it adds a section, it does not
+  modify a protected one.
+
+Honesty guardrails:
+
+- **OFF by default and labeled experimental everywhere.** The validated
+  v1.0 default path is unchanged. Whether an independent Opus review
+  actually improves net audit value is unproven — it is precisely what
+  the planned comparative evaluation will test (it is eval "arm B" in
+  the saved spec). The skill does not claim it helps.
+- If the Opus subagent is unavailable, the pass is skipped and its
+  absence noted — the orchestrating Claude must NOT "calibrate"
+  in-session, which would be the host judging its own run.
+
+What v1.0.3 deliberately did NOT do: swap the synthesis judge to Opus,
+add a permanent Opus Round-1 stream, change the default 3-stream
+structure or the N/3-effective accounting, or claim the pass is
+validated. Those remain eval questions.
 
 ## v1.0.2 — two honesty fixes from a GPT-5.5 Pro strategic review
 
