@@ -94,6 +94,19 @@ grant agency), read it yourself. Models still hallucinate; the
 quote+locator discipline reduces the risk but does not eliminate it. The
 "Points rejected" section is your first line of defense — read it.
 
+**A grounded criticism can still be a bad criticism (triage harm).**
+Quote+locator discipline guards against *fabricated* objections, not
+against *over-stated* ones. A criticism can cite a real passage on a real
+page and still exaggerate its severity, or flag something a competent
+reviewer would wave through. The protocol asks each stream for its top
+criticisms, so on a strong manuscript it can surface plausible-but-minor
+objections dressed as high-severity ones. This has a real cost: acting on
+an over-stated high-severity objection can waste more of your time than
+missing a genuine minor one. Treat each surviving criticism as a
+*candidate to weigh*, not a verdict to obey — and downgrade or drop the
+ones whose severity outruns what the quoted evidence actually supports.
+The skill surfaces and grounds issues; the triage is yours.
+
 ## Bayesian Mode: six failure modes to be aware of
 
 Bayesian Mode (opt-in; see `helpers/orchestration.md` Step 2.5) adds

@@ -37,7 +37,10 @@ Three role streams in Round 1:
   Identification, design, causal logic.
 - **Evidence / Reproducibility Auditor** — Codex (reads structured
   text version of the manuscript). Internal consistency, equations,
-  tables, citation accuracy.
+  tables, citation accuracy. *"Reproducibility" here is textual:
+  internal consistency plus whether code/data are declared available —
+  this stream does not execute replication packages or inspect data
+  pipelines.*
 - **Contribution / Interpretation Skeptic** — Codex. Framing,
   overclaim, literature positioning. Designates the minority report.
 

@@ -3,7 +3,71 @@
 Notable changes to the `mad-research` skill family. The Git tags
 `v0.1`, `v0.2`, `v0.3`, `v0.4`, `v0.5`, `v0.6`, `v0.7`, `v0.75`,
 `v0.8`, `v0.81`, `v0.9`, `v0.91`, `v0.92`, `v0.93`, `v0.94`,
-`v0.95`, `v0.96`, `v1.0`, and `v1.0.1` correspond to the entries below.
+`v0.95`, `v0.96`, `v1.0`, `v1.0.1`, and `v1.0.2` correspond to the
+entries below.
+
+## v1.0.2 — two honesty fixes from a GPT-5.5 Pro strategic review
+
+A GPT-5.5 Pro review (the author's once-weekly access) was run through
+a full MAD: an independent Opus stream, a Codex stress-test against the
+live repo, and an Opus-final decision. Most of Pro's suggestions were
+confirmed real but out of scope (the comparative eval) or correctly
+already handled (the "verdict"/positioning caveats the README already
+carries). Two findings cleared the high bar as genuine
+honesty/accuracy gaps — both aligned with the project's core no-
+overclaim brand — and ship here. No features, no machinery.
+
+- **Triage-harm failure mode now disclosed.** Pro's sharpest point:
+  quote+locator discipline guards against *fabricated* objections but
+  not *over-stated* ones, and the protocol's "top criticisms" framing
+  can dress plausible-but-minor objections as high-severity on a
+  strong manuscript — wasting scarce author time. The repo documented
+  many failure modes but not this one. `helpers/safety_notes.md` now
+  tells the reader to treat each surviving criticism as a candidate to
+  weigh, not a verdict to obey, and to downgrade criticisms whose
+  severity outruns the quoted evidence. (Existing controls already
+  mitigate it partly — Round 2's "weakest/overstated peer arguments",
+  Points rejected, severity ratings, the evidence-engagement minority
+  rule — so this is an honest caveat, not new machinery.)
+- **"Reproducibility" overclaim scoped.** The Evidence /
+  Reproducibility Auditor reads a *text* version of the manuscript; in
+  empirical economics "reproducibility" implies re-running code on
+  data, which this stream does not do. Rather than rename the role
+  (which would ripple into the frozen worked example), `SKILL.md` and
+  `prompts/round1_evidence_auditor.md` now scope the term honestly:
+  textual/internal consistency plus whether code/data are *declared
+  available* — not execution of replication packages.
+
+What v1.0.2 deliberately did NOT do:
+
+- Did NOT run or ship the comparative eval. Pro's 8-document,
+  false-positive-sensitive, blinded paired design (net-utility scoring
+  that penalizes over-stated/invalid criticisms) is the best eval spec
+  we have and is saved to the private backlog — but it is the deferred
+  research project, not a repo change.
+- Did NOT rename the synthesis "Verdict" section or rebrand the
+  project as a "defect ledger." The README already says the memo is
+  "not an authoritative verdict"; renaming ripples into the
+  anti-tamper rule and the frozen example for little gain.
+- Did NOT change the model mix in response to the author's "are we
+  over-relying on Codex?" question. Honest answer recorded: yes, Codex
+  authors 2/3 Round-1 streams and is the fresh-synthesis judge while
+  Claude is one debater + quote-verifier — a real, *already-disclosed*
+  limitation (`SKILL.md` states the judge shares a model family with
+  two debaters and "does not optimally exploit Khan"). It is largely
+  an architecture artifact (Claude is the host, so additional
+  independent streams must be external Codex calls, and the judge must
+  be a non-orchestrator fresh context). A fresh-Claude-subagent judge
+  or model rotation might be better but trades against the clean
+  anti-tamper story and was already weighed against the
+  rejected "configurable model assignments" option; it is saved as a
+  variant to TEST in the eval, not to assume. (Codex assessed this
+  against its own interest and agreed it is "not optimal but
+  defensible.")
+
+The full MAD trail (Pro's feedback, the Opus stream, the Codex
+stress-test, and this synthesis) is in
+`Joint/mad-skill-private/gpt55pro_review/`.
 
 ## v1.0.1 — one real bug caught by a third-model reviewer + final hygiene sweep
 
