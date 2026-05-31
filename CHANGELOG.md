@@ -3,8 +3,40 @@
 Notable changes to the `mad-research` skill family. The Git tags
 `v0.1`, `v0.2`, `v0.3`, `v0.4`, `v0.5`, `v0.6`, `v0.7`, `v0.75`,
 `v0.8`, `v0.81`, `v0.9`, `v0.91`, `v0.92`, `v0.93`, `v0.94`,
-`v0.95`, `v0.96`, `v1.0`, `v1.0.1`, `v1.0.2`, and `v1.0.3` correspond
-to the entries below.
+`v0.95`, `v0.96`, `v1.0`, `v1.0.1`, `v1.0.2`, `v1.0.3`, and `v1.0.4`
+correspond to the entries below.
+
+## v1.0.4 — consistency sweep on the v1.0.3 calibration pass
+
+A focused MAD (Claude + Codex consistency-auditor against the live
+repo) checked whether v1.0.3's calibration pass is stated correctly
+everywhere. The operational wiring was sound — synthesis prompt
+correctly does not produce the note, the doctor needs nothing, the
+frozen example correctly has no note, and "No fourth model" is not
+violated (the Opus subagent is Claude-family, already a participant —
+a fourth *agent*, not a fourth model). Two genuine inconsistencies
+that v1.0.3 itself introduced were fixed:
+
+- **Appended-section title drift.** `SKILL.md` abbreviated the title
+  as `## Calibration note`, while `helpers/orchestration.md` Step 8.6
+  and `prompts/calibration_pass.md` specify the full title the
+  orchestrator must emit: `## Calibration note (independent Opus
+  subagent — experimental)`. `SKILL.md` now matches them exactly.
+- **"Byte-for-byte" overstatement.** The v1.0.3 entry above said the
+  protected sections "stay byte-for-byte as the fresh-Codex judge
+  produced them." That overstates the anti-tamper rule, which already
+  permits Step 8 quote-verification moves and format polish. Corrected
+  to "not altered by the calibration subagent" — the accurate claim
+  (the subagent has no edit authority; the existing Step 8 rules are
+  unchanged).
+
+Deliberately left (high bar): the top-level `README.md` and
+`mad-research/README.md` do NOT advertise the calibration pass. That
+is intentional, not an omission — the pass is experimental,
+unvalidated, and off by default, so putting it in the public pitch or
+the default-flow walkthrough would overclaim. It is fully documented
+in the operational docs (SKILL.md, orchestration.md, the prompt) where
+the orchestrating model actually needs it.
 
 ## v1.0.3 — optional Opus calibration pass (experimental, opt-in)
 
@@ -33,8 +65,10 @@ Why it is safe (anti-tamper fully preserved):
 
 - The calibration subagent has NO authority to edit, drop, re-order,
   or re-score anything. The verdict, surviving criticisms, minority
-  report, action list, trajectory ledger, and Points rejected stay
-  byte-for-byte as the fresh-Codex judge produced them. The subagent's
+  report, action list, trajectory ledger, and Points rejected are not
+  altered by the calibration subagent — it has no edit authority, and
+  the existing Step 8 rules (quote-verification moves, format polish)
+  are unchanged. The subagent's
   entire output is appended as ONE separate, labeled section
   (`## Calibration note (independent Opus subagent — experimental)`),
   carrying a within-family independence disclaimer (Opus shares a model
