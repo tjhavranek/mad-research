@@ -51,7 +51,10 @@ Run `codex exec --help` and look for these tokens in the output:
 If any are missing, the user's Codex version is incompatible with this
 skill. Tell them which flag is missing and offer:
 - Pinning to a tested Codex version: `npm install -g @openai/codex@<known-good>`.
-- Or, for `mad-research`, run Claude-only (clearly labeled "single-model audit," never as MAD-research).
+- Or run `mad-research` in its opt-in **Claude-only mode** (`SKILL.md`): a
+  proper single-provider run via fresh Claude subagents, titled
+  `mad-research (Claude-only mode)` — distinct from the last-resort
+  in-session "single-model audit" (orchestrator judging its own stream).
 
 ### 6. Codex authentication
 ```sh
