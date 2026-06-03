@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: "If you use mad-research, please cite this software; if you use the research-audit protocol itself, also cite the underlying Duel/MAD methodology listed in the README."
 type: software
 title: "mad-research: Claude Code skills for adversarial multi-agent debate on research documents"
-version: "1.0.4"
-date-released: 2026-05-31
+version: "1.1"
+date-released: 2026-06-03
 authors:
   - family-names: "Havránek"
     given-names: "Tomáš"

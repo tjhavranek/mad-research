@@ -30,6 +30,24 @@ The WAIVE team are collaborators of the orchestrator. The example was
 deliberately chosen as a case where the skill would have to produce
 real criticism of friendly work.
 
+## [`claude-only-vs-mad-3way/`](claude-only-vs-mad-3way/) — does Codex add value? A 3-way comparison
+
+A blinded 3-way comparison on **five recent meta-analyses** (relative risk
+aversion, class size, exercise & cognition, beauty & success, hedge-fund
+alphas): the full `mad-research` protocol **with Codex** (arm T) vs. the
+*same* protocol run **Claude-only** with a fresh-subagent synthesizer (arm
+C1) vs. the earlier 5-lens Claude panel. An independent third model
+(**Gemini**) judged the three memos blind on each paper.
+
+Result (illustrative, not a powered study): unanimous **C1 > T > Panel** —
+the structured debate protocol clearly beat the generic panel, but adding
+Codex did **not** beat the all-Claude version of the same protocol. The
+folder's `README.md` has the full tally, the concrete reasons (e.g. on the
+risk-aversion paper the Claude arm caught a sign contradiction and a transcription
+error that the Codex arm missed), and the caveats
+(n = 5, one run per arm, a single LLM judge, no seeded ground truth). This
+example motivates the opt-in **Claude-only mode** added in v1.1.
+
 ## More to come
 
 If you run a `mad-build` or `mad-research` session on material you're

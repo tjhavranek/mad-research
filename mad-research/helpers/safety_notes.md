@@ -8,7 +8,8 @@ Both Claude and Codex send the manuscript and prompts to their respective
 cloud APIs. That means:
 
 - The manuscript content is sent to **Anthropic** (Claude) and **OpenAI**
-  (Codex). Two providers per run.
+  (Codex). Two providers per run — or **Anthropic only** in the opt-in
+  Claude-only mode.
 - Each provider has its own data-handling and retention policy. Read
   Anthropic's and OpenAI's policies before sending material that is
   confidential, embargoed, under double-blind review, or covered by a
@@ -16,7 +17,10 @@ cloud APIs. That means:
 - This skill does not send to anyone else, but the data leaves your
   machine the moment a stream starts.
 
-If you cannot send the document to two providers, do not run this skill.
+If you cannot send the document to two providers, do not run the default
+(cross-model) configuration — but the opt-in **Claude-only mode**
+(`SKILL.md` → "Claude-only mode") sends only to **Anthropic**, so it is the
+single-provider option when you cannot or will not send to OpenAI.
 
 ## Prompt injection in source documents
 

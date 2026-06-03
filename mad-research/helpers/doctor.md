@@ -5,6 +5,12 @@ user exactly what to install. Do not proceed silently.
 
 ## Checks (in order)
 
+> **Claude-only mode (mad-research):** if the user opted into the Claude-only
+> mode (`mad-research/SKILL.md`), checks 4–6 below (Codex install / flags /
+> auth) are *informational only* — no `codex exec` call is made, so a missing
+> or unauthenticated Codex must NOT block the run. Run them, report the
+> result, but do not abort a Claude-only run on them.
+
 ### 1. Claude Code is the host
 You are running inside Claude Code. If this skill is being executed
 elsewhere, abort with a friendly message.
@@ -45,7 +51,10 @@ Run `codex exec --help` and look for these tokens in the output:
 If any are missing, the user's Codex version is incompatible with this
 skill. Tell them which flag is missing and offer:
 - Pinning to a tested Codex version: `npm install -g @openai/codex@<known-good>`.
-- Or, for `mad-research`, run Claude-only (clearly labeled "single-model audit," never as MAD-research).
+- Or run `mad-research` in its opt-in **Claude-only mode** (`SKILL.md`): a
+  proper single-provider run via fresh Claude subagents, titled
+  `mad-research (Claude-only mode)` — distinct from the last-resort
+  in-session "single-model audit" (orchestrator judging its own stream).
 
 ### 6. Codex authentication
 ```sh

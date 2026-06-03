@@ -6,7 +6,9 @@ description: |
   anonymized cross-critique, fresh-context Codex synthesis against a
   locked rubric, minority report preserved. Two modes: default
   methodology audit, and an opt-in Bayesian Mode for evaluating the
-  truth of a contested empirical claim.
+  truth of a contested empirical claim. Can also run in an opt-in
+  Claude-only configuration (all streams + synthesis via fresh-context
+  Claude subagents; single-provider, not cross-model).
 
   Triggers:
    - "MAD-research <file>"
@@ -16,6 +18,7 @@ description: |
    - "audit this manuscript"
    - "MAD-audit <file>"
    - "MAD-research in Bayesian Mode" / "evaluate the empirical claim X with Bayesian discipline" (opt-in Bayesian Mode)
+   - "MAD-research <file> Claude-only" / "run mad-research in Claude-only mode" (opt-in single-provider mode — all streams + synthesis via fresh Claude subagents, no Codex)
 
   For a Claude + Codex collaboration on producing artifacts (code,
   drafts, plans), use the mad-build skill instead.
@@ -108,6 +111,51 @@ avoids session-context leakage but does not optimally exploit Khan's
 Same-session Claude synthesis remains available as an explicit
 degraded fallback for users without Codex.
 
+## Claude-only mode (opt-in, structure-matched)
+
+A deliberate **single-provider** configuration: the full protocol — three
+Round-1 streams, the anonymized Round-2 cross-critique, and the synthesis —
+runs entirely on Claude, but with each stream and the synthesizer dispatched
+as a **fresh-context Claude subagent** (via the Task/Agent tool), never the
+orchestrating session. That preserves the two properties that make this a
+debate rather than one model talking to itself: the streams are mutually
+independent, and the judge has no session history with the debaters.
+
+**This is not the degraded fallback.** When Codex is simply *unavailable*,
+the skill's fallback is an *in-session* Claude synthesis (the orchestrator
+judging its own Methodologist stream), explicitly labelled "single-model
+audit" and weaker by design. Claude-only **mode** is the opposite: an opt-in
+choice in which the judge is a *fresh* Claude subagent, so the fresh-judge
+property is kept.
+
+| Configuration | Streams | Synthesizer | When |
+|---|---|---|---|
+| Default (cross-model) | Claude + Codex + Codex | fresh `codex exec` | default |
+| **Claude-only mode** | 3× fresh Claude subagents | fresh Claude subagent | explicit opt-in |
+| Degraded fallback | as configured | **in-session** Claude | Codex broke + user forced |
+
+**How to select it.** The user says "Claude-only" (e.g. "MAD-research this
+paper, Claude-only"). In this mode the doctor's Codex checks are
+informational, not blocking — Codex is not required. Record
+`stream_assignments` as all `"claude"` and set the independence signature to
+the Claude-only string (see `helpers/orchestration.md` Step 2.6 and Step 7).
+
+**Label honestly.** The final memo is titled `mad-research (Claude-only
+mode)` and its audit-trail Independence line reads, verbatim: *"1 provider
+(Claude); 3 streams + synthesis all via fresh-context Claude subagents;
+structure-matched single-model audit — fresh judge, not cross-model."* Never
+imply cross-model independence in this mode.
+
+**Why it exists.** In a blinded 3-way comparison on five meta-analyses
+(`examples/claude-only-vs-mad-3way/`), an independent Gemini judge ranked
+this Claude-only configuration above the Codex cross-model run on
+every paper, while both beat the simpler 5-lens panel. That is an
+*illustrative* result (n = 5, one run per arm, a single judge, no seeded
+ground truth), not proof — so Claude-only is a supported option, not a new
+default. It is useful when Codex is unavailable or costly, when the document
+must stay with one provider, or when you want the cheaper single-provider
+run.
+
 ## Optional: Opus calibration pass (experimental, opt-in, OFF by default)
 
 If the user asks ("add an Opus calibration pass" / "calibrate the
@@ -129,11 +177,16 @@ judgment work without rewiring the fresh-Codex judge. See
 
 Run `helpers/doctor.md` checks. If Codex is missing or its auth is
 broken:
-- By default, **abort with install instructions**. The audit promise
-  requires three streams plus the fresh-Codex synthesizer.
-- If the user insists on proceeding, offer a Claude-only run clearly
-  labeled "single-model audit" in the final memo — never
-  "mad-research."
+- By default, **abort with install instructions**. The default audit
+  promise requires three streams plus the fresh-Codex synthesizer.
+- If the user wants to proceed without Codex, prefer **Claude-only mode**
+  (above): a proper single-provider run — fresh-subagent streams and a
+  fresh Claude subagent synthesizer — which keeps the independent-streams
+  and fresh-judge structure. It is titled "mad-research (Claude-only
+  mode)", never cross-model.
+- Only if fresh subagents are also unavailable, the last resort is an
+  *in-session* Claude synthesis, labelled "single-model audit" (the
+  orchestrator judging its own stream) — never call that "mad-research."
 
 **Never silently substitute Claude for a failed Codex stream while
 calling the result multi-model.**
