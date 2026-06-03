@@ -24,8 +24,9 @@ that is quote-grounded yet **over-stated** (triage harm — see
 The calibration subagent has NO authority to change the memo. It does
 not edit, delete, re-order, or re-severity any surviving criticism,
 the verdict, the minority report, the action list, the trajectory
-ledger, or Points rejected. Those remain exactly as the fresh-Codex
-judge produced them (anti-tamper rule, `orchestration.md` Step 8). The
+ledger, or Points rejected. Those are not altered by the
+calibration subagent (anti-tamper rule, `orchestration.md` Step 8); Step 8
+quote-verification may already have moved a criticism to Points rejected. The
 subagent's entire output is a **separate, appended, labeled note**.
 The human triages; the memo body is untouched.
 

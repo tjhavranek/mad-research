@@ -29,7 +29,7 @@ INPUTS YOU RECEIVE (as separate files in your working directory):
 - synthesis_packet/audit_Y.md          — Audit Y, same.
 - synthesis_packet/audit_Z.md          — Audit Z, same.
 - synthesis_packet/round3/             — present only if Round 3 ran.
-  Files: r3_X.md, r3_Y.md, r3_Z.md, brief.md.
+  Files: r3_X.md, r3_Y.md, r3_Z.md, round3_brief.md.
 - synthesis_packet/rubric.md           — the locked rubric. DO NOT
   modify or re-weight.
 
@@ -60,7 +60,11 @@ THE NON-NEGOTIABLES (you must enforce these):
    memo. Look for a section titled "Designated minority objection"
    in one of the audit packets; that is the canonical one. If none
    is designated, choose the strongest grounded objection that the
-   majority of streams downplayed.
+   majority of streams downplayed. If — and only if — no objection
+   retains verified quote+locator support after Points rejected, write
+   the minority report as an explicit "None — no grounded objection
+   survived verification this run; see Points rejected." Never
+   manufacture an objection to fill this section.
 5. Distinguish manuscript evidence from [EXTERNAL] claims —
    external claims go in their own section, never in the main
    criticism list.
@@ -109,7 +113,9 @@ For each:
 [One grounded objection preserved even though it lost majority
 support. Include: the claim, source audit, evidence, why it
 deserves preservation, and what the surviving counter-arguments
-named were.]
+named were. If no grounded objection survives verification this run,
+write exactly: "None — no grounded minority objection survived
+verification this run; see Points rejected." Never pad this section.]
 
 ## Points rejected under scrutiny
 | Claim | Origin | Reason rejected |

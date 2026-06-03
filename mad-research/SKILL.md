@@ -151,7 +151,8 @@ imply cross-model independence in this mode.
 this Claude-only configuration above the Codex cross-model run on
 every paper, while both beat the simpler 5-lens panel. That is an
 *illustrative* result (n = 5, one run per arm, a single judge, no seeded
-ground truth), not proof — so Claude-only is a supported option, not a new
+ground truth, and imperfect blinding — so part of the Claude-only edge is
+presentation, not reasoning; see the example), not proof — so Claude-only is a supported option, not a new
 default. It is useful when Codex is unavailable or costly, when the document
 must stay with one provider, or when you want the cheaper single-provider
 run.

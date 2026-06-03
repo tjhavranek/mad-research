@@ -43,7 +43,7 @@ Result (illustrative, not a powered study): unanimous **C1 > T > Panel** —
 the structured debate protocol clearly beat the generic panel, but adding
 Codex did **not** beat the all-Claude version of the same protocol. The
 folder's `README.md` has the full tally, the concrete reasons (e.g. on the
-risk-aversion paper the Claude arm caught a sign contradiction and a transcription
+beauty paper the Claude arm caught a sign contradiction and a transcription
 error that the Codex arm missed), and the caveats
 (n = 5, one run per arm, a single LLM judge, no seeded ground truth). This
 example motivates the opt-in **Claude-only mode** added in v1.1.

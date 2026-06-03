@@ -7,7 +7,7 @@ so the automated and manual outputs can be compared directly.
 
 > **Protocol-version note.** This is a *preserved historical run* from
 > an earlier protocol version; it is kept verbatim as an audit artifact
-> and deliberately not rewritten. Current (v1.0) runs additionally
+> and deliberately not rewritten. Current runs (v1.0 onward) additionally
 > produce a `synthesis_packet/_mode_context.md` file and carry three
 > extra audit-trail fields in the final memo: `Mode`, `N/3 effective`
 > streams, and a mandatory `Independence:` line. The memo here shows
@@ -108,8 +108,8 @@ the WAIVE proposal as a top-5 referee would.
 
 Expect ~30 minutes wall-clock and 5-6 Codex calls (two Round 1
 streams + two Round 2 streams + the synthesis + optional doctor /
-pre-flight). Typical cost on a $20 Codex Plus subscription:
-$0.20-$0.50.
+pre-flight). Typical cost: roughly $0.20-$0.50 per run when Codex is API-billed; on a
+Codex subscription it is covered within quota.
 
 ## License note
 

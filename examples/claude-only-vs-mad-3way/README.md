@@ -12,7 +12,7 @@ The five papers are recent meta-analyses from meta-analysis.cz: relative risk av
 | **C1 — structure-matched Claude-only** | The *same* protocol, prompts, rubric, and rounds — but **Claude in every seat**, including a fresh-context Claude subagent as the synthesizer | Claude only |
 | **Panel — 5-lens Claude-only** | The earlier, simpler single-pass panel (5 independent lenses, no cross-critique, no fresh-judge synthesis) | Claude only |
 
-`T vs C1` isolates the effect of **the model** (Codex vs Claude) holding the protocol fixed. `T/C1 vs Panel` shows the effect of **the structured protocol** over a generic panel.
+`T vs C1` compares **the model** (Codex vs Claude) with the protocol held fixed — but it also changes the synthesis mechanism (a separate Codex process vs an in-harness Claude subagent), so it is not a clean model ablation; see the caveats. `T/C1 vs Panel` shows the effect of **the structured protocol** over a generic panel.
 
 ## The judge
 

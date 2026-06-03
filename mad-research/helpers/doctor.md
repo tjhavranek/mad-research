@@ -82,8 +82,10 @@ Pre-flight OK.
 Session folder will be: <path>
 ```
 
-If any fail: print the failed step, the suggested fix, and stop. Do not
-proceed with the MAD until the user resolves it.
+If any **blocking** check fails: print the failed step, the suggested fix, and
+stop; do not proceed until the user resolves it. **In Claude-only mode the Codex
+checks 4–6 are informational and never block** (see the note at the top of this
+file).
 
 ## What NOT to do
 

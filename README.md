@@ -34,7 +34,7 @@ sends only to Anthropic — a single-provider option; see "How to invoke".)
 **You need access to both providers.** This drives two AI services: your
 existing Claude Code (Anthropic) plan, and an OpenAI Codex account — a
 ChatGPT subscription *or* an OpenAI API key. A typical `mad-research` run
-is 4–6 Codex calls over 30–60 minutes; that costs roughly $0.10–$1.00 when
+is 5–6 Codex calls over 30–60 minutes; that costs roughly $0.10–$1.00 when
 Codex is billed through the OpenAI API, or is covered within quota on a
 ChatGPT/Codex subscription. Claude Code usage counts against your existing
 Claude plan. If you don't already hold both, expect to set up the second
@@ -65,7 +65,12 @@ n = 5, one run per arm, a single (Gemini) judge with its own biases, and no
 seeded ground truth, so the head-to-head is suggestive, not decisive — and
 on at least one paper the Codex arm ranked lower precisely for being *more
 conservative* (declining to assert a claim it could not ground in the
-text), which a stricter reader might prefer.
+text), which a stricter reader might prefer. Two caveats from the example
+matter here too: blinding was imperfect — the Codex-arm memos kept protocol
+scaffolding the Claude-only memos lacked, so part of the `C1 > T` gap is
+presentation, not reasoning — and on three of the five papers the Codex arm was
+re-run after a rate-cap with its raw per-stream files lost to an encoding fault,
+so only the final memos survive for those three.
 
 **Status (v1.1).** The skill is feature-complete and stable. The
 comparative question above now has a first *illustrative* data point (the
@@ -133,7 +138,10 @@ to your temp directory. Replace `git clone ...` in the commands
 below with the unpack step. **Note:** GitHub ZIPs unpack into a
 branch-named folder (typically `mad-research-main/`), so replace
 `/tmp/mad-research` (macOS/Linux) or `$env:TEMP\mad-research`
-(Windows) in the commands below with the actual unpacked path.
+(Windows) in the commands below with the actual unpacked path. **If you
+installed via ZIP, also skip the `rm -rf` / `Remove-Item` line that deletes the
+temp checkout and point only the copy step at your unpacked folder** — otherwise
+that line can remove the very folder you just unpacked.
 
 The install commands below are **idempotent** — safe to re-run. They
 remove any existing temp checkout and any existing installed skill

@@ -39,7 +39,8 @@ Output: a `final_memo.md` with verdict, top surviving criticisms,
 points rejected (with one-line reasons), minority report, trajectory
 ledger (origin → challengers → status), action list, audit trail.
 
-Typical run: 30-60 minutes wall-clock, 4-6 Codex calls.
+Typical run: 30-60 minutes wall-clock, 5-6 Codex calls (the default
+cross-model run; Claude-only mode uses no Codex calls).
 
 There is also an opt-in **Claude-only mode** ("MAD-research this paper,
 Claude-only") that runs the same protocol with no Codex — all three

@@ -34,7 +34,12 @@ criticism that violates them.
    AND the convergent majority ignores rather than directly refutes its
    update-relevant evidence. ("Three streams said the opposite" is not a
    refutation; addressing the evidence is.) Never compress this section
-   into silence.
+   into silence to smooth consensus. **One honest exception:** if no
+   objection passes the test above — none retains verified quote+locator
+   support after Points rejected — state that explicitly ("No grounded
+   minority objection survived verification this run; see Points rejected")
+   rather than manufacture one. An honest empty is allowed; a padded
+   minority report is not.
 
 5. **Manuscript evidence vs. outside knowledge.** Distinguish them
    explicitly. Tag external claims `[EXTERNAL]`. Treat external claims as

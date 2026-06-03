@@ -4,7 +4,98 @@ Notable changes to the `mad-research` skill family. The Git tags
 `v0.1`, `v0.2`, `v0.3`, `v0.4`, `v0.5`, `v0.6`, `v0.7`, `v0.75`,
 `v0.8`, `v0.81`, `v0.9`, `v0.91`, `v0.92`, `v0.93`, `v0.94`,
 `v0.95`, `v0.96`, `v1.0`, `v1.0.1`, `v1.0.2`, `v1.0.3`, `v1.0.4`,
-`v1.1`, and `v1.1.1` correspond to the entries below.
+`v1.1`, `v1.1.1`, and `v1.1.2` correspond to the entries below.
+
+## v1.1.2 — self-audit consistency + honesty sweep (dual MAD)
+
+The repo was run through its own protocol twice: a **cross-model MAD**
+(Methodologist = Claude, Evidence Auditor = Codex, Contribution Skeptic =
+Gemini, fresh-Codex synthesis) and a structure-matched **Claude-only MAD**
+(all streams + synthesis as fresh Claude subagents), with the orchestrating
+Claude holding final say and re-verifying every kept finding against the
+files. The arms had complementary strengths: the cross-model arm's Codex
+stream caught concrete mechanical contradictions the Claude-only arm missed
+(Round-3 brief filename, doctor-footer stop-rule, the "isolates" overclaim),
+while the Claude-only arm caught the one outright factual error and went
+deeper on honesty-of-framing. (Contrast with `examples/claude-only-vs-mad-3way`,
+where Codex did not add value on meta-analysis papers — on this code/docs audit
+it did; n=1, illustrative, not a reversal of that result.) One factual fix, a
+cluster of consistency/honesty fixes, and one operational-doc fix ship.
+
+Factual:
+
+- **`examples/README.md` misattributed a finding.** The "sign contradiction
+  + transcription error" catch the index credited to the *risk-aversion*
+  paper actually belongs to the *beauty* paper (per
+  `claude-only-vs-mad-3way/README.md` and the underlying Gemini verdict); the
+  risk paper's distinguishing catch was the inconsistent reported finance
+  ranges. Corrected to "beauty paper."
+
+Honesty caveats now travel with the claim:
+
+- The "first comparative look" block in `README.md` and the "Why it exists"
+  paragraph in `mad-research/SKILL.md` repeated the favorable `C1 > T` result
+  but left the most-damaging caveat — *blinding was imperfect; part of the gap
+  is presentation, not reasoning* — only in the example. Both now carry it.
+  `README.md` also now states the data-integrity caveat (3 of 5 papers' Codex
+  arm re-run after a rate-cap, raw per-stream files lost to an encoding fault),
+  which previously lived only in the example's reproducibility note.
+
+Internal-consistency fixes:
+
+- **`"isolates"` → `"compares"`** (`claude-only-vs-mad-3way/README.md`): the
+  line claimed `T vs C1` "isolates the effect of the model" while the same
+  file's caveats correctly note it also changes the synthesis mechanism.
+- **Doctor footer** (`mad-research/helpers/doctor.md`): the unconditional "if
+  any fail … stop" footer contradicted the v1.1 Claude-only banner that exempts
+  the Codex checks; the footer is now blocking-only with the exemption restated.
+- **Round-3 brief filename** (`synthesis_codex_prompt.md`): the synthesis prompt
+  expected `synthesis_packet/round3/brief.md` while orchestration Step 6 produces
+  `round3_brief.md` — a producer/consumer mismatch that would mis-fire a
+  triggered Round 3. Unified to `round3_brief.md`.
+- **`"4–6 Codex calls"` → `"5–6"`** (`README.md`, `mad-research/README.md`):
+  every documented breakdown is 5 (or 6 with the doctor auth call); the 4 floor
+  was unsupported. The `mad-research/README` line also now notes Claude-only mode
+  uses no Codex calls.
+- Minor: ZIP-fallback `rm -rf` caution (`README.md`); WAIVE cost line reworded as
+  API-billed-equivalent vs subscription-quota and "Current (v1.0)" → "v1.0
+  onward"; `invoke_codex.md` tested-version string now names 0.13.x **and**
+  0.133.0 (the version the bundled examples ran on); `calibration_pass.md`
+  "exactly as the fresh-Codex judge produced them" softened (Step 8
+  quote-verification may already have moved a criticism).
+
+Operational-doc fix:
+
+- **Minority report gains an honest "none" branch.** `shared_grounding_rules.md`
+  mandated "at least one grounded objection … never compress this section into
+  silence," and the synthesis prompt's non-negotiable #4 + output template had
+  no empty branch — so on a fully convergent audit the synthesizer was pushed to
+  *manufacture* a minority objection, against the project's own anti-padding
+  stance. All three now permit — only when no objection retains verified
+  quote+locator support after Points rejected — an explicit "None — no grounded
+  minority objection survived verification this run; see Points rejected." An
+  honest empty is allowed; a padded one is not. (This was the top *design*
+  finding in both audit arms.)
+
+Deliberately left (verified, below the bar or owner-decided):
+
+- The **Bob Reed testimonial** stays as-is — placement below the limitations
+  block and the `[…]` elision are already deliberate and disclosed (owner
+  decision; the cross-model arm also judged it not a defect).
+- Three further operational-doc edits the audit surfaced were held, not shipped:
+  an inline false-precision caveat beside the Bayesian posterior; softening the
+  `SKILL.md` "mutually independent" sentence + adding the Bayesian appendix and
+  conventional-referee check to the anti-tamper protected list; and
+  logging/non-overwriting synthesis re-runs. Each is real but was not selected
+  for this sweep.
+- Codex-centric repo title, "feature-complete and stable" (same-paragraph
+  mitigation), the CHANGELOG's `Joint/mad-skill-private/` breadcrumbs
+  (gitignored, framed "locally"), and "top-5 referee" in the *preserved* WAIVE
+  reproduction command: deliberate-and-disclosed or preserved-artifact; unchanged.
+
+The full dual-MAD audit trail (both arms, all rounds, both syntheses, and the
+final-say decision memo) lives at `Joint/mad-skill-private/repo_self_audit_20260603/`
+and is not part of the public repo.
 
 ## v1.1.1 — Bob Reed endorsement + v1.1 consistency fix
 
