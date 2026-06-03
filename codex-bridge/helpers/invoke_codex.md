@@ -6,7 +6,8 @@ and `--output-last-message`. If any are missing, run the doctor
 (`helpers/doctor.md`) and tell the user their Codex version is
 incompatible.
 
-This skill family has been tested against `@openai/codex` versions 0.13x.
+This skill family has been tested against `@openai/codex` versions 0.13.x and
+0.133.0 (the version used for the bundled examples).
 
 ## Safe defaults
 

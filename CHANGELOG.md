@@ -4,7 +4,18 @@ Notable changes to the `mad-research` skill family. The Git tags
 `v0.1`, `v0.2`, `v0.3`, `v0.4`, `v0.5`, `v0.6`, `v0.7`, `v0.75`,
 `v0.8`, `v0.81`, `v0.9`, `v0.91`, `v0.92`, `v0.93`, `v0.94`,
 `v0.95`, `v0.96`, `v1.0`, `v1.0.1`, `v1.0.2`, `v1.0.3`, `v1.0.4`,
-`v1.1`, `v1.1.1`, and `v1.1.2` correspond to the entries below.
+`v1.1`, `v1.1.1`, `v1.1.2`, and `v1.1.3` correspond to the entries below.
+
+## v1.1.3 — restore byte-identical shared helper (v1.1.2 follow-up)
+
+A self-introduced drift from v1.1.2, caught immediately after release: that
+sweep improved the Codex tested-version line in
+`mad-research/helpers/invoke_codex.md` (naming `0.13.x` **and** `0.133.0`) but
+touched only the mad-research copy, so the three skills' `invoke_codex.md` — a
+shared helper the project keeps byte-identical — silently diverged. This
+release applies the identical line to `codex-bridge/helpers/invoke_codex.md`
+and `mad-build/helpers/invoke_codex.md`, restoring the invariant (verified: a
+single md5 across all three). No other change.
 
 ## v1.1.2 — self-audit consistency + honesty sweep (dual MAD)
 
