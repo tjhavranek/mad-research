@@ -13,9 +13,13 @@ with install instructions by default**. The audit promise requires three
 streams plus the fresh-Codex synthesizer; running without Codex breaks
 the contract.
 
-If the user insists on proceeding anyway, offer a Claude-only run
-clearly labeled "single-model audit" in the final memo — **never call
-it MAD-research**.
+If the user wants to proceed without Codex, prefer the opt-in
+**Claude-only mode** (Step 2.6): all streams + synthesis via fresh-context
+Claude subagents, titled `mad-research (Claude-only mode)` — it keeps the
+independent-streams and fresh-judge structure. Only if fresh subagents are
+also unavailable, fall back to an *in-session* Claude synthesis clearly
+labeled "single-model audit" — **that** degraded path is never called
+MAD-research.
 
 `SKILL.md` is the source of truth on this policy. This file
 (orchestration) must match it.

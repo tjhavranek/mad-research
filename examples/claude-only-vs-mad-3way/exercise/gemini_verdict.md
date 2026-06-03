@@ -1,4 +1,4 @@
-﻿Report A**
+**Report A**
 1. **Groundedness:** Excellent. Uses highly specific quotes, exact page numbers, and cross-references text claims against figure data (e.g., verifying $k$ and $m$ counts from Figure 2).
 2. **Materiality:** Excellent. Targets fundamental threats to inference, such as the confounding of causal estimands by unmodeled comparators and the instability of the headline bias corrections.
 3. **Severity calibration:** Excellent. Correctly elevates critical identification issues (RoBMA model flips, $m=1$ subgroups) while properly demoting standard error provenance to a bookkeeping issue. 

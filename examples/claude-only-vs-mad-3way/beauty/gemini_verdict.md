@@ -1,4 +1,4 @@
-﻿Ranking and Verdict**
+**Ranking and Verdict**
 1.  **Best: Report C**
 2.  **Runner-up: Report A**
 3.  **Last: Report B**

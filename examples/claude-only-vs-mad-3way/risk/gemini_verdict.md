@@ -1,4 +1,4 @@
-﻿Report A**
+**Report A**
     3.  **Report C**
 
 **Justification for Ranking:**

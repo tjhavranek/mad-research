@@ -148,7 +148,7 @@ imply cross-model independence in this mode.
 
 **Why it exists.** In a blinded 3-way comparison on five meta-analyses
 (`examples/claude-only-vs-mad-3way/`), an independent Gemini judge ranked
-this Claude-only configuration at or above the Codex cross-model run on
+this Claude-only configuration above the Codex cross-model run on
 every paper, while both beat the simpler 5-lens panel. That is an
 *illustrative* result (n = 5, one run per arm, a single judge, no seeded
 ground truth), not proof — so Claude-only is a supported option, not a new

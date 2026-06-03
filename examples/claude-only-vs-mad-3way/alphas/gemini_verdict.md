@@ -1,4 +1,4 @@
-﻿Here is the evaluation of the three audit reports based on the specified criteria.
+Here is the evaluation of the three audit reports based on the specified criteria.
 
 ### Scoring & Evaluation
 

@@ -16,7 +16,7 @@ The five papers are recent meta-analyses from meta-analysis.cz: relative risk av
 
 ## The judge
 
-**Gemini** (via CLI), chosen because it is independent of both Claude and Codex. For each paper the three memos were stripped of identifying headers, **randomized and relabelled A/B/C** (a different order per paper), and Gemini scored them blind on groundedness, materiality, severity calibration, coverage, and false-positive risk — then ranked them.
+**Gemini** (via CLI), chosen because it is independent of both Claude and Codex. For each paper the three memos were stripped of identifying headers, **randomized and relabelled A/B/C** (a different order per paper), and Gemini scored them blind on groundedness, materiality, severity calibration, coverage, and false-positive risk — then ranked them. (Blinding was imperfect — stylistic differences between the arms remained; see the caveats below.)
 
 ## Result
 
@@ -37,7 +37,7 @@ The five papers are recent meta-analyses from meta-analysis.cz: relative risk av
 2. **Codex did *not* earn its place here.** The all-Claude version of the same protocol (C1) was ranked *above* the Codex-augmented version (T) on all five papers, by an independent judge.
 
 ### Why C1 edged out T (concrete, from Gemini's stated reasons)
-- **risk:** C1 pressed the weak-instrument / GMM mechanical estimate–SE correlation as the deepest identification threat; **T (Codex) explicitly set that argument aside as `[EXTERNAL]`** (unprovable from the text) and lost the point. Codex was the more conservative, strictly-grounded auditor; Claude was bolder, and the judge rewarded the reach.
+- **risk:** the **Codex (T) arm** set the weak-instrument / GMM mechanical estimate–SE argument aside as `[EXTERNAL]` (unprovable from the manuscript text) — the more conservative, strictly-grounded call, and arguably *more correct* by the skill's own grounding rules — yet it ranked below the all-Claude arm, which won on other grounded catches (e.g. inconsistent reported finance ranges). The judge rewarded reach over caution.
 - **beauty:** C1 uniquely caught a **sign contradiction** (text claims "no attenuation bias" while Table S2 shows IV > OLS) and a transcription error in the sex-worker credible intervals; T was "high-quality and well-calibrated" but less granular.
 - Across papers the pattern repeats: the all-Claude arm produced deeper, more granular, more *material* catches; Codex produced solid, well-grounded, but slightly more conservative audits.
 
@@ -46,6 +46,7 @@ The five papers are recent meta-analyses from meta-analysis.cz: relative risk av
 - **One judge.** Gemini is itself an LLM with its own preferences; it may systematically favour the longer, more assertive Claude style. A different judge — or a human expert — could rank differently. There is **no seeded ground truth** here: Gemini scored *perceived* quality, not verified correctness.
 - **Conservatism was penalized.** On `risk`, Codex's choice to reject an unprovable-from-text claim is arguably *more correct* by the skill's own grounding rules, yet it scored lower. "Better" here means "the judge found it more useful," which is a value judgment about reach vs. strict grounding.
 - **Confounds.** T vs C1 changes the model *and* the synthesis mechanism (a separate Codex process vs an in-harness Claude subagent). A clean test would also vary those independently.
+- **Blinding was imperfect.** The Codex-arm (T) memos kept protocol scaffolding — `Supporting audits: X/Y/Z` tags and source line-locators — that the Claude-only (C1) memos did not, so the arms were stylistically distinguishable even with headers stripped, and on `alphas` the judge explicitly docked the T report for that "distracting meta-commentary." Part of the `C1 > T` gap is therefore **presentation, not reasoning** — treat `C1 > T` as weaker than the (unaffected) finding that both structured arms beat the Panel.
 - **A real test would** seed known flaws, add human adjudication, replicate with k ≥ 3 seeds, and use more than one arbiter. This example motivates that experiment; it does not substitute for it.
 
 ## Bottom line
@@ -55,12 +56,12 @@ On these five meta-analyses, judged blind by an independent Gemini arbiter, **th
 - `full_mad_codex.md` — the **T** arm's final memo (fresh-Codex synthesis).
 - `claude_only.md` — the **C1** arm's final memo (all-Claude, same protocol).
 - `gemini_verdict.md` — Gemini's blinded scoring and ranking.
-- `t_arm_audits.md` — the T arm's six anonymized stream outputs (R1 + R2, Claude + Codex), i.e. the raw material the Codex synthesizer read.
+- (Raw per-stream outputs are omitted: a capture-encoding issue during the rate-limit recovery corrupted two of them, so only the final memos and the blinded verdict — the substantive artifacts — are included.)
 - The 5-lens Panel verdict for each paper is reproduced at the bottom of this README.
 
 ## Reproducibility notes
 - T-arm Codex calls were real `codex exec` runs (v0.133.0, `--sandbox read-only`, prompt via stdin): 5 Codex calls per paper (2 Round-1 streams, 2 Round-2 streams, 1 synthesis). Claude verified quotes and formatted only — it did not write the verdict.
-- Codex hit its daily usage cap mid-run; 6 calls across 3 papers (`class`, `beauty`, `alphas`) were re-run after the cap reset and the affected `t_arm_audits.md` rebuilt, so the final memos here are complete multi-stream runs.
+- Codex hit its daily usage cap mid-run; 6 calls across 3 papers (`class`, `beauty`, `alphas`) were re-run after the cap reset, so the final memos here are complete multi-stream runs. (The raw per-stream files produced during that recovery had encoding corruption and are therefore not included; the synthesized memos are clean.)
 - Gemini's CLI emitted a non-fatal internal "NumericalClassifierStrategy" routing error on some calls; the substantive evaluation still generated correctly and is what is saved here.
 
 ## Blinded label → arm mapping (auditability)

@@ -1,4 +1,4 @@
-﻿Report A**
+**Report A**
 *   **Groundedness:** Low. Lacks direct quotes, specific data references, or table citations to back up its claims.
 *   **Materiality:** Moderate. Touches on important concepts (publication bias, sub-15 students) but lacks the depth to prove why they matter.
 *   **Severity Calibration:** Poor. Dismisses critical issues as "low" severity or "minor caveats" without rigorous justification.
