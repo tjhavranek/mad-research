@@ -3,8 +3,34 @@
 Notable changes to the `mad-research` skill family. The Git tags
 `v0.1`, `v0.2`, `v0.3`, `v0.4`, `v0.5`, `v0.6`, `v0.7`, `v0.75`,
 `v0.8`, `v0.81`, `v0.9`, `v0.91`, `v0.92`, `v0.93`, `v0.94`,
-`v0.95`, `v0.96`, `v1.0`, `v1.0.1`, `v1.0.2`, `v1.0.3`, and `v1.0.4`
-correspond to the entries below.
+`v0.95`, `v0.96`, `v1.0`, `v1.0.1`, `v1.0.2`, `v1.0.3`, `v1.0.4`,
+and `v1.1` correspond to the entries below.
+
+## v1.1 — opt-in Claude-only mode + first comparative example
+
+Two additions, both motivated by an illustrative comparative run.
+
+- **New `examples/claude-only-vs-mad-3way/`.** A blinded 3-way comparison
+  on five recent meta-analyses: the full protocol with Codex (arm T) vs.
+  the same protocol run Claude-only with a fresh-subagent synthesizer (arm
+  C1) vs. the earlier 5-lens Claude panel, judged blind by an independent
+  third model (Gemini). Result, on all five papers: `C1 > T > Panel` — the
+  structured debate protocol beat the generic panel, but adding Codex did
+  not beat the all-Claude version of the same protocol. Honest caveats are
+  front-and-centre in the example README (n = 5, one run per arm, a single
+  LLM judge, no seeded ground truth); the main README's "ground truth" and
+  status notes now link it.
+- **Opt-in Claude-only mode** (`SKILL.md`; `helpers/orchestration.md` Step
+  2.6). A deliberate single-provider configuration: all three streams and
+  the synthesis run as fresh-context Claude subagents (Task/Agent tool) —
+  not the orchestrating session and not `codex exec`. It keeps the
+  independent-streams and fresh-judge structure, so it is distinct from —
+  and stronger than — the degraded in-session "single-model audit" fallback
+  used when Codex is unavailable. Labelled honestly as `mad-research
+  (Claude-only mode)` with a "1 provider … fresh judge, not cross-model"
+  independence signature; the cross-model run remains the default. Offered
+  as a supported option, not a new default — the comparative result above
+  is illustrative, not a powered study.
 
 ## v1.0.4 — consistency sweep on the v1.0.3 calibration pass
 

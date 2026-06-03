@@ -47,11 +47,31 @@ authoritative verdict. The "Points rejected" and "Trajectory ledger"
 sections in the final memo exist so you can audit what the protocol kept
 and what it dropped.
 
-**Status (v1.0).** The skill is feature-complete and stable. Whether
-multi-agent debate actually outperforms a single strong model on these
-tasks is the open question above — a comparative evaluation is a separate
-planned study, not part of this release. v1.0 means the tooling is done
-and honestly bounded, not that the approach is proven superior.
+**A first comparative look (illustrative).** We ran exactly this comparison
+on five recent meta-analyses: the full protocol *with* Codex versus the
+*same* protocol run *Claude-only* (all streams plus a fresh-context Claude
+subagent as synthesizer) versus the earlier 5-lens Claude panel, with an
+independent third model (Gemini) judging the three memos blind on each
+paper — see
+[`examples/claude-only-vs-mad-3way/`](examples/claude-only-vs-mad-3way/).
+Two things held on all five papers: (1) the **structured debate protocol
+helped** — both multi-stream arms beat the simpler panel; and (2) **adding
+Codex did not beat the all-Claude version** of the same protocol — the
+blinded judge ranked Claude-only first every time. Read that as support for
+the *structured-debate approach*, not as proof about Codex specifically:
+n = 5, one run per arm, a single (Gemini) judge with its own biases, and no
+seeded ground truth, so the head-to-head is suggestive, not decisive — and
+on at least one paper the Codex arm ranked lower precisely for being *more
+conservative* (declining to assert a claim it could not ground in the
+text), which a stricter reader might prefer.
+
+**Status (v1.1).** The skill is feature-complete and stable. The
+comparative question above now has a first *illustrative* data point (the
+example), which motivated the opt-in **Claude-only mode** (see
+`mad-research/SKILL.md`) — but a properly powered study (seeded flaws,
+human adjudication, replication, more than one arbiter) remains a separate
+planned effort, not part of this release. v1.1 means the tooling is done
+and honestly bounded, not that either configuration is proven superior.
 
 ## Install
 
@@ -193,9 +213,18 @@ install or fix.
 You can also just say `Run MAD on file.pdf`; Claude routes to the
 right skill based on the file type and the verbs you used.
 
+To run `mad-research` **Claude-only** — single-provider, with all streams
+and the synthesis done by fresh-context Claude subagents instead of Codex —
+add *"Claude-only"* to the request (e.g. *"MAD-research this paper,
+Claude-only"*). The default remains the Codex cross-model run; the
+Claude-only configuration is an explicit, labelled opt-in (motivated by the
+[3-way comparison](examples/claude-only-vs-mad-3way/)), distinct from the
+degraded in-session fallback used when Codex is simply unavailable.
+
 ## See also
 
 - A real `mad-research` audit, end-to-end: [`examples/mad-research-waive/`](examples/mad-research-waive/).
+- Does Codex add value? A blinded 3-way comparison on five meta-analyses: [`examples/claude-only-vs-mad-3way/`](examples/claude-only-vs-mad-3way/).
 - The manual two-model / four-model protocols this builds on:
   <https://github.com/tjhavranek/research-audit-duel-protocol>.
 - Changelog and version history: [CHANGELOG.md](CHANGELOG.md).

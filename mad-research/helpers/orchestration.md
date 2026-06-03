@@ -115,6 +115,40 @@ running Bayesian Mode.** Six failure modes are documented there
 leakage, anti-prestige overcorrection, padding) and the user should
 be made aware before opting in.
 
+## Step 2.6: Claude-only mode (opt-in)
+
+Orthogonal to Bayesian Mode. By default the skill runs cross-model (Claude
++ Codex + Codex + fresh-Codex synthesis). If the user adds "Claude-only" to
+the request (e.g. "MAD-research this paper, Claude-only" / "run mad-research
+in Claude-only mode"), run the **single-provider** configuration from
+`SKILL.md` → "Claude-only mode":
+
+1. **Streams.** Run all three Round-1 streams (Methodologist, Evidence
+   Auditor, Contribution Skeptic) and all Round-2 cross-critiques as
+   **fresh-context Claude subagents via the Task/Agent tool** — one per
+   stream, each with the same role prompt it uses in cross-model mode. Do
+   NOT author them in the orchestrating session (that collapses stream
+   independence), and do NOT call `codex exec`.
+2. **Synthesis.** Run synthesis as a **fresh-context Claude subagent**
+   (Task/Agent tool, never the orchestrating session) against the same
+   anonymized packet + locked rubric + `_mode_context.md`. Step 8
+   anti-tamper and quote verification are unchanged.
+3. **Doctor.** Codex is not required; its checks in `helpers/doctor.md` are
+   informational and do not block a Claude-only run.
+4. **meta.json.** Set `stream_assignments` to
+   `{"methodologist":"claude","evidence_auditor":"claude","contribution_skeptic":"claude"}`,
+   add `"synthesis":"claude-subagent"`, and set `independence_signature` to
+   the Claude-only string in Step 7.
+5. **Label.** Title the final memo `mad-research (Claude-only mode)`. Never
+   imply cross-model independence.
+
+This mode is **distinct from the degraded fallback** (Step 1 / Step 7): the
+fallback is an *in-session* Claude synthesis used only when Codex broke and
+the user forced through, whereas Claude-only mode uses a *fresh* Claude
+subagent judge and so keeps the fresh-judge structure. Motivation and
+caveats: `SKILL.md` → "Claude-only mode" and
+`examples/claude-only-vs-mad-3way/`.
+
 ## Step 3: Page / token thresholds
 
 If pages > 50 or estimated total tokens > 200k:
@@ -188,6 +222,10 @@ preparation flags unrecoverable issues (no preserved page boundaries,
 image-only PDF, etc.) abort with a message.
 
 ## Step 6: Run rounds
+
+**(Claude-only mode):** run every stream below as a fresh-context Claude
+subagent via the Task/Agent tool instead of `codex exec` — see Step 2.6.
+Validation, anonymization, and the round structure are otherwise identical.
 
 1. **Round 1**: Run three streams.
    - Claude as Methodologist (reads original PDF directly).
@@ -265,6 +303,11 @@ a fresh `codex exec` call against anonymized inputs plus the locked
 rubric. Claude formats the returned memo and verifies quotes; Claude
 does **not** write the verdict.
 
+**(Claude-only mode:** the synthesizer is a fresh-context Claude subagent
+via the Task/Agent tool instead of `codex exec`; the anonymized packet,
+locked rubric, anti-tamper rule, and quote verification are identical — see
+Step 2.6.)
+
 Why: the orchestrating Claude has already authored Round 1's
 Methodologist stream and orchestrated anonymization. It cannot be a
 fresh judge over its own output. The fresh Codex synthesizer has no
@@ -317,9 +360,14 @@ helps the judge most when debaters are stronger than the judge.)
          streams; in-session Claude synthesis after Codex failure
          — fallback path, not an independent judge."
        - Claude-only "single-model audit" (Codex missing and user
-         forced through): "1 provider; 3 streams from one model
-         family; in-session Claude synthesis — labeled
+         forced through, in-session synthesis): "1 provider; 3 streams
+         from one model family; in-session Claude synthesis — labeled
          single-model audit, NOT MAD-research."
+       - Claude-only **opt-in mode** (all three streams + synthesis via
+         fresh-context Claude subagents; see Step 2.6): "1 provider
+         (Claude); 3 streams + synthesis all via fresh-context Claude
+         subagents; structure-matched single-model audit — fresh judge,
+         not cross-model."
      If a future run uses a non-default stream configuration, the
      orchestrator writes the matching honest description; the
      synthesizer never invents this string.
