@@ -75,6 +75,24 @@ human adjudication, replication, more than one arbiter) remains a separate
 planned effort, not part of this release. v1.1 means the tooling is done
 and honestly bounded, not that either configuration is proven superior.
 
+## Independent user feedback
+
+> "I wholeheartedly recommend this new AI tool from Tomas and Zuzana.
+> For those who are not used to working with the terminal versions of
+> Claude Code and Codex — like me — the setup required some help from
+> ChatGPT. However, well worth it. I used the mad-research skill. The
+> comments I received were good and caused me to make some changes to
+> my paper. I also compared it to two proprietary AI review sites […].
+> mad-research was comparable, if not superior. And, of course, it is
+> free. mad-research will be part of standard toolkit in the future
+> when writing papers."
+>
+> — **Bob Reed**, University of Canterbury — from his comment on the
+> [MAER-Net announcement](https://www.maer-net.org/post/stress-testing-research-with-ai-now-super-easy-and-fully-automated),
+> quoted with permission.
+
+<sub>The `[…]` omits two competitor sign-up links from the original comment; nothing else is altered.</sub>
+
 ## Install
 
 ### Prerequisites

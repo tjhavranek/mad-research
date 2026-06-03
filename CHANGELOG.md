@@ -4,7 +4,42 @@ Notable changes to the `mad-research` skill family. The Git tags
 `v0.1`, `v0.2`, `v0.3`, `v0.4`, `v0.5`, `v0.6`, `v0.7`, `v0.75`,
 `v0.8`, `v0.81`, `v0.9`, `v0.91`, `v0.92`, `v0.93`, `v0.94`,
 `v0.95`, `v0.96`, `v1.0`, `v1.0.1`, `v1.0.2`, `v1.0.3`, `v1.0.4`,
-and `v1.1` correspond to the entries below.
+`v1.1`, and `v1.1.1` correspond to the entries below.
+
+## v1.1.1 — Bob Reed endorsement + v1.1 consistency fix
+
+A review of the v1.1 changes (Claude-only mode + the 3-way example),
+cross-checked with Codex, found the additions sound and honestly
+caveated — no overclaim from n=5, clean mode integration, correct
+three-way independence signatures. Two small, verified follow-ups
+ship here; the substance of v1.1 is unchanged.
+
+- **Independent-user endorsement added to the README.** Bob Reed
+  (University of Canterbury) publicly endorsed the tool on the
+  MAER-Net announcement and agreed it could be quoted here. Added as
+  a short "Independent user feedback" section placed after the
+  "Status (v1.1)" note and before "Install" — prominent, but kept
+  below the "Privacy and limitations (read first)" block so the
+  honest caveats still come first. His two competitor sign-up URLs
+  are elided with a marked `[…]` and a transparent note; nothing
+  else in the quote is altered.
+- **v1.1 doctor drift fixed.** v1.1 updated `mad-research`'s own
+  doctor to point to the legitimate opt-in `mad-research (Claude-only
+  mode)`, but the byte-identical sibling lines in
+  `codex-bridge/helpers/doctor.md` and `mad-build/helpers/doctor.md`
+  still said a Claude-only run is a `"single-model audit, never as
+  MAD-research"` — a direct contradiction of the new mode. Both lines
+  now match the corrected guidance (Claude-only mode is a proper
+  single-provider run, distinct from the weaker in-session
+  "single-model audit" last resort).
+- **`mad-research/README.md`** now notes the opt-in Claude-only mode
+  (its quick-flow walkthrough had described only the default
+  all-Codex path). One line; points to `SKILL.md`.
+
+Deliberately left: the v1.1 example and its strong "Codex did not
+earn its place here (n=5)" framing stand — the caveats are already
+prominent and correct, and cross-model MAD rightly remains the
+default (the result is illustrative, not a powered study).
 
 ## v1.1 — opt-in Claude-only mode + first comparative example
 

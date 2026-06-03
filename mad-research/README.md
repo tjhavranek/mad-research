@@ -41,6 +41,11 @@ ledger (origin → challengers → status), action list, audit trail.
 
 Typical run: 30-60 minutes wall-clock, 4-6 Codex calls.
 
+There is also an opt-in **Claude-only mode** ("MAD-research this paper,
+Claude-only") that runs the same protocol with no Codex — all three
+streams and the synthesis as fresh-context Claude subagents. Single
+provider, fresh judge preserved; see `SKILL.md` → "Claude-only mode."
+
 ## Output structure
 
 ```
