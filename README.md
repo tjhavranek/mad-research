@@ -28,7 +28,8 @@ family, automated for the Claude Code + Codex CLI combination.
 text of your manuscript and the prompts to their respective cloud APIs
 (Anthropic and OpenAI). Read each provider's data-handling policy before
 sending anything confidential, embargoed, under double-blind review, or
-covered by an NDA. If in doubt, don't.
+covered by an NDA. If in doubt, don't. (The opt-in **Claude-only mode**
+sends only to Anthropic — a single-provider option; see "How to invoke".)
 
 **You need access to both providers.** This drives two AI services: your
 existing Claude Code (Anthropic) plan, and an OpenAI Codex account — a
@@ -37,7 +38,8 @@ is 4–6 Codex calls over 30–60 minutes; that costs roughly $0.10–$1.00 when
 Codex is billed through the OpenAI API, or is covered within quota on a
 ChatGPT/Codex subscription. Claude Code usage counts against your existing
 Claude plan. If you don't already hold both, expect to set up the second
-one before the skill will run end-to-end.
+one before the skill will run end-to-end. (Exception: the opt-in
+**Claude-only mode** runs on Claude alone and needs no Codex account.)
 
 **Multi-agent debate is not ground truth.** Recent evidence (Smit et al.,
 ICML 2024) suggests that MAD does not reliably beat a single strong model

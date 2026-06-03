@@ -5,6 +5,12 @@ user exactly what to install. Do not proceed silently.
 
 ## Checks (in order)
 
+> **Claude-only mode (mad-research):** if the user opted into the Claude-only
+> mode (`mad-research/SKILL.md`), checks 4–6 below (Codex install / flags /
+> auth) are *informational only* — no `codex exec` call is made, so a missing
+> or unauthenticated Codex must NOT block the run. Run them, report the
+> result, but do not abort a Claude-only run on them.
+
 ### 1. Claude Code is the host
 You are running inside Claude Code. If this skill is being executed
 elsewhere, abort with a friendly message.

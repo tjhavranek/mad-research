@@ -31,6 +31,10 @@ Two additions, both motivated by an illustrative comparative run.
   independence signature; the cross-model run remains the default. Offered
   as a supported option, not a new default — the comparative result above
   is illustrative, not a powered study.
+- **Single-provider docs reconciled.** Because Claude-only mode is a
+  one-provider (Anthropic-only) path, the README privacy notes,
+  `helpers/safety_notes.md`, and `helpers/doctor.md` no longer assert that
+  *two* providers are always required; `CITATION.cff` bumped to 1.1.
 
 ## v1.0.4 — consistency sweep on the v1.0.3 calibration pass
 
