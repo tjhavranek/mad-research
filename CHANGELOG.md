@@ -4,7 +4,91 @@ Notable changes to the `mad-research` skill family. The Git tags
 `v0.1`, `v0.2`, `v0.3`, `v0.4`, `v0.5`, `v0.6`, `v0.7`, `v0.75`,
 `v0.8`, `v0.81`, `v0.9`, `v0.91`, `v0.92`, `v0.93`, `v0.94`,
 `v0.95`, `v0.96`, `v1.0`, `v1.0.1`, `v1.0.2`, `v1.0.3`, `v1.0.4`,
-`v1.1`, `v1.1.1`, `v1.1.2`, and `v1.1.3` correspond to the entries below.
+`v1.1`, `v1.1.1`, `v1.1.2`, `v1.1.3`, and `v1.2` correspond to the
+entries below.
+
+## v1.2 — external roundtable audit applied: evidence honesty, 2026 literature, public eval spec, paper-workshop cross-link
+
+The repo was put through an adversarial Roundtable of the authors'
+successor skill, [`paper-workshop`](https://github.com/tjhavranek/paper-workshop)
+(16 expert seats + 3 generalists + pre-mortem, blind and independent;
+cross-critique under three lenses; a verification panel cleared 127 of 151
+findings — run degraded by a session cap: the steelman angle covered only
+~30% of findings and the completeness audit did not run, so the chair pass
+was completed in-session and the bar set high). The material fixes:
+
+- **Evidence honesty on the 3-way example.** The example README now opens
+  its limits with a single authoritative "Evidence status" account
+  (replacing three inconsistent descriptions of the raw-file loss),
+  admits the example fails the protocol's own retention standard (no raw
+  per-stream artifact survives for any arm — the temp copies were lost to
+  OS cleanup before archiving), discloses that the judge saw **only the
+  memos, not the manuscripts**, publishes the verbatim judge prompt
+  (`judge_prompt.md`), notes the treatment-correlated rate-cap disruption,
+  records backing models (imperfectly — itself now a logged lesson), and
+  discloses that all five papers are co-authored by the repo's authors.
+- **Perception-scoped claims everywhere.** "The structured protocol
+  clearly helps" / "Codex did not earn its place" style sentences were
+  rewritten as what they are: one LLM judge's consistent perceived-quality
+  ranking. The "(unaffected)" certification of the protocol-beats-Panel
+  margin was withdrawn; 5/5 unanimity is now labeled judge consistency,
+  not five confirmations. The examples index carries the caveats with the
+  claim.
+- **2026 literature folded in.** The README's "not ground truth" note now
+  cites the controlled-debate findings (reasoning strength + group
+  diversity dominate; majority pressure suppresses correction; problem
+  drift) and the judge-bias numbers (style bias 0.76–0.92, verbosity
+  ≈ +17%, 3-family judge rosters recommended), and a new non-circular
+  "Why the cross-model default remains, for now" paragraph weighs the
+  example against the diversity evidence and the repo's own cross-model
+  catches — both directions, openly weak.
+- **Public evaluation spec.** `docs/EVALUATION.md` publishes the planned
+  ground-truth study (seeded flaws + codebook, organic-flaw transport
+  check, 3-family judge roster, k ≥ 3 replication, pre-registered decision
+  rule incl. failed-run handling, full provenance logging) — converting
+  "deferred to a private future study" into a checkable commitment.
+- **Tested-version truth (shared helper, all three copies, byte-identical).**
+  The unqualified "tested against 0.13.x and 0.133.0" claim is replaced by
+  the precise status: 0.133.0 is tested for read-only runs only;
+  workspace-write on 0.133 has the reproduced silent-artifact-loss failure
+  (v0.81) — with a doctor-probe instruction and a pin fallback.
+- **Integrity rails anchored.** `meta.json` now records a SHA-256 of
+  `final_memo_codex_raw.md` at receipt (the anti-tamper comparison gets a
+  fixed reference) and a `backing_models` block (served model identities,
+  not just CLI versions). The N/3-effective disclosure was made
+  implementable: the synthesizer names empty streams by anonymized label;
+  the orchestrator appends real names in the metadata step it owns.
+- **Injection threat model righted.** `safety_notes.md` and
+  `packet_schema.md` now state plainly that the manuscript is the primary
+  untrusted surface (the packet guard is secondary), with the
+  evidence-not-directive rule extended explicitly to manuscript text; the
+  README warns referees that manuscripts under review are confidential
+  regardless of blinding regime.
+- **Bayesian Mode labeled experimental** (no documented end-to-end run),
+  and its numeric posterior must now carry an inline "structured stance,
+  not a calibrated probability" disclaimer in the memo itself.
+- **User-harm fixes:** install commands now replace an existing skill only
+  after verifying the fresh clone exists (a failed download no longer
+  deletes a working install); the README's read-first block warns about
+  severity inflation (triage harm) and links the safety notes; the
+  testimonial's "free" is footnoted (MIT-licensed skills vs metered
+  default run); cost figures carry an as-of date and basis; the
+  single-provider Claude-only option is stated in the bold claim itself
+  and at the Codex install step; the Claude-only mode's "mutually
+  independent" wording was scoped to session isolation (explicitly not
+  provider diversity); "v3" lineage labeling was reconciled with the
+  Citation section's Duel v1.7 / MAD v2.0.
+- **paper-workshop relationship documented** in the README: mad-research
+  is the fast cross-model audit; paper-workshop (CRUCIBLE) is the deep
+  Claude-only successor workshop with the optional rebuild, its
+  Claude-only design informed by this repo's comparative example.
+
+Known and accepted at v1.2: the integrity rails remain documented
+procedures (an executable diff gate stays future work per the v0.8
+anti-treadmill decision); the example's raw artifacts are unrecoverable;
+the repo title's Codex-centric framing stays until the evaluation says
+otherwise — the new README paragraph makes that reasoning explicit
+instead of implicit.
 
 ## v1.1.3 — restore byte-identical shared helper (v1.1.2 follow-up)
 

@@ -64,7 +64,12 @@ Three rounds plus synthesis:
    NOT change merge/reject/severity decisions except when an
    objective quote verification fails.
 
-## Bayesian Mode (opt-in)
+## Bayesian Mode (opt-in, experimental)
+
+**Status: experimental — no end-to-end Bayesian-Mode run is documented
+yet** (the same maturity label the Opus calibration pass carries). The
+mode's design is complete and its failure modes are documented, but until
+a real run is published, treat it as untested machinery.
 
 For most audits, the question is "is this manuscript's methodology
 sound?" — default mode. But sometimes the question is closer to "is
@@ -117,9 +122,13 @@ A deliberate **single-provider** configuration: the full protocol — three
 Round-1 streams, the anonymized Round-2 cross-critique, and the synthesis —
 runs entirely on Claude, but with each stream and the synthesizer dispatched
 as a **fresh-context Claude subagent** (via the Task/Agent tool), never the
-orchestrating session. That preserves the two properties that make this a
-debate rather than one model talking to itself: the streams are mutually
-independent, and the judge has no session history with the debaters.
+orchestrating session. That preserves the *session-level* properties that
+make this more than one context talking to itself: the streams run in
+mutually isolated contexts, and the judge has no session history with the
+debaters. Session isolation is **not** provider diversity — all seats share
+one model family and therefore its blind spots (the repo's own v0.96 note
+ranks provider diversity as the load-bearing independence claim, which this
+mode deliberately gives up; the honest label below says exactly that).
 
 **This is not the degraded fallback.** When Codex is simply *unavailable*,
 the skill's fallback is an *in-session* Claude synthesis (the orchestrator

@@ -184,6 +184,12 @@ Write `meta.json`:
   "input_sha256": "<hash of concatenated inputs>",
   "rounds_planned": ["round1", "round2", "synthesis"],
   "codex_version": "<from doctor>",
+  "backing_models": {
+    "codex_served_model": "<from the codex exec banner, per call batch, or null>",
+    "claude_session_model": "<the orchestrating session's model id>",
+    "synthesis_model": "<served model of the synthesizer call, or null>"
+  },
+  "raw_memo_sha256": null,
   "codex_available": true | false,
   "host_session": "claude-code <version>",
   "stream_assignments": {
@@ -433,11 +439,23 @@ operations (and only these):
    silently fix the locator and do not delete the criticism
    without a row in "Points rejected." The verification result is
    logged in `meta.json` under `quote_verification`.
+2.5. **Raw-memo hash at receipt.** Immediately on receiving
+   `final_memo_codex_raw.md`, compute its SHA-256 and record it in
+   `meta.json` as `raw_memo_sha256` — *before* any verification or
+   formatting. This anchors the anti-tamper comparison to a value fixed at
+   receipt: any later divergence between the recorded hash and the file is
+   itself evidence of tampering. (The rule remains a documented procedure
+   executed by the orchestrator; the hash makes it checkable after the
+   fact.)
 3. **Audit-trail metadata append.** Add to the "Audit trail"
    section: the Session ID (filling the placeholder the
    synthesizer left, since synthesis must not read `meta.json`),
    Codex version, total Codex calls, total elapsed time, and the
-   "synthesis ran via fresh `codex exec`" note. Nothing else.
+   "synthesis ran via fresh `codex exec`" note; and, when the synthesizer
+   reported **N/3 effective** with N < 3, the real name of the empty
+   stream(s) appended next to the anonymized label it used (the
+   orchestrator holds the de-anonymization mapping; the synthesizer cannot
+   and must not). Nothing else.
 4. **Optional calibration note (opt-in; experimental).** If the
    user enabled the Opus calibration pass (Step 8.6), append the
    independent subagent's output as its own clearly-labeled section

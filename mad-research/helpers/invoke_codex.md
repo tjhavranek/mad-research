@@ -6,8 +6,15 @@ and `--output-last-message`. If any are missing, run the doctor
 (`helpers/doctor.md`) and tell the user their Codex version is
 incompatible.
 
-This skill family has been tested against `@openai/codex` versions 0.13.x and
-0.133.0 (the version used for the bundled examples).
+Tested-version status, stated precisely: the family was developed and
+smoke-tested against `@openai/codex` 0.13.x; on 0.133.0 the documented
+testing covers **read-only** `codex exec` runs (the bundled `mad-research`
+examples). **`--sandbox workspace-write` on 0.133 has a reproduced
+silent-artifact-loss failure** (see CHANGELOG v0.81): Codex reports success
+but expected output files are missing. Before relying on workspace-write
+(the `mad-build` default), run the doctor and verify a smoke-test file
+actually lands on disk; if it does not, pin a 0.13.x version
+(`npm install -g @openai/codex@<version>`).
 
 ## Safe defaults
 

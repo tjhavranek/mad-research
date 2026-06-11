@@ -184,6 +184,10 @@ For each item:
 
 ### Posterior
 - Point estimate + 80% interval.
+- Include this sentence verbatim, immediately after the numbers: "This
+  posterior is an LLM-generated structured stance on the evidence, not a
+  calibrated probability." (Required since v1.2 so the disclaimer travels
+  with the number to every downstream reader of the memo.)
 - One-line sensitivity: [what would move the posterior most?].
 - Flag if posterior equals consensus prior: [if yes, justify why
   the manuscript's evidence does NOT update the prior, and ensure
@@ -216,11 +220,14 @@ Specific verbs, not generic adjectives.
   rejected) made it into the memo. A stream that passed Round-1
   structural validation but whose entire output ended up in Points
   rejected contributed 0 accepted points; the audit trail must
-  disclose that. When N < 3, name the structurally-valid-but-empty
-  stream(s) here, e.g. "3/3 structurally; 2/3 effective — stream Z
-  contributed 0 accepted points after Points rejected." (Added in
-  v0.92 to operationalize the safety_notes.md "degraded run" rule
-  at the stream level.)
+  disclose that. When N < 3, identify the empty stream by its
+  anonymized label (you only see Audit X/Y/Z), e.g. "3/3 structurally;
+  2/3 effective — Audit Z contributed 0 accepted points after Points
+  rejected"; the orchestrator, which holds the de-anonymization
+  mapping, appends the stream's real name during the Step 8
+  audit-trail metadata append. (Added in v0.92; the naming split was
+  clarified in v1.2 — the synthesizer cannot know stream names behind
+  the anonymization firewall, and must not.)
 - Synthesis: fresh codex exec (or "fallback: in-session Claude — Codex unavailable")
 - **Independence**: [quote the `independence_signature` field from
   `_mode_context.md` VERBATIM. This is mandatory in every memo and

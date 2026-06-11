@@ -39,14 +39,18 @@ alphas): the full `mad-research` protocol **with Codex** (arm T) vs. the
 C1) vs. the earlier 5-lens Claude panel. An independent third model
 (**Gemini**) judged the three memos blind on each paper.
 
-Result (illustrative, not a powered study): unanimous **C1 > T > Panel** —
-the structured debate protocol clearly beat the generic panel, but adding
-Codex did **not** beat the all-Claude version of the same protocol. The
-folder's `README.md` has the full tally, the concrete reasons (e.g. on the
-beauty paper the Claude arm caught a sign contradiction and a transcription
-error that the Codex arm missed), and the caveats
-(n = 5, one run per arm, a single LLM judge, no seeded ground truth). This
-example motivates the opt-in **Claude-only mode** added in v1.1.
+Result (illustrative, not a powered study): one blinded LLM judge ranked
+**C1 > T > Panel** on all five papers — a consistent *perceived-quality*
+verdict, not ground truth. The folder's `README.md` has the full tally, the
+concrete reasons (e.g. on the beauty paper the Claude arm caught a sign
+contradiction and a transcription error that the Codex arm missed), and the
+caveats that must travel with the claim: n = 5, one run per arm, a single
+LLM judge (so the 5/5 unanimity measures judge consistency, not five
+confirmations), **imperfect blinding** (the Codex-arm memos carried
+identifiable scaffolding the judge penalized — part of the gap is
+presentation), no seeded ground truth, and the raw per-stream files did not
+survive (see the example's "Evidence status" section). This example
+motivated the opt-in **Claude-only mode** added in v1.1.
 
 ## More to come
 
