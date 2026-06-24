@@ -4,8 +4,13 @@ Notable changes to the `mad-research` skill family. The Git tags
 `v0.1`, `v0.2`, `v0.3`, `v0.4`, `v0.5`, `v0.6`, `v0.7`, `v0.75`,
 `v0.8`, `v0.81`, `v0.9`, `v0.91`, `v0.92`, `v0.93`, `v0.94`,
 `v0.95`, `v0.96`, `v1.0`, `v1.0.1`, `v1.0.2`, `v1.0.3`, `v1.0.4`,
-`v1.1`, `v1.1.1`, `v1.1.2`, `v1.1.3`, and `v1.2` correspond to the
-entries below.
+`v1.1`, `v1.1.1`, `v1.1.2`, `v1.1.3`, `v1.2`, and `v1.2.1` correspond to
+the entries below.
+
+## v1.2.1 — archival release for Zenodo DOI
+
+Metadata-only release cut to trigger Zenodo's GitHub archiving and mint a
+DOI for the repository; no behavior or documentation changes since v1.2.
 
 ## v1.2 — external roundtable audit applied: evidence honesty, 2026 literature, public eval spec, paper-workshop cross-link
 
