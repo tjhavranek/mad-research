@@ -1,5 +1,7 @@
 # mad-research: three Claude Code skills for working with Codex
 
+[![DOI](https://zenodo.org/badge/1248112144.svg)](https://doi.org/10.5281/zenodo.20829175)
+
 **For researchers who want a structured second opinion on a paper, proposal,
 or report — without writing code.**
 
@@ -341,8 +343,8 @@ MIT. Use, modify, share. Credit the authors.
 ## Citation
 
 Havránek, T., & Iršová, Z. (2026). *mad-research: Claude Code skills for
-adversarial multi-agent debate on research documents*. GitHub repository,
-<https://github.com/tjhavranek/mad-research>.
+adversarial multi-agent debate on research documents*. Zenodo.
+<https://doi.org/10.5281/zenodo.20829175>
 
 For the underlying methodology (Duel v1.7 / MAD v2.0) please also cite:
 Iršová & Havránek (2026), *Research Audit Protocols: Duel + MAD*,

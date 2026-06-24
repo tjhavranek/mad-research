@@ -10,6 +10,11 @@ authors:
   - family-names: "Iršová"
     given-names: "Zuzana"
 repository-code: "https://github.com/tjhavranek/mad-research"
+doi: 10.5281/zenodo.20829175
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.20829175
+    description: "Concept DOI — resolves to the latest release"
 license: MIT
 abstract: "Three Claude Code skills for using Codex CLI in research and build workflows: codex-bridge for one-shot Codex calls, mad-build for staged Claude-Codex collaboration, and mad-research for adversarial audits of papers, grants, and reports with anonymized cross-critique and fresh-context synthesis."
 keywords:
