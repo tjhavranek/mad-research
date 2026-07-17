@@ -349,3 +349,14 @@ adversarial multi-agent debate on research documents*. Zenodo.
 For the underlying methodology (Duel v1.7 / MAD v2.0) please also cite:
 Iršová & Havránek (2026), *Research Audit Protocols: Duel + MAD*,
 Zenodo, <https://doi.org/10.5281/zenodo.19105954>.
+
+### Evaluated in
+
+Havránek, T., & Iršová, Z. (2026). *Does Multi-Agent Debate Improve AI
+Feedback on Research Papers?* arXiv:2607.14713.
+<https://arxiv.org/abs/2607.14713>
+
+A pre-registered experiment in which authors of 44 economics meta-analyses
+ranked blinded AI reports on their own papers. The plain single-pass baseline
+was ranked above mad-research — an against-interest result we report in full;
+see the paper for the design, caveats, and what the comparison does not show.
